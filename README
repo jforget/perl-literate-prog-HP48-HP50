@@ -1,0 +1,14 @@
+This project is a mini-framework for developping
+programs for the HP-48 and HP-50 in User-RPL.
+ 
+It is based on Knuth's idea of literate programming,
+where a single file contains all which is necessary
+to produce both the code and the documentation.
+
+This project is developped in parallel with
+another project, which will be a testcase for
+literate programming generation.
+
+For now, no installation instructions. Just read
+the F*ing source and guess how it will be used.
+

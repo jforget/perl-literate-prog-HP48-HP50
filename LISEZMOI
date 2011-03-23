@@ -1,0 +1,17 @@
+Ce projet est un mini environnement de développement
+pour écrire des programmes en User-RPL pour la HP-48
+et la HP-50.
+
+Le projet est basé sur le concept de Knuth de
+programmation littéraire, où le même fichier
+source permet de générer à la fois le code
+et la documentation.
+
+Ce projet est développé en parallèle avec un autre
+projet, qui sera la première mise en application
+de la génération en programmation littéraire.
+
+Pour l'instant, pas d'instructions d'installation.
+Le seul moyen d'en savoir plus est de lire le
+source et de deviner comment cela pourra être
+utilisé.
