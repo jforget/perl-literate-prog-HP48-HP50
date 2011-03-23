@@ -9,9 +9,13 @@ use Data::Dumper;
 
 my $racine = $ARGV[0];
 
-my %transco1 = qw{ @ @ \\ \\ |^ &#8593;  -> &#8594; 
-    };
-my %transco2 = qw{ < &lt, > &gt; & &amp; };
+my %transco1 = ( '@', '@', '\\', '\\',
+   # flèches
+   '<-', '&#8592;', '|^', '&#8593;', '->', '&#8594;', '|v', '&#8595;', 
+   # comparaisons
+   '<=', '&#8804;', '>=', '&#8805;', '=/', '&#8800;',
+    );
+my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
 my $re1 = join '|', map { quotemeta $_ } keys %transco1;
 
 my %textes;
@@ -28,7 +32,7 @@ for (keys %$h) {
   }
   else {
     my $nom = "$racine.$_.html";
-    open my $f, '>', $nom
+    open my $f, '>:encoding(utf8)', $nom
       or die "Ouverture $nom $!";
     $textes{$_}{name} = $nom;
     $textes{$_}{fh} = $f;
@@ -96,10 +100,10 @@ for my $fragment (@$l) {
 	$morceau[$i + 1] = "<a href='#$etiq_call'>$etiq_call</a>";
       }
       elsif ($etiq_ins) {
-	$morceau[$i + 1] = "<a href='#$etiq_ins'>$etiq_ins</a>";
+	$morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
       }
       else {
-	$morceau[$i + 2] = $transco2{$morceau[$i + 2]};
+	$morceau[$i + 3] = $transco2{$morceau[$i + 3]};
       }
     }
 
