@@ -1,7 +1,7 @@
 fr: Programmation littéraire pour HP-48 et HP-50
 en: Literate programming for HP-48 and HP-50
 ---
-- section: intro
+- section: 0
   'fr,en': Introduction
 - fr: |
     Ceci est un texte auto-descriptif
@@ -107,7 +107,7 @@ en: Literate programming for HP-48 and HP-50
     <li>The same programme weaves the documentation files and tangles
     the code files.</li>
     </ul>
-- section: principe
+- section: 0
   fr: Principe
   en: Principle
 - fr: |
@@ -225,29 +225,24 @@ en: Literate programming for HP-48 and HP-50
     given by the <tt>section</tt> attribute. The contents is the
     text associated to the language.
 - fr: |
-    Pour les textes, le balisage par défaut est les balises &lt;p&gt;.
+    Pour les textes, le balisage par défaut est les balises <tt>&lt;p&gt;</tt>.
     Chaque paragraphe (fragment de texte ou portion de fragment de texte
     délimitée par des lignes vides) sera encadré par 
-    &lt;p&gt; et &lt;/p&gt;, sauf si une balise existe
+    <tt>&lt;p&gt;</tt> et <tt>&lt;/p&gt;</tt>, sauf si une balise existe
     déjà au début et à la fin. Et si par hasard, vous 
     ne voulez pas de balise, il vous suffit d'ajouter
-    un commentaire HTML &lt;!-- blabla --&gt;.
+    un commentaire HTML <tt>&lt;!-- blabla --&gt;</tt>.
 - en: |
-    Default tagging for texts is &lt;p&gt;, so
+    Default tagging for texts is <tt>&lt;p&gt;</tt>, so
     each paragraph (text fragment or text fragment portion
     delimited by empty lines) will be surrounded by
-    &lt;p&gt; and &lt;/p&gt;, except if another tag exists
+    <tt>&lt;p&gt;</tt> and <tt>&lt;/p&gt;</tt>, except if another tag exists
     both at the beginning and at the end of the paragraph.
     And if you do not want any tag, just add 
-    an HTML comment &lt;!-- blahblah --&gt;.
+    an HTML comment <tt>&lt;!-- blahblah --&gt;</tt>.
 - fr: |
     Les fragments de type code sont tous repris
-    dans le fichier HTML généré. Ils subissent quelques
-    adaptations&nbsp;: remplacement des séquences  <i lang='en'>backslash</i>
-    par les caractères associés (en UTF-8) ou les séquences
-    HTML correspondantes (en ISO-8859) et traitement des
-    liens hypertexte <i>(à compléter)</i> et échappement
-    des esperluettes et des signes inférieurs et supérieurs.. De plus, pour les
+    dans le fichier HTML généré. De plus, pour les
     fragments de type <tt>GROB</tt>, le programme génère un
     fichier <tt>.png</tt> représentant le bitmap associé.
     Le fichier n'est pas appelé automatiquement dans le HTML
@@ -255,22 +250,47 @@ en: Literate programming for HP-48 and HP-50
     une balise <tt>&lt;img&gt;</tt> dans un fragment texte.
 - en: |
     All code fragments are used when generating
-    the HTML file. They undergo some modifications:
-    backslash-sequences are replaced with the corresponding
-    character (in UTF-8) or the proper HTML sequence (in ISO-8859),
-    the hyperlinks are processed <i>(to be defined)</i> and
-    the ampersand, less than and greater than signs are escaped. 
+    the HTML file.  
     In addition, for <tt>GROB</tt> fragments, the program generates
     a <tt>.png</tt> file containing the bitmap.
     This file is not automatically linked to in the generated
     HTML file, you must include a <tt>&lt;img&gt;</tt> tag in
     a text fragment to show it.
-- section: emmelage
+- fr: |
+    Dans tous les cas, section, texte et code, le tissage recherche
+    les séquences introduites par un <i lang='en'>backslash</i> pour
+    les remplacer par le caractère associé (en fait, la séquence
+    <tt>&amp;#</tt><var>nnn</var><tt>;</tt>). Par exemple,
+    la séquence <tt>\\pi</tt> sera remplacée par <tt>&amp;#960;</tt>, c'est-à-dire \pi.
+    En même temps, les noms de section encadrés par des <tt>@</tt> ou des
+    <tt>£</tt> sont transformés en liens hypertextes vers la section du
+    même nom (cela dit, il n'y a pas de contrôle, le lien peut pointer
+    vers le néant s'il n'existe aucune section de ce nom).
+    Et dans le cas des fragments codes, les <tt>&lt;&gt;&amp;</tt> sont
+    remplacés par la séquence HTML correspondante. Ce n'est pas fait
+    pour les sections et les textes, car ceux-ci contiennent déjà du marquage
+    HTML et on considère que les  <tt>&lt;&gt;&amp;</tt> y sont déjà sous
+    la forme <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
+- en: |
+    In all cases, section, text and code, weaving looks for substrings
+    starting with a backslash to substitute them with the associated
+    character (or actually, the corresponding
+    <tt>&amp;#</tt><var>nnn</var><tt>;</tt> sequence). For example,
+    <tt>\\pi</tt> will be replaced by <tt>&amp;#960;</tt>, that is, \pi.
+    At the same time, the section names sandwiched between two <tt>@</tt>'s
+    or two <tt>£</tt>'s are changed into an hyperlink to the section
+    with the corresponding name (yet, there is no check; if the name 
+    defines no section, the link will be dangling).
+    And for code fragments, the <tt>&lt;&gt;&amp;</tt> are escaped.
+    This is not done for sections and texts, because they already include
+    HTML tags, and we consider that all <tt>&lt;&gt;&amp;</tt> are already coded
+    as <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
+- section: 0
   fr: Emmêlage
   en: Tangling
 - fr: |
     L'emmêlage permet de générer un ou plusieurs fichiers
-    téléchargeable sur les machines HP-48 ou HP-50.
+    téléchargeables sur les machines HP-48 ou HP-50.
     Il peut y avoir plusieurs raisons pour générer
     plusieurs fichiers&nbsp;:
 
@@ -279,7 +299,7 @@ en: Literate programming for HP-48 and HP-50
       <li>les fichiers contiennent des chaînes de caractères dans des langues différentes
       pour les invites et les messages,</li>
       <li>les fichiers concernent des machines cibles différentes, par exemple une HP-48
-      avec un affichage nnxnn et une HP-50 avec un affichage nnxnn,</li>
+      avec un affichage 64x131 et une HP-50 avec un affichage 80x131,</li>
       <li>un fichier contient les routines utilitaires sous formes de variables globales
       dans le répertoire de la HP, pour faciliter la mise au point, tandis qu'un autre
       fichier stocke toutes ces routines utilitaires dans des variables locales
@@ -294,8 +314,8 @@ en: Literate programming for HP-48 and HP-50
     <li>one file contains the basic functions and the others contain the extensions,</li>
     <li>each file contains prompt strings and message strings in a different language,</li>
     <li>the files apply to different target machines, for example one file for HP-48's
-    with a nnxnn screen and another file for HP-50's with a nnxnn screen,</li>
-    <li>one file contains all routines int global variables, to facilitage
+    with a 64x131 screen and another file for HP-50's with a 80x131 screen,</li>
+    <li>one file stores all routines into global variables, to facilitage
     development, while the other stores these routines as local variables
     inside the main programs.</li>
     </ul>

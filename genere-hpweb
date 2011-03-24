@@ -15,6 +15,9 @@ my %transco1 = ( # méta-caractères
        '<-', '2190', '|^', '2191', '->', '2192', '|v', '2193', 
        # comparaisons
        '=/', '2260', '<=', '2264', '>=', '2265',
+       # grec minuscule
+       'pi', '3c0', 'Ga', '3b1', 'Gg', '3b3', 'Gd', '3b4', 'Ge', '3b5', 'Gn', '3b7',
+       'Gh', '3b8', 'Gl', '3bb', 'Gr', '3c1', 'Gs', '3c3', 'Gt', '3c4', 'Gw', '3c9',
     );
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
 my $re1 = join '|', map { quotemeta $_ } keys %transco1;
