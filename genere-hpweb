@@ -9,14 +9,19 @@ use Data::Dumper;
 
 my $racine = $ARGV[0];
 
-my %transco1 = ( '@', '@', '\\', '\\',
-   # flèches U+2190 à U+2193
-   '<-', '&#8592;', '|^', '&#8593;', '->', '&#8594;', '|v', '&#8595;', 
-   # comparaisons U+2260 à U+2265
-   '=/', '&#8800;', '<=', '&#8804;', '>=', '&#8805;',
+my %transco1 = ( # méta-caractères
+       '@', '@', '\\', '\\', '£', '£',
+       # flèches
+       '<-', '2190', '|^', '2191', '->', '2192', '|v', '2193', 
+       # comparaisons
+       '=/', '2260', '<=', '2264', '>=', '2265',
     );
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
 my $re1 = join '|', map { quotemeta $_ } keys %transco1;
+for (values %transco1) {
+  $_ = sprintf "&#%d;", hex($_)
+    if /^[0-9a-f]+$/i;
+}
 
 my %textes;
 my %codes;
@@ -29,6 +34,9 @@ for (keys %$h) {
     open my $f, '>', $_
       or die "Ouverture $_ $!";
     $codes{$_} = $f;
+    print $f <<'EOF';
+%%HP: T(3)A(R)F(,);
+EOF
   }
   else {
     my $nom = "$racine.$_.html";
@@ -80,37 +88,13 @@ for my $fragment (@$l) {
     next;
   }
   elsif ($fragment->{code}) {
-    my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
-                      | @(\w+)@   # capture des appels à une étiquette
-                      | £(\w+)£   # capture des insertions
-                      | ([<>&])   # capture des caractères spéciaux HTML
-                      /x, $fragment->{code};
-
-    for (my $i = 1; $i < $#morceau; $i +=5) {
-      $morceau[$i    ] ||= ''; 
-      $morceau[$i + 1] ||= ''; 
-      $morceau[$i + 2] ||= ''; 
-      $morceau[$i + 3] ||= ''; 
-      my $etiq_call = $morceau[$i + 1];
-      my $etiq_ins  = $morceau[$i + 2];
-      if ($morceau[$i]) {
-	$morceau[$i] = $transco1{$morceau[$i]};
-      }
-      elsif ($etiq_call) {
-	$morceau[$i + 1] = "<a href='#$etiq_call'>$etiq_call</a>";
-      }
-      elsif ($etiq_ins) {
-	$morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
-      }
-      else {
-	$morceau[$i + 3] = $transco2{$morceau[$i + 3]};
-      }
-    }
+    my $code = transcrit($fragment->{code});
 
     for my $lg (keys %textes) {
       my $f = $textes{$lg}{fh};
-      print $f join '', "<pre>\n", @morceau, "</pre>\n";
+      print $f "<pre>\n$code</pre>\n";
     }
+
     next;
   }
   else {
@@ -139,4 +123,37 @@ for (keys %textes) {
 for (keys %codes) {
   close $codes{$_}
     or die "fermeture $codes{$_}{name} $!";
+}
+
+exit(0);
+
+sub transcrit {
+  my ($texte) = @_;
+  my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
+		    | @(\w+)@   # capture des appels à une étiquette
+		    | £(\w+)£   # capture des insertions
+		    | ([<>&])   # capture des caractères spéciaux HTML
+		    /x, $texte;
+
+  for (my $i = 1; $i < $#morceau; $i +=5) {
+    $morceau[$i    ] ||= ''; 
+    $morceau[$i + 1] ||= ''; 
+    $morceau[$i + 2] ||= ''; 
+    $morceau[$i + 3] ||= ''; 
+    my $etiq_call = $morceau[$i + 1];
+    my $etiq_ins  = $morceau[$i + 2];
+    if ($morceau[$i]) {
+      $morceau[$i] = $transco1{$morceau[$i]};
+    }
+    elsif ($etiq_call) {
+      $morceau[$i + 1] = "<a href='#$etiq_call'>$etiq_call</a>";
+    }
+    elsif ($etiq_ins) {
+      $morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
+    }
+    else {
+      $morceau[$i + 3] = $transco2{$morceau[$i + 3]};
+    }
+  }
+  return join '', @morceau;
 }
