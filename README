@@ -7,7 +7,10 @@ to produce both the code and the documentation.
 
 This project is developped in parallel with
 another project, which will be a testcase for
-literate programming generation.
+literate programming generation. As a result,
+there may be discrepancies between the software
+description in "description.hpweb" and what it
+actually does in "genere-hpweb".
 
 For now, no installation instructions. Just read
 the F*ing source and guess how it will be used.

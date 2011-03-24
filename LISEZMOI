@@ -10,6 +10,9 @@ et la documentation.
 Ce projet est développé en parallèle avec un autre
 projet, qui sera la première mise en application
 de la génération en programmation littéraire.
+Du coup, il peut y avoir quelques écarts entre la
+description du logiciel dans "description.hpweb"
+et ce qu'il fait réellement dans "genere-hpweb".
 
 Pour l'instant, pas d'instructions d'installation.
 Le seul moyen d'en savoir plus est de lire le

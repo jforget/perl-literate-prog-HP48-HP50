@@ -1,0 +1,142 @@
+#!/usr/bin/perl
+#
+# Génération de la documentation HTML et du fichier à transférer
+
+use strict;
+use warnings;
+use YAML;
+use Data::Dumper;
+
+my $racine = $ARGV[0];
+
+my %transco1 = ( '@', '@', '\\', '\\',
+   # flèches U+2190 à U+2193
+   '<-', '&#8592;', '|^', '&#8593;', '->', '&#8594;', '|v', '&#8595;', 
+   # comparaisons U+2260 à U+2265
+   '=/', '&#8800;', '<=', '&#8804;', '>=', '&#8805;',
+    );
+my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
+my $re1 = join '|', map { quotemeta $_ } keys %transco1;
+
+my %textes;
+my %codes;
+
+my ($h, $l) = YAML::LoadFile("$racine.hpweb");
+#print Data::Dumper::Dumper($h, $l);
+
+for (keys %$h) {
+  if ($h->{$_} eq 'code') {
+    open my $f, '>', $_
+      or die "Ouverture $_ $!";
+    $codes{$_} = $f;
+  }
+  else {
+    my $nom = "$racine.$_.html";
+    open my $f, '>:encoding(utf8)', $nom
+      or die "Ouverture $nom $!";
+    $textes{$_}{name} = $nom;
+    $textes{$_}{fh} = $f;
+    print $f <<"EOF";
+<html>
+<head>
+<meta http-equiv='content-type' content='Text/html; charset=utf-8' />
+<title>$h->{$_}</title>
+</head>
+<body>
+EOF
+  }
+}
+
+for my $fragment (@$l) {
+  for my $cle (keys %$fragment) {
+    if ($cle =~ /,/) {
+      for my $cle1 (split ',', $cle) {
+	$fragment->{$cle1} = $fragment->{$cle};
+      }
+    }
+  }
+}
+
+#print Data::Dumper::Dumper($h, $l);
+
+for my $fragment (@$l) {
+  if (defined $fragment->{section}) {
+    my $section = $fragment->{section};
+    my $niveau  = $fragment->{level} || 2;
+    print "$section\n";
+    for (keys %textes) {
+      my $f = $textes{$_}{fh};
+      my $titre = $fragment->{$_};
+      if ($section && $titre) {
+        print $f "<h$niveau><a name='$section'><tt>$section</tt> - $titre</a></h$niveau>\n";
+      }
+      elsif ($titre) {
+        print $f "<h$niveau>$titre</h$niveau>\n";
+      }
+      elsif ($section) {
+        print $f "<h$niveau><a name='$section'><tt>$section</tt></a></h$niveau>\n";
+      }
+    }
+    next;
+  }
+  elsif ($fragment->{code}) {
+    my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
+                      | @(\w+)@   # capture des appels à une étiquette
+                      | £(\w+)£   # capture des insertions
+                      | ([<>&])   # capture des caractères spéciaux HTML
+                      /x, $fragment->{code};
+
+    for (my $i = 1; $i < $#morceau; $i +=5) {
+      $morceau[$i    ] ||= ''; 
+      $morceau[$i + 1] ||= ''; 
+      $morceau[$i + 2] ||= ''; 
+      $morceau[$i + 3] ||= ''; 
+      my $etiq_call = $morceau[$i + 1];
+      my $etiq_ins  = $morceau[$i + 2];
+      if ($morceau[$i]) {
+	$morceau[$i] = $transco1{$morceau[$i]};
+      }
+      elsif ($etiq_call) {
+	$morceau[$i + 1] = "<a href='#$etiq_call'>$etiq_call</a>";
+      }
+      elsif ($etiq_ins) {
+	$morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
+      }
+      else {
+	$morceau[$i + 3] = $transco2{$morceau[$i + 3]};
+      }
+    }
+
+    for my $lg (keys %textes) {
+      my $f = $textes{$lg}{fh};
+      print $f join '', "<pre>\n", @morceau, "</pre>\n";
+    }
+    next;
+  }
+  else {
+    # Fragment de texte, indexé par le code langue
+    for my $lg (keys %$fragment) {
+      for my $paragraphe (split /\n\n+/, $fragment->{$lg}) {
+	#print "--$paragraphe--\n";
+	if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
+	#if ($paragraphe !~ /\A\<.*\>\z/s) {
+	  $paragraphe = "<p>\n$paragraphe</p>\n";
+	}
+	my $f = $textes{$lg}{fh};
+	print $f $paragraphe, "\n";
+      }
+    }
+  }
+}
+
+for (keys %textes) {
+  my $f = $textes{$_}{fh};
+  print $f "</body>\n</html>\n";
+  close $f
+    or die "fermeture $textes{$_}{name} $!";
+}
+
+for (keys %codes) {
+  close $codes{$_}
+    or die "fermeture $codes{$_}{name} $!";
+}
