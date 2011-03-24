@@ -285,6 +285,15 @@ en: Literate programming for HP-48 and HP-50
     This is not done for sections and texts, because they already include
     HTML tags, and we consider that all <tt>&lt;&gt;&amp;</tt> are already coded
     as <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
+- fr: |
+    Les caractères disponibles sont&nbsp;:
+    \<) \x- \.V \v/\.S \GS\|>\pi\.d \<=\>=\=/ \Ga\->\<- \|v\|^ \Gg\Gd\Ge\Gn\Gh\Gl\Gr\Gs\Gt\Gw
+    \GD\PI\GW \[] \oo
+- en: |
+    The available characters are:
+    \<) \x- \.V \v/\.S \GS\|>\pi\.d \<=\>=\=/ \Ga\->\<- \|v\|^ \Gg\Gd\Ge\Gn\Gh\Gl\Gr\Gs\Gt\Gw
+    \GD\PI\GW \[] \oo
+
 - section: 0
   fr: Emmêlage
   en: Tangling

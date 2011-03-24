@@ -18,7 +18,12 @@ my %transco1 = ( # méta-caractères
        # grec minuscule
        'pi', '3c0', 'Ga', '3b1', 'Gg', '3b3', 'Gd', '3b4', 'Ge', '3b5', 'Gn', '3b7',
        'Gh', '3b8', 'Gl', '3bb', 'Gr', '3c1', 'Gs', '3c3', 'Gt', '3c4', 'Gw', '3c9',
+       # autres symboles (à revoir : v- |> )
+       '<)', '2221', 'x-', 'x-', '.V', '2207', 'v/', '221a', '.S', '222b', 'GS', '2211',
+       '|>', '25b6', '.d', '2202', 'GD', '2206', 'PI', '220f', 'GW', '3a9', '[]', '220e',
+       'oo', '221e', 
     );
+$transco1{'x-'} = 'x&#772;';
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
 my $re1 = join '|', map { quotemeta $_ } keys %transco1;
 for (values %transco1) {
