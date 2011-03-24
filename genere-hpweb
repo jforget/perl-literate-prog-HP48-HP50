@@ -55,6 +55,7 @@ EOF
   }
 }
 
+# séparer les codes langues
 for my $fragment (@$l) {
   for my $cle (keys %$fragment) {
     if ($cle =~ /,/) {
@@ -71,10 +72,10 @@ for my $fragment (@$l) {
   if (defined $fragment->{section}) {
     my $section = $fragment->{section};
     my $niveau  = $fragment->{level} || 2;
-    print "$section\n";
+    #print "$section\n";
     for (keys %textes) {
       my $f = $textes{$_}{fh};
-      my $titre = $fragment->{$_};
+      my $titre = transcrit($fragment->{$_} || '', 0);
       if ($section && $titre) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt> - $titre</a></h$niveau>\n";
       }
@@ -88,7 +89,7 @@ for my $fragment (@$l) {
     next;
   }
   elsif ($fragment->{code}) {
-    my $code = transcrit($fragment->{code});
+    my $code = transcrit($fragment->{code}, 1);
 
     for my $lg (keys %textes) {
       my $f = $textes{$lg}{fh};
@@ -100,10 +101,9 @@ for my $fragment (@$l) {
   else {
     # Fragment de texte, indexé par le code langue
     for my $lg (keys %$fragment) {
-      for my $paragraphe (split /\n\n+/, $fragment->{$lg}) {
+      for my $paragraphe (split /\n\n+/, transcrit($fragment->{$lg}, 0)) {
 	#print "--$paragraphe--\n";
 	if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
-	#if ($paragraphe !~ /\A\<.*\>\z/s) {
 	  $paragraphe = "<p>\n$paragraphe</p>\n";
 	}
 	my $f = $textes{$lg}{fh};
@@ -128,7 +128,9 @@ for (keys %codes) {
 exit(0);
 
 sub transcrit {
-  my ($texte) = @_;
+  # $texte : le texte à transcrire, $transc_html : faut-il transcrire les <>& en HTML ou bien sont-ils déjà transcrits ?
+  my ($texte, $transc_html) = @_;
+
   my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
 		    | @(\w+)@   # capture des appels à une étiquette
 		    | £(\w+)£   # capture des insertions
@@ -151,7 +153,7 @@ sub transcrit {
     elsif ($etiq_ins) {
       $morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
     }
-    else {
+    elsif ($transc_html) {
       $morceau[$i + 3] = $transco2{$morceau[$i + 3]};
     }
   }
