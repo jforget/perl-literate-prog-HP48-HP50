@@ -82,8 +82,9 @@ for my $fragment (@$l) {
         print $f "<br /><a href='#$section'><tt>$section</tt> - $titre</a>\n";
       }
       elsif ($titre) {
-        # ?????
-        print $f "<br />$titre\n";
+        my $lien = $titre;
+        $lien =~ s/[<>&']/_/g;
+        print $f "<br /><a href='#$lien'>$titre</a>\n";
       }
       elsif ($section) {
         print $f "<br /><a href='#$section'><tt>$section</tt></a>\n";
@@ -110,7 +111,9 @@ for my $fragment (@$l) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt> - $titre</a></h$niveau>\n";
       }
       elsif ($titre) {
-        print $f "<h$niveau>$titre</h$niveau>\n";
+        my $lien = $titre;
+        $lien =~ s/[<>&']/_/g;
+        print $f "<h$niveau><a name='$lien'>$titre</a></h$niveau>\n";
       }
       elsif ($section) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt></a></h$niveau>\n";
