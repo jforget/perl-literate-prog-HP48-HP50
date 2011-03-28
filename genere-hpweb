@@ -39,12 +39,7 @@ my ($h, $l) = YAML::LoadFile("$racine.hpweb");
 
 for (keys %$h) {
   if ($h->{$_} eq 'code') {
-    open my $f, '>', $_
-      or die "Ouverture $_ $!";
-    $codes{$_} = $f;
-    print $f <<'EOF';
-%%HP: T(3)A(R)F(,);
-EOF
+    $codes{$_} = 1;
   }
   else {
     my $nom = "$racine.$_.html";
@@ -59,6 +54,7 @@ EOF
 <title>$h->{$_}</title>
 </head>
 <body>
+<a href='#$h->{$_}'>$h->{$_}</a>
 EOF
   }
 }
@@ -75,6 +71,32 @@ for my $fragment (@$l) {
 }
 
 #print Data::Dumper::Dumper($h, $l);
+
+for my $fragment (@$l) {
+  if (defined $fragment->{section}) {
+    my $section = $fragment->{section};
+    for (keys %textes) {
+      my $f = $textes{$_}{fh};
+      my $titre = transcrit($fragment->{$_} || '', 0);
+      if ($section && $titre) {
+        print $f "<br /><a href='#$section'><tt>$section</tt> - $titre</a>\n";
+      }
+      elsif ($titre) {
+        # ?????
+        print $f "<br />$titre\n";
+      }
+      elsif ($section) {
+        print $f "<br /><a href='#$section'><tt>$section</tt></a>\n";
+      }
+    }
+  }
+}
+
+for (keys %textes) {
+  my $f = $textes{$_}{fh};
+  my $titre = $h->{$_};
+  print $f "<hr /><h1><a name='$titre'>$titre</a></h1>\n";
+}
 
 for my $fragment (@$l) {
   if (defined $fragment->{section}) {
@@ -129,6 +151,14 @@ for (keys %textes) {
 }
 
 for (keys %codes) {
+  open my $f, '>', $_
+    or die "Ouverture $_ $!";
+  print $f <<'EOF';
+%%HP: T(3)A(R)F(,);
+EOF
+
+  # reste à faire
+
   close $codes{$_}
     or die "fermeture $codes{$_}{name} $!";
 }
