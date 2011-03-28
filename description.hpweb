@@ -328,3 +328,53 @@ en: Literate programming for HP-48 and HP-50
     development, while the other stores these routines as local variables
     inside the main programs.</li>
     </ul>
+- section: 0
+  fr: Préparation
+  en: Preparation
+
+- fr: |
+    La première étape consiste à recenser tous les fragments de code
+    qui s'appliquent au fichier de code en cours de constitution et
+    à identifier les liens (appels et insertions) qui s'y trouvent.
+    À cette occasion, le programme bâtit un graphe des appels et un
+    graphe des insertions.
+- en: |
+    The first step consists in collating all code fragments which are
+    involved in building the current code file, and extracting all the
+    links (calls and inserts) which exist in these fragments.
+    During this step, the program builds a graph for the insert links 
+    and another graph for the call links.
+
+- fr: |
+    La deuxième étape a deux buts&nbsp;:
+
+    <ol>
+    <li>
+    établir un tri topologique des fragments en fonction des insertions,
+    pour savoir quels fragments il faut traiter en premiers, lesquels
+    il faut traiter en second et ainsi de suite.
+    </li>
+    <li>
+    détecter les cycles dans le graphe des insertions.
+    </li>
+    </ol>
+
+- en: |
+    The second step acheives two purposes:
+
+    <li>
+    topologically sort the fragments according to the insertion
+    links, to determine in which order they have to be generated.
+    </li>
+    <li>
+    détect any cycles in the insertions graph.
+    </li>
+    </ol>
+- section: 0
+  fr: Licence
+  en: License
+- fr: |
+    Ce code est diffusé sous les mêmes termes que Perl, la licence GPL
+    et la licence artistique.
+- en: |
+    This code is published under the same terms as Perl: GPL and Artistic License.
