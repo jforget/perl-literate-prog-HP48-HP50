@@ -38,7 +38,7 @@ my ($h, $l) = YAML::LoadFile("$racine.hpweb");
 #print Data::Dumper::Dumper($h, $l);
 
 for (keys %$h) {
-  if ($h->{$_} eq 'code') {
+  if ($h->{$_} eq 'code' || $h->{$_} eq 'dir') {
     $codes{$_} = 1;
   }
   else {
@@ -52,6 +52,12 @@ for (keys %$h) {
 <head>
 <meta http-equiv='content-type' content='Text/html; charset=utf-8' />
 <title>$h->{$_}</title>
+<style>
+<!--
+.insert  { background-color: skyblue}
+.call    { background-color: yellow}
+-->
+</style>
 </head>
 <body>
 <a href='#$h->{$_}'>$h->{$_}</a>
@@ -189,10 +195,10 @@ sub transcrit {
       $morceau[$i] = $transco1{$morceau[$i]};
     }
     elsif ($etiq_call) {
-      $morceau[$i + 1] = "<a href='#$etiq_call'>$etiq_call</a>";
+      $morceau[$i + 1] = "<a href='#$etiq_call' class='call'>$etiq_call</a>";
     }
     elsif ($etiq_ins) {
-      $morceau[$i + 2] = "<a href='#$etiq_ins'>$etiq_ins</a>";
+      $morceau[$i + 2] = "<a href='#$etiq_ins' class='insert'>$etiq_ins</a>";
     }
     elsif ($transc_html) {
       $morceau[$i + 3] = $transco2{$morceau[$i + 3]};
