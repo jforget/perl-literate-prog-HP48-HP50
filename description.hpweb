@@ -128,26 +128,142 @@ en: Literate programming for HP-48 and HP-50
     peut être&nbsp;:
 
     <ul>
-      <li>une section</li>
+      <li>un fragment section</li>
       <li>du texte</li>
       <li>du code</li>
       <li>la spécification d'un lien dans le fragment de code précédent.</li>
     </ul>
+
+    Attention, il faut bien distinguer les «&nbsp;fragments sections&nbsp;»
+    des «&nbsp;sections&nbsp;». Un fragment section se termine lorsque
+    commence un autre fragment, que ce soit du texte, du code, voire un
+    autre fragment section, tandis qu'une section regroupe tous les fragments
+    à partir d'un fragment section (inclus) jusqu'au fragment section suivant
+    (exclus, car faisant partie de la section suivante).
 - en: |
     The second variable is a list of chunks. Each chunk can be:
 
     <ul>
-      <li>a section</li>
+      <li>a section fragment</li>
       <li>some text</li>
       <li>some code</li>
       <li>the specification of a link in the preceding code chunk.</li>
     </ul>
+
+    Note that a "section fragment" is not the same as a section.
+    A section fragment ends when the next fragment, text or code, begins.
+    A section is the collection of all fragments from a first section
+    fragment (included) to the next section fragment (excluded, because
+    it belongs to the next section).
+- fr: |
+    Le tissage consiste à construire un fichier HTML pour chaque
+    code langue. Le programme passe en revue tous les fragments
+    et tient compte des fragments sections, des fragments codes
+    indépendamment de la langue et des fragments textes associés 
+    à la langue en cours de traitement.
+
+    Pour chaque fragment, le programme effectue un léger traitement
+    de formattage. Ainsi, les fragments sections donnent lieu
+    à une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> et à
+    une balise <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt>.
+    Les fragments de code sont encadrés par des balises <tt>&lt;pre&gt;</tt>.
+
+    En outre, dans les fragments de texte et de code, on repère les références
+    (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;£&nbsp;») pour établir
+    un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
+    d'autres sections.
+- en: |
+    Weaving consists in building an HTML file for each language code.
+    The program scans all fragments, keeping the sections fragments
+    and code fragment irrespective of the language code and the
+    text fragments tagged with the current language code.
+
+    Each fragment is slightly reformatted. A section fragment
+    generates a <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> tag and a
+    <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt> tag.
+    The code fragments are sandwiched between <tt>&lt;pre&gt;</tt> tags.
+
+    In addition, in text fragments and code fragments, the program
+    looks for references tagged by "@" or "£" and generates
+    links <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> to other
+    sections.
+- fr: |
+    L'emmêlement se passe ainsi pour un fichier de code donné&nbsp;:
+    le programme commence par répertorier toutes les sections 
+    appelées dans ce fichier. Il passe également en revue toutes
+    les sections pour en extraire les références consistant à inclure
+    une section dans une autre. Après s'être assuré qu'il n'y a pas
+    de dépendance circulaire et après avoir déterminé dans quel ordre
+    il faut générer les sections, le programme effectue ces insertions
+    et écrit le fichier de code final.
+- en: |
+    For a given code file, tangling consists in the following actions.
+    The program starts by listing all the sections assigned to the
+    file. It also scans all sections to extract the insertion-type
+    references. It checks there is no cycle in these references 
+    and determines in which order the sections will be generated
+    by inserting other sections. Then, the program writes the
+    code sections into the final code file.
+- section: 0
+  fr: Détails
+  en: Details
+- section: 0
+  fr: Jeu de caractères
+  en: Characters set
+  level: 3
 - fr: |
     Le fichier est écrit en UTF-8 pour être lu par YAML. Mais la machine
     cible utilise un codage spécifique assez proche de l'ISO-8859.
+    Pour les caractères utilisés par les HP-48 et HP-50 qui ne figurent
+    pas dans le jeu de caractère ISO-8859-1, il faudra utiliser une
+    séquence de caractères introduite par un <i lang='en'>backslash</i>.
+    Par exemple, les lignes&nbsp;:
 - en: |
     The file is written in UTF-8 to be readable by YAML. But the
     target machine uses a specific encoding similar to ISO-8859.
+    For the characters belonging to the HP-48/HP-50 character set,
+    but not the ISO-8859-1 character set, you will use backslash sequences.
+    So, the following lines:
+- code: |
+    \\<) \\x- \\.V \\v/ \\.S \\GS \\|> \\pi \\.d \\<= \\>= \\=/ \\Ga \\-> \\<- \\|v \\|^
+    \\Gg \\Gd \\Ge \\Gn \\Gh \\Gl \\Gr \\Gs \\Gt \\Gw
+    \\GD \\PI \\GW \\[] \\oo
+- fr: |
+    donneront lieu à&nbsp;:
+- en: |
+    will result in:
+- code: |
+    \<) \x- \.V \v/\.S \GS \|> \pi \.d \<= \>= \=/ \Ga \-> \<- \|v\|^
+    \Gg \Gd \Ge \Gn \Gh \Gl \Gr \Gs \Gt \Gw
+    \GD \PI \GW \[] \oo
+- fr: |
+    Notons que certains caractères qui figuent dans le jeu de caractères
+    ISO-8859-1 ont eux aussi une séquence introduite par <i lang='en'>backslash</i>
+    alors qu'il n'en ont pas réellement besoin.
+- en: |
+    Note that some characters which do belong to the ISO-8859-1 character set
+    have a backslash sequence, although they would not need it.
+- code: |
+    \\<< \\^o \\Gm \\>> \\.x \\O/ \\Gb \\:-
+    «   °   µ   »   ×   Ø   ß   ÷
+- fr: |
+    Et si vous avez besoin de faire apparaître une telle séquence
+    sans la remplacer par le caractère spécial, il suffit d'insérer
+    un <i lang='en'>backslash</i> avant cette séquence, pour désactiver
+    l'interprétation du <i lang='en'>backslash</i>. C'est vrai également
+    pour désactiver l'interprétation du «&nbsp;@&nbsp;» et du «&nbsp;£&nbsp;»
+    dans les cas où ils pourraient être compris à tort comme des liens vers d'autres
+    sections.
+- en: |
+    And if you need to display such a sequence without replacing it
+    by the special character, you just have to insert a backslash before
+    the sequence, to deactivate the interpretation of the backslash.
+    The same procedure applies to the cases when "@" or "£" would be
+    wrongly understood as links to other sections.
+- section: 0
+  fr: Syntaxe YAML
+  en: YAML Syntax
+  level: 3
 - fr: |
     Pour les besoins de la syntaxe YAML, pour chaque fragment,
     la première ligne du contenu doit commencer par 4&nbsp;espaces
@@ -171,12 +287,23 @@ en: Literate programming for HP-48 and HP-50
     Lorsqu'il y a besoin d'un code langue, il est possible de spécifier
     plusieurs codes langues séparés par des virgules. Cela permet de mettre
     en commun le texte associé, s'il ne contient aucun élément traduisible 
-    par exemple.
+    ou si la traduction est identique à l'original. Par exemple.
 - en: |
     When a language code is required, it is allowed to enter several
     codes joined with a comma. This allows to use the same text for all
-    given languages, if this text contains no translatable element, for example.
-- section: tissage
+    given languages, if this text contains no translatable element,
+    or if the translation is identical to the original sentence.For example
+- code: |
+    'fr,en': Introduction
+- fr: |
+     est remplacé par&nbsp;:
+- en: |
+     is replaced by:
+- code: |
+    fr: Introduction
+    en: Introduction
+
+- section: 0
   fr: Tissage
   en: Weaving
 - fr: |
@@ -194,7 +321,7 @@ en: Literate programming for HP-48 and HP-50
 
     The name of the output file is the name of the input file,
     minus the <tt>.hpweb</tt> extension, plus a dot, the language
-    code and the extension <tt>.htlm</tt>. For example, for
+    code and the extension <tt>.html</tt>. For example, for
     the English language, the
     input file <tt>description.htweb</tt> will produce the output
     file <tt>description.en.html</tt>.
@@ -207,20 +334,20 @@ en: Literate programming for HP-48 and HP-50
     file gives the contents of the <tt>&lt;title&gt;</tt>
     and the <tt>&lt;h1&gt;</tt> elements in the HTML file.
 - fr: |
-    Pour le tissage, le programme extrait dans l'ordre toutes les sections,
+    Pour le tissage, le programme extrait dans l'ordre tous les fragments sections,
     tous les textes dépendant du code langue utilisé et tous les
     fragments de code, avec les spécifications de liens associées.
 - en: |
-    When weaving, the program extracts all sections, all texts
+    When weaving, the program extracts all section fragments, all texts
     which belongs to the current language code, all code fragments
     and all corresponding links specifications.
 - fr: |
-    Chaque section génère une balise <tt>&lt;h2&gt;</tt>
+    Chaque fragment section génère une balise <tt>&lt;h2&gt;</tt>
     et une balise <tt>&lt;a name='...'&gt;</tt>, le nom étant
     donné par l'attribut <tt>section</tt> de la section. Le contenu
     est donné par le texte associé à la langue.
 - en: |
-    Each section generates a <tt>&lt;h2&gt;</tt> tag and a
+    Each section fragment generates a <tt>&lt;h2&gt;</tt> tag and a
     <tt>&lt;a name='...'&gt;</tt> tag, the name of which is
     given by the <tt>section</tt> attribute. The contents is the
     text associated to the language.
@@ -257,7 +384,7 @@ en: Literate programming for HP-48 and HP-50
     HTML file, you must include a <tt>&lt;img&gt;</tt> tag in
     a text fragment to show it.
 - fr: |
-    Dans tous les cas, section, texte et code, le tissage recherche
+    Dans tous les cas, fragment section, texte et code, le tissage recherche
     les séquences introduites par un <i lang='en'>backslash</i> pour
     les remplacer par le caractère associé (en fait, la séquence
     <tt>&amp;#</tt><var>nnn</var><tt>;</tt>). Par exemple,
@@ -272,7 +399,7 @@ en: Literate programming for HP-48 and HP-50
     HTML et on considère que les  <tt>&lt;&gt;&amp;</tt> y sont déjà sous
     la forme <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
 - en: |
-    In all cases, section, text and code, weaving looks for substrings
+    In all cases, section fragments, text and code, weaving looks for substrings
     starting with a backslash to substitute them with the associated
     character (or actually, the corresponding
     <tt>&amp;#</tt><var>nnn</var><tt>;</tt> sequence). For example,
@@ -285,20 +412,12 @@ en: Literate programming for HP-48 and HP-50
     This is not done for sections and texts, because they already include
     HTML tags, and we consider that all <tt>&lt;&gt;&amp;</tt> are already coded
     as <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
-- fr: |
-    Les caractères disponibles sont&nbsp;:
-    \<) \x- \.V \v/\.S \GS\|>\pi\.d \<=\>=\=/ \Ga\->\<- \|v\|^ \Gg\Gd\Ge\Gn\Gh\Gl\Gr\Gs\Gt\Gw
-    \GD\PI\GW \[] \oo
-- en: |
-    The available characters are:
-    \<) \x- \.V \v/\.S \GS\|>\pi\.d \<=\>=\=/ \Ga\->\<- \|v\|^ \Gg\Gd\Ge\Gn\Gh\Gl\Gr\Gs\Gt\Gw
-    \GD\PI\GW \[] \oo
 
 - section: 0
-  fr: Emmêlage
+  fr: Emmêlement
   en: Tangling
 - fr: |
-    L'emmêlage permet de générer un ou plusieurs fichiers
+    L'emmêlement permet de générer un ou plusieurs fichiers
     téléchargeables sur les machines HP-48 ou HP-50.
     Il peut y avoir plusieurs raisons pour générer
     plusieurs fichiers&nbsp;:
@@ -331,6 +450,7 @@ en: Literate programming for HP-48 and HP-50
 - section: 0
   fr: Préparation
   en: Preparation
+  level: 3
 
 - fr: |
     La première étape consiste à recenser tous les fragments de code
@@ -351,7 +471,7 @@ en: Literate programming for HP-48 and HP-50
     <ol>
     <li>
     établir un tri topologique des fragments en fonction des insertions,
-    pour savoir quels fragments il faut traiter en premiers, lesquels
+    pour savoir quels fragments il faut traiter en premier, lesquels
     il faut traiter en second et ainsi de suite.
     </li>
     <li>
