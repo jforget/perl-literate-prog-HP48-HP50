@@ -1,5 +1,8 @@
 fr: Programmation littéraire pour HP-48 et HP-50
 en: Literate programming for HP-48 and HP-50
+ex1: code
+ex2: dir
+ex-cycle: dir
 ---
 - section: 0
   'fr,en': Introduction
@@ -52,8 +55,14 @@ en: Literate programming for HP-48 and HP-50
     <var>toto</var><tt>.tex</tt> commence par donner une idée générale
     de l'algorithme, puis il définit la structure de données principale,
     puis le détail de l'algorithme, puis les initialisations et enfin
-    le traitement des erreurs. Comme le fichier source <var>toto</var><tt>.web</tt>
-    a la même structure, Knuth a appelé <tt>weave</tt>
+    le traitement des erreurs. À l'inverse, pour les besoins du compilateur,
+    le fichier <var>toto</var><tt>.p</tt> doit commencer par la description
+    des structures de données, puis la déclaration des variables globales
+    et le corps de l'algorithme est mélangé avec le traitement des cas limite
+    et la gestion des erreurs.
+    Comme le fichier source <var>toto</var><tt>.web</tt>
+    et le fichier <var>toto</var><tt>.tex</tt>
+    ont la même structure, Knuth a appelé <tt>weave</tt>
     («&nbsp;tisser&nbsp;») le programme permettant
     de passer de <var>toto</var><tt>.web</tt> à <var>toto</var><tt>.tex</tt>.
     À l'inverse, <var>toto</var><tt>.p</tt> et <var>toto</var><tt>.web</tt>
@@ -76,7 +85,11 @@ en: Literate programming for HP-48 and HP-50
     example, the <var>foo</var><tt>.tex</tt> file can first give a
     general orverview of the algorithm, then define the main data
     structure, show the details of the algorithm and end with
-    intialisation and error processing. The source file 
+    intialisation and error processing. On the other hand, the
+    <var>toto</var><tt>.p</tt> file must begin with the definition of
+    data structures and the declaration of global variables and the
+    algorithm's main functions include the processing of border cases  
+    and of errors. The source file 
     <var>toto</var><tt>.web</tt> has the same structure as 
     <var>toto</var><tt>.tex</tt>, so the programme generating
     the T<sub>E</sub>X file is called <tt>weave</tt>. On the other
@@ -131,7 +144,6 @@ en: Literate programming for HP-48 and HP-50
       <li>un fragment section</li>
       <li>du texte</li>
       <li>du code</li>
-      <li>la spécification d'un lien dans le fragment de code précédent.</li>
     </ul>
 
     Attention, il faut bien distinguer les «&nbsp;fragments sections&nbsp;»
@@ -147,7 +159,6 @@ en: Literate programming for HP-48 and HP-50
       <li>a section fragment</li>
       <li>some text</li>
       <li>some code</li>
-      <li>the specification of a link in the preceding code chunk.</li>
     </ul>
 
     Note that a "section fragment" is not the same as a section.
@@ -190,7 +201,8 @@ en: Literate programming for HP-48 and HP-50
 - fr: |
     L'emmêlement se passe ainsi pour un fichier de code donné&nbsp;:
     le programme commence par répertorier toutes les sections 
-    appelées dans ce fichier. Il passe également en revue toutes
+    appelées dans ce fichier. Il passe également en revue tous les
+    fragments de code de toutes
     les sections pour en extraire les références consistant à inclure
     une section dans une autre. Après s'être assuré qu'il n'y a pas
     de dépendance circulaire et après avoir déterminé dans quel ordre
@@ -199,7 +211,7 @@ en: Literate programming for HP-48 and HP-50
 - en: |
     For a given code file, tangling consists in the following actions.
     The program starts by listing all the sections assigned to the
-    file. It also scans all sections to extract the insertion-type
+    file. It also scans all code fragments from all sections to extract the insertion-type
     references. It checks there is no cycle in these references 
     and determines in which order the sections will be generated
     by inserting other sections. Then, the program writes the
@@ -237,7 +249,7 @@ en: Literate programming for HP-48 and HP-50
     \Gg \Gd \Ge \Gn \Gh \Gl \Gr \Gs \Gt \Gw
     \GD \PI \GW \[] \oo
 - fr: |
-    Notons que certains caractères qui figuent dans le jeu de caractères
+    Notons que certains caractères qui figurent dans le jeu de caractères
     ISO-8859-1 ont eux aussi une séquence introduite par <i lang='en'>backslash</i>
     alors qu'il n'en ont pas réellement besoin.
 - en: |
@@ -260,6 +272,14 @@ en: Literate programming for HP-48 and HP-50
     the sequence, to deactivate the interpretation of the backslash.
     The same procedure applies to the cases when "@" or "£" would be
     wrongly understood as links to other sections.
+- fr: |
+    Remarque&nbsp;: les germanophones remarqueront que le jeu de caractères
+    des calculatrices HP confond allègrement le béta grec et le s-tsett allemand.
+    Désolé, ce n'est pas moi qui ai pris cette option.
+- en: |
+    The German-speaking people will note that the character set used by HP
+    calculators does not make any difference between the Greek beta and the
+    German s-tsett. I am sorry, but it is not my fault.
 - section: 0
   fr: Syntaxe YAML
   en: YAML Syntax
@@ -268,21 +288,10 @@ en: Literate programming for HP-48 and HP-50
     Pour les besoins de la syntaxe YAML, pour chaque fragment,
     la première ligne du contenu doit commencer par 4&nbsp;espaces
     et les lignes suivantes par 4&nbsp;espaces ou plus.
-
-    Normalement, les liens devraient dépendre du fragment de code
-    précédent et donc figurer dans une structure interne, marquée
-    par une indentation plus importante. Mais pour la simplification
-    de la saisie, ils figurent à la même indentation que le fragment
-    de code associé.
 - en: |
     For the YAML syntax, the first line of each chunk
     must begin with 4 spaces and the next lines must begin
     with 4 or more spaces.
-
-    Theoretically, the link fragments depend on the previous code
-    fragment and they should therefore be in an inner structure, 
-    which means in YAML a longer indentation.  But for the
-    ease of text entry, the identation is the same, 4 spaces.
 - fr: |
     Lorsqu'il y a besoin d'un code langue, il est possible de spécifier
     plusieurs codes langues séparés par des virgules. Cela permet de mettre
@@ -302,6 +311,104 @@ en: Literate programming for HP-48 and HP-50
 - code: |
     fr: Introduction
     en: Introduction
+- fr: |
+    Dans un fragment de texte ou un fragment de code, la première
+    ligne fixe l'indentation minimale du fragment et toutes les lignes
+    qui suivent doivent avoir une indentation supérieure ou égale.
+    Pour passer outre cette limitation, vous pouvez spécifier une
+    première ligne composée en tout et pour tout d'un point précédé
+    de quatre espaces et vous avez toute latitude pour l'indentation
+    de la deuxième ligne. La première ligne sera supprimée lors de 
+    l'emmêlement et du tissage.
+
+    Et si vous voulez quand même une ligne constituée d'un point et
+    rien d'autre, mettez cette ligne en double. Le premier exemplaire
+    de la ligne sera supprimé, le second sera conservé.
+- en: |
+    In a text fragment or a code fragment, the first line specify the
+    minimum indentation of the lines of the fragment and all subsequent
+    lines must have the same indentation or a greater one. To circumvent
+    this limitation, you can write a first line consisting of a sigle
+    period, following four spaces. And then, you can choose any indentation
+    for the second line and the other. During weaving and tangling, the
+    first line with a single period will be removed.
+
+    And if you really want a line consisting of a single period, 
+    just write two such lines. The first will be removed, but the
+    second one will be kept.
+- fr: |
+    Rappel&nbsp;: YAML n'aime pas les tabulations. Pensez donc à 
+    utiliser si nécessaire <tt>untabify</tt> sous Emacs ou <tt>expand</tt>
+    sous shell.
+- en: |
+    Remember that YAML does not like tabulations. So, use <tt>untabify</tt>
+    under Emacs or <tt>expand</tt> under shell when necessary.
+
+- section: 0
+  fr: Préparation
+  en: Preparation
+- fr: |
+    La préparation consiste à répertorier quelles langues utiliser
+    pour la documentation et quels fichiers générer pour le code.
+    Cela se fait en examinant la première variable saisie dans le fichier
+    YAML. Cette variable est une table de hachage, interprétée ainsi&nbsp;:
+
+    Dans le couple clé-valeur, si la valeur est <tt>dir</tt> ou <tt>code</tt>,
+    la clé est le nom d'un fichier qui contiendra du code. Sinon, la clé
+    est un code langue et la valeur est le titre du fichier HTML généré.
+- en: |
+    The preparation consists in determining which languages will be used
+    for the documentation and which files will contain code. This is specified
+    in the first variable typed in the YAML file. This variable is a hashtable,
+    which is interpreted in the following way.
+
+    If the value of a key-value pair is <tt>dir</tt> or <tt>code</tt>, then
+    the key is the filename for a file which will contain code. Else, the
+    key is a language code and the value is the title of the generated HTML
+    file.
+- fr: |
+    Si vous remontez au tout début du présent fichier <tt>.hpweb</tt>,
+    vous pouvez constater qu'il y aura trois fichiers de code&nbsp;: 
+    <tt>ex1</tt>, <tt>ex2</tt> et <tt>ex-cycle</tt>. De plus, la documentation
+    est écrite en français (code <tt>fr</tt>, titre «&nbsp;Programmation littéraire
+    pour HP-48 et HP-50&nbsp;») et en anglais (code langue <tt>en</tt>, titre
+    <i lang='en'>Literate programming for HP-48 and HP-50</i>).
+- en: |
+    If you go back to the beginning of the present <tt>desctiption.hpweb</tt>
+    file, you can see that three code files will be generated: <tt>ex1</tt>,
+    <tt>ex2</tt> and <tt>ex-cycle</tt>. The documentation is written in
+    English (language code <tt>en</tt>, title "Literate programming for HP-48 and HP-50")
+    and in French (language code <tt>fr</tt>, title <i lang='fr'>Programmation littéraire
+    pour HP-48 et HP-50</i>).
+- fr: |
+    Il n'y a pas de contrôle vis-à-vis de la table ISO-639
+    des codes langues. Vous pouvez saisir n'importe quel code constitué de caractères
+    alphanumériques, ils seront interprétés comme indiqué ci-dessus. Ainsi, si 
+    le fichier <tt>ams-soviet.hpweb</tt> commence par&nbsp;:
+- en: |
+    There is no check with the ISO-639 table for language
+    codes. You can enter any alphanumeric string for the various codes. Thus, if
+    the <tt>ams-soviet.hpweb</tt> file starts with:
+- code: |
+    Side_Globe,Don_Kay: Small_Fred,Mare_Tail
+    Skip_Spin: code
+    Flap_Lid: dir
+    Light_Bulb: Top_Trough,Rum_Tub,Straight_Key
+- fr: |
+    il y aura deux fichiers de code&nbsp;:
+    <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
+    et trois fichiers de documentation
+    <tt>ams-soviet.Side_Globe.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
+    <tt>ams-soviet.Don_Kay.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
+    et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;»
+- en: |
+    there will be two code files:
+    <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
+    and three documentation files:
+    <tt>ams-soviet.Side_Globe.html</tt> titled "Small_Fred,Mare_Tail"
+    <tt>ams-soviet.Don_Kay.html</tt> titled "Small_Fred,Mare_Tail"
+    et <tt>ams-soviet.Light_Bulb.html</tt> titled "Top_Trough,Rum_Tub,Straight_Key".
+
 
 - section: 0
   fr: Tissage
@@ -336,21 +443,40 @@ en: Literate programming for HP-48 and HP-50
 - fr: |
     Pour le tissage, le programme extrait dans l'ordre tous les fragments sections,
     tous les textes dépendant du code langue utilisé et tous les
-    fragments de code, avec les spécifications de liens associées.
+    fragments de code.
 - en: |
     When weaving, the program extracts all section fragments, all texts
-    which belongs to the current language code, all code fragments
-    and all corresponding links specifications.
+    which belongs to the current language code, all code fragments.
 - fr: |
     Chaque fragment section génère une balise <tt>&lt;h2&gt;</tt>
     et une balise <tt>&lt;a name='...'&gt;</tt>, le nom étant
     donné par l'attribut <tt>section</tt> de la section. Le contenu
-    est donné par le texte associé à la langue.
+    est donné par le nom de la section et le texte associé à la langue.
 - en: |
     Each section fragment generates a <tt>&lt;h2&gt;</tt> tag and a
     <tt>&lt;a name='...'&gt;</tt> tag, the name of which is
     given by the <tt>section</tt> attribute. The contents is the
-    text associated to the language.
+    section name and the text associated to the language.
+- fr: |
+    Si un fragment section contient une clé <tt>level</tt>, alors le 
+    programme utilise la valeur <var>n</var> correspondante pour générer
+    une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> à la place
+    de <tt>&lt;h2&gt;</tt>.
+- en: |
+    If a section fragment includes a <tt>level</tt> key, the program
+    uses the corresponding value <var>n</var> to generate a
+    <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> tag instead of
+    the <tt>&lt;h2&gt;</tt> tag.
+- fr: |
+    Si la valeur correspondant à la clé <tt>section</tt> est <tt>0</tt>,
+    il s'agit d'une section anonyme. Dans ce cas, la balise
+    <tt>&lt;a name='...'&gt;</tt> sera générée avec le titre de la
+    section.
+- en: |
+    If the value corresponding to the <tt>section</tt> key is <tt>0</tt>,
+    this is an anonymous section. The 
+    <tt>&lt;a name='...'&gt;</tt> tag will be generated using the
+    section's title.
 - fr: |
     Pour les textes, le balisage par défaut est les balises <tt>&lt;p&gt;</tt>.
     Chaque paragraphe (fragment de texte ou portion de fragment de texte
@@ -395,7 +521,7 @@ en: Literate programming for HP-48 and HP-50
     vers le néant s'il n'existe aucune section de ce nom).
     Et dans le cas des fragments codes, les <tt>&lt;&gt;&amp;</tt> sont
     remplacés par la séquence HTML correspondante. Ce n'est pas fait
-    pour les sections et les textes, car ceux-ci contiennent déjà du marquage
+    pour les fragments sections et les textes, car ceux-ci contiennent déjà du marquage
     HTML et on considère que les  <tt>&lt;&gt;&amp;</tt> y sont déjà sous
     la forme <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
 - en: |
@@ -409,7 +535,7 @@ en: Literate programming for HP-48 and HP-50
     with the corresponding name (yet, there is no check; if the name 
     defines no section, the link will be dangling).
     And for code fragments, the <tt>&lt;&gt;&amp;</tt> are escaped.
-    This is not done for sections and texts, because they already include
+    This is not done for section fragments and texts, because they already include
     HTML tags, and we consider that all <tt>&lt;&gt;&amp;</tt> are already coded
     as <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
 
@@ -448,8 +574,8 @@ en: Literate programming for HP-48 and HP-50
     inside the main programs.</li>
     </ul>
 - section: 0
-  fr: Préparation
-  en: Preparation
+  fr: Extraction des liens
+  en: Extracting the links
   level: 3
 
 - fr: |
@@ -470,8 +596,8 @@ en: Literate programming for HP-48 and HP-50
 
     <ol>
     <li>
-    établir un tri topologique des fragments en fonction des insertions,
-    pour savoir quels fragments il faut traiter en premier, lesquels
+    établir un tri topologique des sections en fonction des insertions,
+    pour savoir quelles sections il faut traiter en premier, lesquelles
     il faut traiter en second et ainsi de suite.
     </li>
     <li>
@@ -480,14 +606,14 @@ en: Literate programming for HP-48 and HP-50
     </ol>
 
 - en: |
-    The second step acheives two purposes:
+    The second step achieves two purposes:
 
     <li>
-    topologically sort the fragments according to the insertion
+    topologically sort the sections according to the insertion
     links, to determine in which order they have to be generated.
     </li>
     <li>
-    détect any cycles in the insertions graph.
+    detect any cycles in the insertions graph.
     </li>
     </ol>
 - section: 0
