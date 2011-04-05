@@ -37,6 +37,16 @@ my %codes;
 my ($h, $l) = YAML::LoadFile("$racine.hpweb");
 #print Data::Dumper::Dumper($h, $l);
 
+# séparer les codes langues dans $h
+for my $cle (keys %$h) {
+  if ($cle =~ /,/) {
+    for my $cle1 (split ',', $cle) {
+      $h->{$cle1} = $h->{$cle};
+    }
+    delete $h->{$cle};
+  }
+}
+
 for (keys %$h) {
   if ($h->{$_} eq 'code' || $h->{$_} eq 'dir') {
     $codes{$_} = 1;
@@ -165,10 +175,16 @@ for (keys %codes) {
   print $f <<'EOF';
 %%HP: T(3)A(R)F(,);
 EOF
+  if ($h->{$_} eq 'dir') {
+    print $f "DIR\n";
+  }
 
   # reste à faire
 
-  close $codes{$_}
+  if ($h->{$_} eq 'dir') {
+    print $f "END\n";
+  }
+  close $f
     or die "fermeture $codes{$_}{name} $!";
 }
 

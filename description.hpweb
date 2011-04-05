@@ -390,7 +390,7 @@ ex-cycle: dir
     codes. You can enter any alphanumeric string for the various codes. Thus, if
     the <tt>ams-soviet.hpweb</tt> file starts with:
 - code: |
-    Side_Globe,Don_Kay: Small_Fred,Mare_Tail
+    'Side_Globe,Don_Kay': Small_Fred,Mare_Tail
     Skip_Spin: code
     Flap_Lid: dir
     Light_Bulb: Top_Trough,Rum_Tub,Straight_Key
