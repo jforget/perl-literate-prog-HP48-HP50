@@ -180,7 +180,7 @@ ex-cycle: dir
     Les fragments de code sont encadrés par des balises <tt>&lt;pre&gt;</tt>.
 
     En outre, dans les fragments de texte et de code, on repère les références
-    (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;£&nbsp;») pour établir
+    (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;|&nbsp;») pour établir
     un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
     d'autres sections.
 - en: |
@@ -195,7 +195,7 @@ ex-cycle: dir
     The code fragments are sandwiched between <tt>&lt;pre&gt;</tt> tags.
 
     In addition, in text fragments and code fragments, the program
-    looks for references tagged by "@" or "£" and generates
+    looks for references tagged by "@" or "|" and generates
     links <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> to other
     sections.
 - fr: |
@@ -263,14 +263,14 @@ ex-cycle: dir
     sans la remplacer par le caractère spécial, il suffit d'insérer
     un <i lang='en'>backslash</i> avant cette séquence, pour désactiver
     l'interprétation du <i lang='en'>backslash</i>. C'est vrai également
-    pour désactiver l'interprétation du «&nbsp;@&nbsp;» et du «&nbsp;£&nbsp;»
+    pour désactiver l'interprétation du «&nbsp;@&nbsp;» et du «&nbsp;|&nbsp;»
     dans les cas où ils pourraient être compris à tort comme des liens vers d'autres
     sections.
 - en: |
     And if you need to display such a sequence without replacing it
     by the special character, you just have to insert a backslash before
     the sequence, to deactivate the interpretation of the backslash.
-    The same procedure applies to the cases when "@" or "£" would be
+    The same procedure applies to the cases when "@" or "|" would be
     wrongly understood as links to other sections.
 - fr: |
     Remarque&nbsp;: les germanophones remarqueront que le jeu de caractères
@@ -516,7 +516,7 @@ ex-cycle: dir
     <tt>&amp;#</tt><var>nnn</var><tt>;</tt>). Par exemple,
     la séquence <tt>\\pi</tt> sera remplacée par <tt>&amp;#960;</tt>, c'est-à-dire \pi.
     En même temps, les noms de section encadrés par des <tt>@</tt> ou des
-    <tt>£</tt> sont transformés en liens hypertextes vers la section du
+    <tt>|</tt> sont transformés en liens hypertextes vers la section du
     même nom (cela dit, il n'y a pas de contrôle, le lien peut pointer
     vers le néant s'il n'existe aucune section de ce nom).
     Et dans le cas des fragments codes, les <tt>&lt;&gt;&amp;</tt> sont
@@ -531,7 +531,7 @@ ex-cycle: dir
     <tt>&amp;#</tt><var>nnn</var><tt>;</tt> sequence). For example,
     <tt>\\pi</tt> will be replaced by <tt>&amp;#960;</tt>, that is, \pi.
     At the same time, the section names sandwiched between two <tt>@</tt>'s
-    or two <tt>£</tt>'s are changed into an hyperlink to the section
+    or two <tt>|</tt>'s are changed into an hyperlink to the section
     with the corresponding name (yet, there is no check; if the name 
     defines no section, the link will be dangling).
     And for code fragments, the <tt>&lt;&gt;&amp;</tt> are escaped.
@@ -590,7 +590,103 @@ ex-cycle: dir
     links (calls and inserts) which exist in these fragments.
     During this step, the program builds a graph for the insert links 
     and another graph for the call links.
-
+- fr: |
+    La sélection du code se fait à deux niveaux&nbsp;: section et fragment.
+    Si la section est une section anonyme (<tt>section:&nbsp;0</tt>),
+    elle ne sera sélectionnée dans aucun fichier de code.
+    Une section nommée sera sélectionnée pour un fichier si le fragment
+    section contient un attribut avec le nom du fichier comme clé
+    et avec un nombre supérieur ou égal à 1 comme valeur.
+    S'il n'y a pas un tel attribut, la section pourra être quand
+    même utilisée, si elle est incluse dans une section sélectionnée
+    (ou incluse dans une section elle-même incluse dans... et ainsi de 
+    suite, récursivement).
+- en: |
+    Selecting code is done on two levels: section and fragment.
+    An anonymous section  (<tt>section:&nbsp;0</tt>) is never selected
+    in any code file. A named section will be selected if the
+    section fragment includes a attribute whose key is the 
+    code file name and whose value is a number, 1 or greater.
+    If no such attribute exists, the section might still be selected
+    if it is included in an already selected section (or included
+    in a section included in... and so on, recursively).
+- fr: |
+    La sélection sur les fragments est assez semblable. Si un fragment
+    comporte un attribut avec le nom du fichier de code en clé, alors
+    le fragment de code sera inclus dans le fichier de code.
+    La seule différence par rapport aux sections est que si un fragment
+    ne comporte aucun attribut dont la clé est un nom de fichier de code,
+    alors il sera appelé dans tous les fichiers.
+- en: |
+    The selection on fragments is rather similar to the selection on sections.
+    If a fragment contains an attribute pair whose key is a code file name,
+    the fragment will be selected in this file. The main difference with section
+    selection is that if the code fragment does not contain any attribute 
+    whose key is a code file name, then this fragment will be used by all 
+    code files.
+- fr: |
+    Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
+- en: |
+    Here is an example (best understood if you read the <tt>.hpweb</tt> file)
+- section: CVTCAR
+  level: 4
+  ex1: 1
+  ex2: 1
+- code: |
+    « "\" ROT + SWAP CHR
+- ex1: 1
+  code: |
+    |SUBSG| \-> ch av ap SUBSG
+- ex2: 1
+  code: |
+    'ap' STO 'av' STO 'ch' STO
+- code: |
+    «
+      "<-" 142 @SUBSG@
+      "->" 141 @SUBSG@
+      "<=" 137 @SUBSG@
+      ">=" 138 @SUBSG@
+      "=/" 139 @SUBSG@
+      IF DUP "%%HP" POS
+      THEN
+        DUP 10 CHR POS 1 +
+        OVER SIZE
+        SUB
+      END
+      »
+    »
+- section: SUBSG
+  level: 4
+  ex2: 2
+- code: |
+    « WHILE ch av POS
+      REPEAT
+        ch 1 OVER av POS 1 - SUB
+        ap +
+        ch DUP av POS av SIZE +
+        OVER SIZE SUB +
+        'ch' STO
+      END ch
+    »
+- fr: |
+    La section @CVTCAR@ sera appelée dans les deux fichiers <tt>ex1</tt> et
+    <tt>ex2</tt>, tandis que la section @SUBSG@ ne sera, apparemment, sélectionnée
+    que dans <tt>ex2</tt>. Pour la section @CVTCAR@, le fichier <tt>ex2</tt>
+    utilisera un stockage dans des variables globales pour des besoins
+    de débugage, tandis que le fichier <tt>ex1</tt> stockera tout dans des variables
+    locales. De plus, le fichier <tt>ex1</tt> inclura le code de @SUBSG@ et le stockera dans
+    une autre variable locale.
+- en: |
+    The @CVTCAR@ section will be selected in both <tt>ex1</tt> and <tt>ex2</tt>
+    files. On the other hand, it seems that the @SUBSG@ section will be selected
+    only in <tt>ex2</tt>. For the @CVTCAR@ section, the <tt>ex2</tt> file
+    will store values into global variables, for debugging purposes. The
+    <tt>ex1</tt> file will store them into local variables. In addition,
+    the <tt>ex1</tt> file will include the @SUBSG@ code and store it into another local variable.
+- section: 0
+  fr: Tri des sections de code
+  en: Sorting the code sections
+  level: 3
 - fr: |
     La deuxième étape a deux buts&nbsp;:
 
