@@ -196,25 +196,47 @@ for (keys %textes) {
 }
 
 # Génération des fichiers de code
-for (keys %codes) {
-  # reste à faire : sélection des sections et des fragments, tri topologique des sections, génération des sections
+for my $fic (keys %codes) {
 
-  open my $f, '>', $_
-    or die "Ouverture $_ $!";
+  my $section = '';
+  my $rang;
+  my %sections;
+  for my $fragment (@$l) {
+
+    if (defined $fragment->{section}) {
+      $section = $fragment->{section};
+      $rang    = $fragment->{$fic} || 0;
+      next
+        unless ($section);
+      $sections{$section}{rang} = $rang;
+      $sections{$section}{hier} = 0;
+    }
+
+    elsif ($fragment->{code} && $section) {
+      if ($fragment->{commun} || $fragment->{$fic}) {
+        push @{$sections{$section}{fragments}}, $fragment->{code};
+      }
+    }
+  }
+  print $fic, ' ', Data::Dumper::Dumper(\%sections);
+  # reste à faire : extraction du graphe des appels et du graphe des insertions, tri topologique des sections, génération des sections
+
+  open my $f, '>', $fic
+    or die "Ouverture $fic $!";
   print $f <<'EOF';
 %%HP: T(3)A(R)F(,);
 EOF
-  if ($h->{$_} eq 'dir') {
+  if ($h->{$fic} eq 'dir') {
     print $f "DIR\n";
   }
 
   # reste à faire : impression des sections
 
-  if ($h->{$_} eq 'dir') {
+  if ($h->{$fic} eq 'dir') {
     print $f "END\n";
   }
   close $f
-    or die "fermeture $codes{$_}{name} $!";
+    or die "fermeture $fic $!";
 }
 
 exit(0);
