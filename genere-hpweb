@@ -10,7 +10,7 @@ use Data::Dumper;
 my $racine = $ARGV[0];
 
 my %transco1 = ( # méta-caractères
-       '@', '@', '\\', '\\', '£', '£',
+       '@', '@', '\\', '\\', '|', '|',
        # flèches
        '<-', '2190', '|^', '2191', '->', '2192', '|v', '2193', 
        # comparaisons
@@ -25,7 +25,8 @@ my %transco1 = ( # méta-caractères
     );
 $transco1{'x-'} = 'x&#772;';
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
-my $re1 = join '|', map { quotemeta $_ } keys %transco1;
+# Obligé de trier par longueur décroissante pour que '|^' et '|v' matchent avant '|'
+my $re1 = join '|', map { quotemeta $_ } sort { length($b) <=> length($a) } keys %transco1;
 for (values %transco1) {
   $_ = sprintf "&#%d;", hex($_)
     if /^[0-9a-f]+$/i;
@@ -64,8 +65,10 @@ for (keys %$h) {
 <title>$h->{$_}</title>
 <style>
 <!--
-.insert  { background-color: skyblue}
-.call    { background-color: yellow}
+.insert    { background-color: skyblue}
+.call      { background-color: yellow}
+.condcode  { background-color: lightgrey }
+.condition { font-size-adjust: .5 }
 -->
 </style>
 </head>
@@ -88,6 +91,7 @@ for my $fragment (@$l) {
 
 #print Data::Dumper::Dumper($h, $l);
 
+# Table des matières
 for my $fragment (@$l) {
   if (defined $fragment->{section}) {
     my $section = $fragment->{section};
@@ -109,13 +113,16 @@ for my $fragment (@$l) {
   }
 }
 
+# Fin de la table des matières et titre principal
 for (keys %textes) {
   my $f = $textes{$_}{fh};
   my $titre = $h->{$_};
   print $f "<hr /><h1><a name='$titre'>$titre</a></h1>\n";
 }
 
+# Texte principal
 for my $fragment (@$l) {
+
   if (defined $fragment->{section}) {
     my $section = $fragment->{section};
     my $niveau  = $fragment->{level} || 2;
@@ -137,16 +144,34 @@ for my $fragment (@$l) {
     }
     next;
   }
+
   elsif ($fragment->{code}) {
+    my @condition;
+    $fragment->{commun} = 1;
+    for (keys %codes) {
+      if ($fragment->{$_}) {
+        $fragment->{commun} = 0;
+        push @condition, $_;
+      }
+    }
+
     my $code = transcrit($fragment->{code}, 1);
+    my $condition = '';
+    my $classe    = '';
+    unless ($fragment->{commun}) {
+      $classe = " class='condcode'";
+      $condition = join ', ', sort @condition;
+      $condition = "<span class='condition'>$condition</span>\n";
+    }
 
     for my $lg (keys %textes) {
       my $f = $textes{$lg}{fh};
-      print $f "<pre>\n$code</pre>\n";
+      print $f "<pre$classe>\n$condition$code</pre>\n";
     }
 
     next;
   }
+
   else {
     # Fragment de texte, indexé par le code langue
     for my $lg (keys %$fragment) {
@@ -162,6 +187,7 @@ for my $fragment (@$l) {
   }
 }
 
+# Fin de la documentation
 for (keys %textes) {
   my $f = $textes{$_}{fh};
   print $f "</body>\n</html>\n";
@@ -169,7 +195,10 @@ for (keys %textes) {
     or die "fermeture $textes{$_}{name} $!";
 }
 
+# Génération des fichiers de code
 for (keys %codes) {
+  # reste à faire : sélection des sections et des fragments, tri topologique des sections, génération des sections
+
   open my $f, '>', $_
     or die "Ouverture $_ $!";
   print $f <<'EOF';
@@ -179,7 +208,7 @@ EOF
     print $f "DIR\n";
   }
 
-  # reste à faire
+  # reste à faire : impression des sections
 
   if ($h->{$_} eq 'dir') {
     print $f "END\n";
