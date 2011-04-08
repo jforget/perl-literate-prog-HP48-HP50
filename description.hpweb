@@ -635,6 +635,7 @@ ex-cycle: dir
 - code: |
     « "\" ROT + SWAP CHR
 - ex1: 1
+  ex-style: 1
   code: |
     |SUBSG| \-> ch av ap SUBSG
 - ex2: 1
@@ -658,6 +659,7 @@ ex-cycle: dir
 - section: SUBSG
   level: 4
   ex2: 2
+  ex-cycle: 1
 - code: |
     « WHILE ch av POS
       REPEAT
@@ -668,6 +670,9 @@ ex-cycle: dir
         'ch' STO
       END ch
     »
+- ex-cycle: 1
+  code: |
+    "cycle" |CVTCAR|
 - fr: |
     La section @CVTCAR@ sera appelée dans les deux fichiers <tt>ex1</tt> et
     <tt>ex2</tt>, tandis que la section @SUBSG@ ne sera, apparemment, sélectionnée
@@ -683,6 +688,12 @@ ex-cycle: dir
     will store values into global variables, for debugging purposes. The
     <tt>ex1</tt> file will store them into local variables. In addition,
     the <tt>ex1</tt> file will include the @SUBSG@ code and store it into another local variable.
+- fr: |
+    Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section @SUBSG@,
+    qui inclut la section @CVTCAR@, qui inclut à son tour @SUBSG@, ce qui constitue un problème certain.
+- en: |
+    As for the <tt>ex-cycle</tt> file, il selects the @SUBSG@ section, which includes the
+    @CVTCAR@ section, which in turn includes @SUBSG@, which causes some kind of problem.
 - section: 0
   fr: Tri des sections de code
   en: Sorting the code sections
