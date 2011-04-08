@@ -218,7 +218,8 @@ for my $fic (keys %codes) {
       }
     }
   }
-  print $fic, ' ', Data::Dumper::Dumper(\%sections);
+  #print $fic, ' ', Data::Dumper::Dumper(\%sections);
+  print $fic, ' ', YAML::Dump(\%sections);
   # reste à faire : extraction du graphe des appels et du graphe des insertions, tri topologique des sections, génération des sections
 
   open my $f, '>', $fic
