@@ -635,7 +635,7 @@ ex-cycle: dir
 - code: |
     « "\" ROT + SWAP CHR
 - ex1: 1
-  ex-style: 1
+  ex-cycle: 1
   code: |
     |SUBSG| \-> ch av ap SUBSG
 - ex2: 1
