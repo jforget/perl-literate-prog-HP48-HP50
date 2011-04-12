@@ -78,7 +78,7 @@ EOF
   }
 }
 
-# séparer les codes langues
+# séparer les codes langues dans @$l
 for my $fragment (@$l) {
   for my $cle (keys %$fragment) {
     if ($cle =~ /,/) {
@@ -146,6 +146,12 @@ for my $fragment (@$l) {
   }
 
   elsif ($fragment->{code}) {
+    my $code = $fragment->{code};
+    if (substr($code, 0, 2) eq ".\n") {
+      $code = substr($code, 2);
+      $fragment->{code} = $code;
+    }
+
     my @condition;
     $fragment->{commun} = 1;
     for (keys %codes) {
@@ -155,7 +161,7 @@ for my $fragment (@$l) {
       }
     }
 
-    my $code = transcrit($fragment->{code}, 1);
+    $code = transcrit($code, 1);
     my $condition = '';
     my $classe    = '';
     unless ($fragment->{commun}) {
@@ -175,6 +181,13 @@ for my $fragment (@$l) {
   else {
     # Fragment de texte, indexé par le code langue
     for my $lg (keys %$fragment) {
+
+      my $texte = $fragment->{$lg};
+      if (substr($texte, 0, 2) eq ".\n") {
+        $texte = substr($texte, 2);
+        $fragment->{$lg} = $texte;
+      }
+
       for my $paragraphe (split /\n\n+/, transcrit($fragment->{$lg}, 0)) {
 	#print "--$paragraphe--\n";
 	if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
@@ -201,6 +214,9 @@ for my $fic (keys %codes) {
   my $section = '';
   my $rang;
   my %sections;
+  my %appel;
+  my %insertion;  
+
   for my $fragment (@$l) {
 
     if (defined $fragment->{section}) {
@@ -215,11 +231,24 @@ for my $fic (keys %codes) {
     elsif ($fragment->{code} && $section) {
       if ($fragment->{commun} || $fragment->{$fic}) {
         push @{$sections{$section}{fragments}}, $fragment->{code};
+        my @morceau = decoup($fragment->{code});
+        for (my $i = 2;  $i < $#morceau; $i +=5) {
+          if ($morceau[$i]) {
+            # lien call
+            $appel{$section}{$morceau[$i]} ++;
+          }
+          elsif ($morceau[$i+1]) {
+            # lien insertion
+            $insertion{$section}{$morceau[$i+1]} ++;
+          }
+        }
       }
     }
   }
   #print $fic, ' ', Data::Dumper::Dumper(\%sections);
-  print $fic, ' ', YAML::Dump(\%sections);
+  print $fic, ' sections ',  YAML::Dump(\%sections);
+  print $fic, ' appel ',     YAML::Dump(\%appel);
+  print $fic, ' insertion ', YAML::Dump(\%insertion);
   # reste à faire : extraction du graphe des appels et du graphe des insertions, tri topologique des sections, génération des sections
 
   open my $f, '>', $fic
@@ -246,20 +275,13 @@ sub transcrit {
   # $texte : le texte à transcrire, $transc_html : faut-il transcrire les <>& en HTML ou bien sont-ils déjà transcrits ?
   my ($texte, $transc_html) = @_;
 
-  my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
-		    | @(\w+)@   # capture des appels à une étiquette
-		    | \|(\w+)\| # capture des insertions
-		    | ([<>&])   # capture des caractères spéciaux HTML
-		    /x, $texte;
+  my @morceau = decoup($texte);
 
   for (my $i = 1; $i < $#morceau; $i +=5) {
-    $morceau[$i    ] ||= ''; 
-    $morceau[$i + 1] ||= ''; 
-    $morceau[$i + 2] ||= ''; 
-    $morceau[$i + 3] ||= ''; 
     my $etiq_call = $morceau[$i + 1];
     my $etiq_ins  = $morceau[$i + 2];
     if ($morceau[$i]) {
+      # Séquence préfixée par un backslash
       $morceau[$i] = $transco1{$morceau[$i]};
     }
     elsif ($etiq_call) {
@@ -273,4 +295,22 @@ sub transcrit {
     }
   }
   return join '', @morceau;
+}
+ 
+
+sub decoup {
+  my ($texte) = @_;
+  my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
+		    | @(\w+)@   # capture des appels à une étiquette
+		    | \|(\w+)\| # capture des insertions
+		    | ([<>&])   # capture des caractères spéciaux HTML
+		    /x, $texte;
+
+  for (my $i = 1; $i < $#morceau; $i +=5) {
+    $morceau[$i    ] ||= ''; 
+    $morceau[$i + 1] ||= ''; 
+    $morceau[$i + 2] ||= ''; 
+    $morceau[$i + 3] ||= ''; 
+  }
+  return @morceau;
 }
