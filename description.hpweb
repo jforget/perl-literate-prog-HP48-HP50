@@ -321,6 +321,11 @@ ex-cycle: dir
     de la deuxième ligne. La première ligne sera supprimée lors de 
     l'emmêlement et du tissage.
 
+    Pour les fragments de code, cela vous permet d'avoir une indentation
+    cohérente d'un fragment à l'autre. Pour les fragments de texte, je
+    ne vois pas dans quelles circonstances cela pourrait servir, mais
+    on ne sait jamais.
+
     Et si vous voulez quand même une ligne constituée d'un point et
     rien d'autre, mettez cette ligne en double. Le premier exemplaire
     de la ligne sera supprimé, le second sera conservé.
@@ -332,6 +337,11 @@ ex-cycle: dir
     period, following four spaces. And then, you can choose any indentation
     for the second line and the other. During weaving and tangling, the
     first line with a single period will be removed.
+
+    For code fragments, this feature allows you to keep a consistent
+    indentation from a code fragment to the next. For text fragments, 
+    I do not know in which case it could be useful, but you
+    never know.
 
     And if you really want a line consisting of a single period, 
     just write two such lines. The first will be removed, but the
