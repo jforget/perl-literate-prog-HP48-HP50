@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use YAML;
 use Data::Dumper;
+use GraphViz;
 
 my $racine = $ARGV[0];
 
@@ -245,13 +246,44 @@ for my $fic (keys %codes) {
       }
     }
   }
+
+  my $g = GraphViz->new();
+  $g->add_node($fic, shape => 'octagon');
+
+  for (keys %sections) {
+    $g->add_node($_);
+    if ($sections{$_}{rang}) {
+      $g->add_edge($fic, $_);
+      $sections{$_}{global} = 1;
+    }
+  }
+
+  for my $haut (keys %insertion) {
+    for my $bas (keys %{$insertion{$haut}}) {
+      $g->add_edge($haut, $bas);
+    }
+  }
+
+  for my $haut (keys %appel) {
+    for my $bas (keys %{$appel{$haut}}) {
+      $g->add_edge($haut, $bas, color => 'red');
+    }
+  }
+
+  open my $f, '>', "$fic.png"
+    or die "Ouverture $fic.png $!";
+  print $f $g->as_png;
+  close $f
+    or die "fermeture $fic.png $!";
+
   #print $fic, ' ', Data::Dumper::Dumper(\%sections);
   print $fic, ' sections ',  YAML::Dump(\%sections);
   print $fic, ' appel ',     YAML::Dump(\%appel);
   print $fic, ' insertion ', YAML::Dump(\%insertion);
+
   # reste à faire : extraction du graphe des appels et du graphe des insertions, tri topologique des sections, génération des sections
 
-  open my $f, '>', $fic
+  open $f, '>', $fic
     or die "Ouverture $fic $!";
   print $f <<'EOF';
 %%HP: T(3)A(R)F(,);
