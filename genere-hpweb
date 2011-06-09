@@ -304,9 +304,10 @@ for my $fic (keys %codes) {
   }
   if ($max_hier > keys %sections) {
     print STDERR "Il existe un cycle dans $fic\n";
+    next;
   }
   print $fic, ' sections ',  YAML::Dump(\%sections);
-  # reste à faire : extraction du graphe des appels et du graphe des insertions, tri topologique des sections, génération des sections
+  # reste à faire : génération des sections
 
   open $f, '>', $fic
     or die "Ouverture $fic $!";
@@ -329,7 +330,8 @@ EOF
 exit(0);
 
 sub transcrit {
-  # $texte : le texte à transcrire, $transc_html : faut-il transcrire les <>& en HTML ou bien sont-ils déjà transcrits ?
+  # $texte : le texte à transcrire,
+  # $transc_html : faut-il transcrire les <>& en HTML ou bien sont-ils déjà transcrits ?
   my ($texte, $transc_html) = @_;
 
   my @morceau = decoup($texte);
