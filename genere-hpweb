@@ -5,8 +5,13 @@
 use strict;
 use warnings;
 use YAML;
+use Getopt::Long;
 use Data::Dumper;
 use GraphViz;
+
+my $trace = 0;
+GetOptions("trace:i" => \$trace)
+  or die "Problème avec les options";
 
 my $racine = $ARGV[0];
 
@@ -37,7 +42,9 @@ my %textes;
 my %codes;
 
 my ($h, $l) = YAML::LoadFile("$racine.hpweb");
-#print Data::Dumper::Dumper($h, $l);
+if ($trace & 1) {
+  print Data::Dumper::Dumper($h, $l);
+}
 
 # séparer les codes langues dans $h
 for my $cle (keys %$h) {
@@ -90,7 +97,9 @@ for my $fragment (@$l) {
   }
 }
 
-#print Data::Dumper::Dumper($h, $l);
+if ($trace & 2) {
+  print Data::Dumper::Dumper($h, $l);
+}
 
 # Table des matières
 for my $fragment (@$l) {
@@ -127,7 +136,9 @@ for my $fragment (@$l) {
   if (defined $fragment->{section}) {
     my $section = $fragment->{section};
     my $niveau  = $fragment->{level} || 2;
-    #print "$section\n";
+    if ($trace & 4) {
+      print "$section\n";
+    }
     for (keys %textes) {
       my $f = $textes{$_}{fh};
       my $titre = transcrit($fragment->{$_} || '', 0);
@@ -190,7 +201,9 @@ for my $fragment (@$l) {
       }
 
       for my $paragraphe (split /\n\n+/, transcrit($fragment->{$lg}, 0)) {
-	#print "--$paragraphe--\n";
+        if ($trace & 8) {
+	  print "--$paragraphe--\n";
+        }
 	if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
 	  $paragraphe = "<p>\n$paragraphe</p>\n";
 	}
@@ -280,10 +293,11 @@ for my $fic (keys %codes) {
   close $f
     or die "fermeture $fic.png $!";
 
-  #print $fic, ' ', Data::Dumper::Dumper(\%sections);
-  print $fic, ' sections ',  YAML::Dump(\%sections);
-  print $fic, ' appel ',     YAML::Dump(\%appel);
-  print $fic, ' insertion ', YAML::Dump(\%insertion);
+  if ($trace & 16) {
+    print $fic, ' sections ',  YAML::Dump(\%sections);
+    print $fic, ' appel ',     YAML::Dump(\%appel);
+    print $fic, ' insertion ', YAML::Dump(\%insertion);
+  }
 
   # Tri topologique des sections
   my $change   = 1;
@@ -306,7 +320,9 @@ for my $fic (keys %codes) {
     print STDERR "Il existe un cycle dans $fic\n";
     next;
   }
-  print $fic, ' sections ',  YAML::Dump(\%sections);
+  if ($trace & 32) {
+    print $fic, ' sections ',  YAML::Dump(\%sections);
+  }
   # reste à faire : génération des sections
 
   open $f, '>', $fic
