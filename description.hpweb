@@ -507,7 +507,8 @@ ex-cycle: dir
     Les fragments de type code sont tous repris
     dans le fichier HTML généré. De plus, pour les
     fragments de type <tt>GROB</tt>, le programme génère un
-    fichier <tt>.png</tt> représentant le bitmap associé.
+    fichier <tt>.png</tt> représentant le bitmap associé
+    (développement ultérieur, ce n'est pas encore prêt).
     Le fichier n'est pas appelé automatiquement dans le HTML
     généré, il faut l'appeler «&nbsp;manuellement&nbsp;» avec
     une balise <tt>&lt;img&gt;</tt> dans un fragment texte.
@@ -515,7 +516,8 @@ ex-cycle: dir
     All code fragments are used when generating
     the HTML file.  
     In addition, for <tt>GROB</tt> fragments, the program generates
-    a <tt>.png</tt> file containing the bitmap.
+    a <tt>.png</tt> file containing the bitmap (to be developped
+    later, it is not ready yet).
     This file is not automatically linked to in the generated
     HTML file, you must include a <tt>&lt;img&gt;</tt> tag in
     a text fragment to show it.
@@ -733,6 +735,50 @@ ex-cycle: dir
     detect any cycles in the insertions graph.
     </li>
     </ol>
+
+- fr: |
+    Le tri topologique consiste à passer en revue tous les liens d'insertion
+    et à comparer le niveau hiérarchique de la section englobante et celui
+    de la section insérée. Le niveau de la section englobante doit être supérieur,
+    strictement, à celui de la section insérée. Si ce n'est pas le cas, le niveau
+    de la section englobante est mis à jour avec le niveau hiérarchique de la section
+    insérée plus 1.
+
+- en: |
+    The topological sort consists in scanning all insertion links and comparing
+    the hierachical level of the calling section with the level of the inserted
+    section. The level of the calling section must be greater than (and not equal to)
+    the level of the inserted section. If this is not the case, the calling section's
+    level is updated, using the inserted section's level plus one.
+
+- fr: |
+    Le mécanisme s'arrête dans deux cas. Tout d'abord, si on a effectué une passe
+    sur tous les liens d'insertion sans qu'il y ait eu besoin de mettre à jour 
+    un niveau hiérarchique. Le tri est alors achevé. Ou alors, si on détecte qu'une
+    section a un niveau hiérarchique supérieur au nombre de sections existantes.
+    Dans ce cas, cela signifie qu'il existe un cycle dans les liens d'insertion.
+    Et le fichier n'est pas généré.
+
+- en: |
+    The algorithm stops in two ways. First, it stops if during a scan of all insertion
+    links, no hierarchical level has been updated. The sort is finished. Or second,
+    if we notice that a section has a hierarchical level greater than the total
+    number of sections. That means that there is a cycle in the insertion links and
+    that the sort must be interrupted. And we do not generate the code file.
+
+- fr: |
+    Remarque&nbsp;: dans la version actuelle, on tient compte de toutes les sections
+    et de tous les liens d'insertion déclarés pour le fichier, même si parmi
+    ces sections, il en existe qui constituent du «&nbsp;code mort&nbsp;» (sections
+    qui ne sont pas reliées au fichier à générer par un lien d'insertion). Cela peut
+    créer des rejets abusifs. Cela sera corrigé dans une version ultérieure.
+
+- en: |
+    NB: in the current version, all sections and all insertion links are checked,
+    even if some sections are "dead code", that is, they are not linked to the
+    generated file with insertion links. That can produce a rejection of the generated
+    file. This will be corrected in a next release.
+
 - section: 0
   fr: Licence
   en: License
