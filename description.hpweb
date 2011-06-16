@@ -109,7 +109,7 @@ ex-cycle: dir
     et qui emmêle les fichiers de code.</li>
     <li>CWEB a un mécanisme assez malcommode pour générer plusieurs fichiers
     de code&nbsp;: les <i lang='en'>change files</i> (comme le résultat de <tt>diff</tt>
-    traité par <tt>patch</tt>, mais en moins bien). Et cela permet de générer seulement
+    et son traitement ultérieur par <tt>patch</tt>, mais en moins bien). Et cela permet de générer seulement
     des fichiers de code similaires, se distinguant par quelques variantes éparses.
     Mon système permet de générer des fichiers de code qui peuvent être des variantes
     d'un fichier de base, ou bien des fichiers complémentaires, partageant très peu de code.</li>
@@ -803,6 +803,65 @@ ex-cycle: dir
     or a global section which has been included into another section, just as
     a local one. These error cases are not detected by the program. The programmer
     has to detect them, mainly by examining the insertion and call graph.
+
+- section: 0
+  fr: Génération des sections de code
+  en: Generating the code sections
+  level: 3
+
+- fr: |
+    Les sections sont générées dans l'ordre de la hiérarchie croissante.
+    Dans chaque fragment de code, on extrait les liens, aussi bien les
+    liens d'insertion (balisés par <tt>|</tt>) que les liens d'appel
+    (balisés par <tt>@</tt>). Un lien d'insertion est remplacé par
+    le code de la section associée, tout simplement. Pour les liens
+    d'appel, c'est un peu plus compliqué. Si la section appelée est
+    une section globale, alors le code généré est réduit au nom de
+    la section. En revanche, s'il s'agit d'une section locale,
+    il faut la faire suivre de <tt>EVAL</tt>.
+
+    Une section peut être globale dans un premier fichier de code
+    et locale dans un autre. C'est pour cela que l'instruction <tt>EVAL</tt>
+    n'est pas codée dans le source, mais générée lors de la construction
+    du code.
+
+- en: |
+    Sections are generated in hierarchical order. In each code fragment,
+    the program extracts both types of links, insertions links tagged
+    by <tt>|</tt> and call links tagged by <tt>@</tt>. The processing
+    of insertion links is simple: they are replaced by the code
+    of the inserted section. The processing of call links is a bit more
+    complicated: if the section is a global one (file-level section),
+    the link is replaced by the section name and that's all. If the
+    section is a local one, it has to be followed by <tt>EVAL</tt>.
+
+    A section can be global in a first code file and local in a second
+    one. This is the reason why <tt>EVAL</tt> is not written in the
+    source file, but generated on demand when building the code files.
+
+- section: 0
+  fr: Écriture des fichiers de code
+  en: Writing the code files
+  level: 3
+
+- fr: |
+    Pour un fichier de type <tt>code</tt>, toutes les sections globales
+    sont écrites, dans l'ordre de leur attribut <tt>rang</tt> (celui
+    qui a été spécifié par le nom du fichier de code). Pour un fichier 
+    de type <tt>dir</tt>, on commence par le mot-clé <tt>DIR</tt>, 
+    puis pour chaque section globale, on écrit le nom puis le code.
+    Et on termine par <tt>END</tt>. Cela sert à créer un répertoire
+    entier dans la machine cible.
+
+- en: |
+    For a <tt>code</tt> type file, all global sections are written
+    ordered by their <tt>rang</tt> attribute (which was specified
+    by the filename). For a <tt>dir</tt> type file, the program
+    writes first the keyword <tt>DIR</tt>. Then, for all global
+    sections, it writes the section name and the section code.
+    At last, it ends the code file with the keyword <tt>END</tt>.
+    Such a file allows the creation of a whole directory in 
+    the target calculator.
 
 - section: 0
   fr: Licence
