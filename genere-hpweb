@@ -91,7 +91,7 @@ for my $fragment (@$l) {
   for my $cle (keys %$fragment) {
     if ($cle =~ /,/) {
       for my $cle1 (split ',', $cle) {
-	$fragment->{$cle1} = $fragment->{$cle};
+        $fragment->{$cle1} = $fragment->{$cle};
       }
     }
   }
@@ -202,13 +202,13 @@ for my $fragment (@$l) {
 
       for my $paragraphe (split /\n\n+/, transcrit($fragment->{$lg}, 0)) {
         if ($trace & 8) {
-	  print "--$paragraphe--\n";
+          print "--$paragraphe--\n";
         }
-	if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
-	  $paragraphe = "<p>\n$paragraphe</p>\n";
-	}
-	my $f = $textes{$lg}{fh};
-	print $f $paragraphe, "\n";
+        if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
+          $paragraphe = "<p>\n$paragraphe</p>\n";
+        }
+        my $f = $textes{$lg}{fh};
+        print $f $paragraphe, "\n";
       }
     }
   }
@@ -404,10 +404,10 @@ sub transcrit {
 sub decoup {
   my ($texte) = @_;
   my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
-		    | @(\w+)@   # capture des appels à une étiquette
-		    | \|(\w+)\| # capture des insertions
-		    | ([<>&])   # capture des caractères spéciaux HTML
-		    /x, $texte;
+                    | @(\w+)@   # capture des appels à une étiquette
+                    | \|(\w+)\| # capture des insertions
+                    | ([<>&])   # capture des caractères spéciaux HTML
+                    /x, $texte;
 
   for (my $i = 1; $i < $#morceau; $i +=5) {
     $morceau[$i    ] ||= ''; 
