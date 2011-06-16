@@ -323,7 +323,28 @@ for my $fic (keys %codes) {
   if ($trace & 32) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
-  # reste à faire : génération des sections
+  # Génération des sections
+  for my $section (sort { $sections{$a}{hier} <=> $sections{$b}{hier} } keys %sections) {
+    my @code = ();
+    for my $fragment (@{$sections{$section}{fragments}}) {
+      my @morceau = decoup($fragment);
+      for (my $i = 1; $i < $#morceau; $i += 5) {
+        my $etiq_call = $morceau[$i + 1];
+        my $etiq_insr = $morceau[$i + 2];
+        if ($etiq_call && ! $sections{$etiq_call}{global}) {
+          $morceau[$i + 1] = "$etiq_call EVAL";
+        }
+        if ($etiq_insr) {
+          $morceau[$i + 2] = $sections{$etiq_insr}{code};
+        }
+      }
+      push @code, grep { length($_) } @morceau;
+    }
+    $sections{$section}{code} = join '', @code, "\n"; 
+  }
+  if ($trace & 64) {
+    print $fic, ' sections ',  YAML::Dump(\%sections);
+  }
 
   open $f, '>', $fic
     or die "Ouverture $fic $!";
