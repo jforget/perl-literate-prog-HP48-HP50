@@ -355,7 +355,14 @@ EOF
     print $f "DIR\n";
   }
 
-  # reste à faire : impression des sections
+  # Impression des sections
+  for my $section (sort { $sections{$a}{rang} <=> $sections{$b}{rang} } grep { $sections{$_}{global} } keys %sections) {
+    if ($h->{$fic} eq 'dir') {
+      print $f "$section ";
+    }
+    print $f $sections{$section}{code};
+
+  }
 
   if ($h->{$fic} eq 'dir') {
     print $f "END\n";
