@@ -58,7 +58,7 @@ ex-cycle: dir
     le traitement des erreurs. À l'inverse, pour les besoins du compilateur,
     le fichier <var>toto</var><tt>.p</tt> doit commencer par la description
     des structures de données, puis la déclaration des variables globales
-    et le corps de l'algorithme est mélangé avec le traitement des cas limite
+    et le corps de l'algorithme est mélangé avec le traitement des cas limites
     et la gestion des erreurs.
     Comme le fichier source <var>toto</var><tt>.web</tt>
     et le fichier <var>toto</var><tt>.tex</tt>
@@ -107,6 +107,12 @@ ex-cycle: dir
     RPL pour les calculatrices HP.</li>
     <li>C'est le même programme qui tisse les fichiers de documentation
     et qui emmêle les fichiers de code.</li>
+    <li>CWEB a un mécanisme assez malcommode pour générer plusieurs fichiers
+    de code&nbsp;: les <i lang='en'>change files</i> (comme le résultat de <tt>diff</tt>
+    traité par <tt>patch</tt>, mais en moins bien). Et cela permet de générer seulement
+    des fichiers de code similaires, se distinguant par quelques variantes éparses.
+    Mon système permet de générer des fichiers de code qui peuvent être des variantes
+    d'un fichier de base, ou bien des fichiers complémentaires, partageant très peu de code.</li>
     </ul>
 - en: |
     My version differs on several points.
@@ -119,6 +125,10 @@ ex-cycle: dir
     generates User-RPL for HP calculators.</li>
     <li>The same programme weaves the documentation files and tangles
     the code files.</li>
+    <li>CWEB has a cumbersome mechanism to produce several code files: change files
+    (a bit like <tt>diff</tt>'s output, processed by <tt>patch</tt>, but less efficient).
+    My system allows you to produce easily several code files, either variants of a basic
+    file, or independant dissimilar files.</li>
     </ul>
 - section: 0
   fr: Principe
@@ -778,6 +788,21 @@ ex-cycle: dir
     even if some sections are "dead code", that is, they are not linked to the
     generated file with insertion links. That can produce a rejection of the generated
     file. This will be corrected in a next release.
+
+- fr: |
+    Il y a d'autres cas d'erreur, comme une section que l'on a oublié d'inclure,
+    ou bien que l'on a inclue plusieurs fois alors qu'il ne fallait pas le faire,
+    ou encore une section globale inclue en tant que section locale.
+    Ces cas de figure ne sont pas traitée automatiquement par le programme,
+    c'est au programmeur de s'en rendre compte en jetant un coup d'&oelig;il
+    sur le graphe des appels et des insertions.
+
+- en: |
+    There are other error conditions, such as a section which has not been included
+    or a section which has been included several times instead of just once,
+    or a global section which has been included into another section, just as
+    a local one. These error cases are not detected by the program. The programmer
+    has to detect them, mainly by examining the insertion and call graph.
 
 - section: 0
   fr: Licence
