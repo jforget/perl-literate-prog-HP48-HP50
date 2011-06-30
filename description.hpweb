@@ -2,6 +2,7 @@ fr: Programmation littéraire pour HP-48 et HP-50
 en: Literate programming for HP-48 and HP-50
 ex1: code
 ex2: dir
+ex3: dir
 ex-cycle: dir
 ---
 - section: 0
@@ -388,15 +389,15 @@ ex-cycle: dir
     file.
 - fr: |
     Si vous remontez au tout début du présent fichier <tt>.hpweb</tt>,
-    vous pouvez constater qu'il y aura trois fichiers de code&nbsp;: 
-    <tt>ex1</tt>, <tt>ex2</tt> et <tt>ex-cycle</tt>. De plus, la documentation
+    vous pouvez constater qu'il y aura quatre fichiers de code&nbsp;: 
+    <tt>ex1</tt>, <tt>ex2</tt>, <tt>ex3</tt> et <tt>ex-cycle</tt>. De plus, la documentation
     est écrite en français (code <tt>fr</tt>, titre «&nbsp;Programmation littéraire
     pour HP-48 et HP-50&nbsp;») et en anglais (code langue <tt>en</tt>, titre
     <i lang='en'>Literate programming for HP-48 and HP-50</i>).
 - en: |
     If you go back to the beginning of the present <tt>desctiption.hpweb</tt>
     file, you can see that three code files will be generated: <tt>ex1</tt>,
-    <tt>ex2</tt> and <tt>ex-cycle</tt>. The documentation is written in
+    <tt>ex2</tt>, <tt>ex3</tt> and <tt>ex-cycle</tt>. The documentation is written in
     English (language code <tt>en</tt>, title "Literate programming for HP-48 and HP-50")
     and in French (language code <tt>fr</tt>, title <i lang='fr'>Programmation littéraire
     pour HP-48 et HP-50</i>).
@@ -654,61 +655,74 @@ ex-cycle: dir
   level: 4
   ex1: 1
   ex2: 1
+  ex3: 1
 - code: |
-    « "\" ROT + SWAP CHR
+    « 
 - ex1: 1
   ex-cycle: 1
   code: |
-    |SUBSG| \-> ch av ap SUBSG
-- ex2: 1
-  code: |
-    'ap' STO 'av' STO 'ch' STO
+    |SUBSG| \-> SUBSG
 - code: |
-    «
-      "<-" 142 @SUBSG@
-      "->" 141 @SUBSG@
-      "<=" 137 @SUBSG@
-      ">=" 138 @SUBSG@
-      "=/" 139 @SUBSG@
-      IF DUP "%%HP" POS
-      THEN
-        DUP 10 CHR POS 1 +
-        OVER SIZE
-        SUB
-      END
+    .
+      «
+        "<-" 142 @SUBSG@
+        "->" 141 @SUBSG@
+        "<=" 137 @SUBSG@
+        ">=" 138 @SUBSG@
+        "=/" 139 @SUBSG@
+        IF DUP "%%HP" POS
+        THEN
+          DUP 10 CHR POS 1 +
+          OVER SIZE
+          SUB
+        END
       »
     »
 - section: SUBSG
   level: 4
   ex2: 2
+  ex3: 2
   ex-cycle: 1
 - code: |
-    « WHILE ch av POS
-      REPEAT
-        ch 1 OVER av POS 1 - SUB
-        ap +
-        ch DUP av POS av SIZE +
-        OVER SIZE SUB +
-        'ch' STO
-      END ch
+    « "\" ROT + SWAP CHR
+- ex1: 1
+  ex3: 1
+  ex-cycle: 1
+  code: |
+    .
+      \-> ch av ap
+- ex2: 1
+  code: |
+    'ap' STO 'av' STO 'ch' STO
+- code: |
+    .
+      « WHILE ch av POS
+        REPEAT
+          ch 1 OVER av POS 1 - SUB
+          ap +
+          ch DUP av POS av SIZE +
+          OVER SIZE SUB +
+          'ch' STO
+        END ch
+      »
     »
 - ex-cycle: 1
   code: |
     "cycle" |CVTCAR|
 - fr: |
-    La section @CVTCAR@ sera appelée dans les deux fichiers <tt>ex1</tt> et
-    <tt>ex2</tt>, tandis que la section @SUBSG@ ne sera, apparemment, sélectionnée
-    que dans <tt>ex2</tt>. Pour la section @CVTCAR@, le fichier <tt>ex2</tt>
+    La section @CVTCAR@ sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
+    <tt>ex3</tt>, tandis que la section @SUBSG@ ne sera, apparemment, sélectionnée
+    que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section @CVTCAR@, le fichier <tt>ex2</tt>
     utilisera un stockage dans des variables globales pour des besoins
-    de débugage, tandis que le fichier <tt>ex1</tt> stockera tout dans des variables
+    de débugage, tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
     locales. De plus, le fichier <tt>ex1</tt> inclura le code de @SUBSG@ et le stockera dans
     une autre variable locale.
 - en: |
-    The @CVTCAR@ section will be selected in both <tt>ex1</tt> and <tt>ex2</tt>
+    The @CVTCAR@ section will be selected in both <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>
     files. On the other hand, it seems that the @SUBSG@ section will be selected
-    only in <tt>ex2</tt>. For the @CVTCAR@ section, the <tt>ex2</tt> file
+    only in <tt>ex2</tt> and <tt>ex3</tt>. For the @CVTCAR@ section, the <tt>ex2</tt> file
     will store values into global variables, for debugging purposes. The
-    <tt>ex1</tt> file will store them into local variables. In addition,
+    <tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables. In addition,
     the <tt>ex1</tt> file will include the @SUBSG@ code and store it into another local variable.
 - fr: |
     Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section @SUBSG@,
