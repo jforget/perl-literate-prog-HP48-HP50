@@ -3,8 +3,8 @@
 (defun html-plus-grand   () (interactive) (insert "&gt;"))
 (defun html-plus-petit   () (interactive) (insert "&lt;"))
 (defun html-espace-insec () (interactive) (insert "&nbsp;"))
-(defun html-laquo        () (interactive) (insert "«&nbsp;"))
-(defun html-raquo        () (interactive) (insert "&nbsp;»"))
+(defun html-laquo        () (interactive) (insert "Â«&nbsp;"))
+(defun html-raquo        () (interactive) (insert "&nbsp;Â»"))
 (defun html-latex        () (interactive) (insert "L<sup>A</sup>T<sub>E</sub>X"))
 (defun html-oelig        () (interactive) (insert "&oelig;"))
 (defun html-list-item    () (interactive) (insert "
@@ -19,12 +19,12 @@
 ") (next-line -2) (end-of-line))
 
 (defun subs-chaine (chaine avant apres lgav)
-  "Dans une chaîne principale, substituer une sous-chaîne par une autre, la longueur n'étant pas nécessairement la même"
+  "Dans une chaÃ®ne principale, substituer une sous-chaÃ®ne par une autre, la longueur n'Ã©tant pas nÃ©cessairement la mÃªme"
   (cond
-     ((< (length chaine) lgav)  chaine) ; fin de la récursion, la chaîne ne contient assurément pas la chaîne-avant
+     ((< (length chaine) lgav)  chaine) ; fin de la rÃ©cursion, la chaÃ®ne ne contient assurÃ©ment pas la chaÃ®ne-avant
      ((equal (substring chaine 0 lgav) avant)
-        (concat apres                  (subs-chaine (substring chaine lgav) avant apres lgav))) ; remplacement et récursion
-     (t (concat (substring chaine 0 1) (subs-chaine (substring chaine    1) avant apres lgav))) ; récursion sans remplacement
+        (concat apres                  (subs-chaine (substring chaine lgav) avant apres lgav))) ; remplacement et rÃ©cursion
+     (t (concat (substring chaine 0 1) (subs-chaine (substring chaine    1) avant apres lgav))) ; rÃ©cursion sans remplacement
   )
 )
 
@@ -37,7 +37,7 @@
 	(backward-char 4))
 
 (defun html-search-cpan (module) (interactive "smodule ? ") 
-   "Insère un lien vers un module de CPAN"
+   "InsÃ¨re un lien vers un module de CPAN"
    (let ((module-deux-points (subs-chaine module "-"  "::" 1)) 
          (module-tiret       (subs-chaine module "::" "-"  2)))
 	(insert "<a href='http://search.cpan.org/dist/" module-tiret "/'><tt>" module-deux-points "</tt></a>")))
