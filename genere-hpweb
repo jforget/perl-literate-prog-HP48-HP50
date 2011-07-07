@@ -352,11 +352,11 @@ for my $fic (keys %codes) {
 
   open $f, '>', $fic
     or die "Ouverture $fic $!";
+  if ($h->{$fic} eq 'dir') {
   print $f <<'EOF';
 %%HP: T(3)A(R)F(,);
+DIR
 EOF
-  if ($h->{$fic} eq 'dir') {
-    print $f "DIR\n";
   }
 
   # Impression des sections
