@@ -684,7 +684,7 @@ ex-cycle: dir
   ex3: 2
   ex-cycle: 1
 - code: |
-    « "\" ROT + SWAP CHR
+    « 92 CHR ROT + SWAP CHR
 - ex1: 1
   ex3: 1
   ex-cycle: 1
