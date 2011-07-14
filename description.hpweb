@@ -17,24 +17,10 @@ ex-cycle: dir
     format I chose to use literate programming for
     RPL-using HP calculators.
 - fr: |
-    Si vous lisez une alternance de français et d'anglais
-    avec quelques symboles curieux, vous lisez le bon fichier.
-    Si vous lisez un texte bien présenté et entièrement en
-    français sur votre navigateur Internet ou si vous lisez du HTML, 
-    vous lisez un fichier annexe. Sa lecture peut vous éclairer sur
-    la programmation littéraire, mais il n'est plus auto-descriptif.
-
     Il est préférable de lire en parallèle le texte d'origine (français
     + anglais avec les symboles spéciaux) et le texte HTML généré
     pour mieux se rendre compte du fonctionnement du système.
 - en: |
-    If you are reading alternating paragraphs in French and in English,
-    with a few special formulas spread between, you are reading the proper
-    self-describing file. If you are reading a properly rendered file in
-    your web browser, or some HTML source, you are reading a secondary
-    file, which may give you some information, but which cannot be
-    considered as self-describing.
-
     It is better to read in parallel the source file (French + English
     with some special symbols) and the generated HTML file, so the
     operation of the system is easier to understand.
@@ -296,11 +282,11 @@ ex-cycle: dir
   en: YAML Syntax
   level: 3
 - fr: |
-    Pour les besoins de la syntaxe YAML, pour chaque fragment,
+    Pour les besoins de la syntaxe YAML, pour chaque fragment code ou texte,
     la première ligne du contenu doit commencer par 4&nbsp;espaces
     et les lignes suivantes par 4&nbsp;espaces ou plus.
 - en: |
-    For the YAML syntax, the first line of each chunk
+    For the YAML syntax, the first line of each code or text chunk
     must begin with 4 spaces and the next lines must begin
     with 4 or more spaces.
 - fr: |
