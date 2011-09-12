@@ -222,12 +222,27 @@ for (keys %textes) {
     or die "fermeture $textes{$_}{name} $!";
 }
 
+# Table des sections et accesseurs aux propriétés des sections
+my %sections;
+sub rang_sect {
+  return $sections{$_[0]}{rang};
+}
+sub nv_hier  {
+  return $sections{$_[0]}{hier};
+}
+sub code_sect {
+  return $sections{$_[0]}{code};
+}
+sub globale {
+  return $sections{$_[0]}{global};
+}
+
 # Génération des fichiers de code
 for my $fic (keys %codes) {
 
   my $section = '';
   my $rang;
-  my %sections;
+  %sections = ();
   my %appel;
   my %insertion;  
 
@@ -265,7 +280,7 @@ for my $fic (keys %codes) {
   $g->add_node($fic, shape => 'octagon');
 
   for (keys %sections) {
-    if ($sections{$_}{rang}) {
+    if (rang_sect($_)) {
       $g->add_node($_, shape => 'box');
       $g->add_edge($fic, $_);
       $sections{$_}{global} = 1;
@@ -306,11 +321,11 @@ for my $fic (keys %codes) {
     $change = 0;
     for my $d (keys %insertion) {
       for my $a (keys %{$insertion{$d}}) {
-        if ($sections{$d}{hier} <= $sections{$a}{hier}) {
-          $sections{$d}{hier} = $sections{$a}{hier} + 1;
+        if (nv_hier($d) <= nv_hier($a)) {
+          $sections{$d}{hier} = nv_hier($a) + 1;
           $change = 1;
-          if ($sections{$d}{hier} > $max_hier) {
-            $max_hier = $sections{$d}{hier};
+          if (nv_hier($d) > $max_hier) {
+            $max_hier = nv_hier($d);
           }
         }
       }
@@ -324,7 +339,7 @@ for my $fic (keys %codes) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
   # Génération des sections
-  for my $section (sort { $sections{$a}{hier} <=> $sections{$b}{hier} } keys %sections) {
+  for my $section (sort { nv_hier($a) <=> nv_hier($b) } keys %sections) {
     my @code = ();
     for my $fragment (@{$sections{$section}{fragments}}) {
       my @morceau = decoup($fragment);
@@ -335,11 +350,11 @@ for my $fic (keys %codes) {
         if ($seq_bcksl) {
 	  $morceau[$i + 1] = '\\' . $seq_bcksl;
 	}
-        if ($etiq_call && ! $sections{$etiq_call}{global}) {
+        if ($etiq_call && ! globale($etiq_call)) {
           $morceau[$i + 2] = "$etiq_call EVAL";
         }
         if ($etiq_insr) {
-          $morceau[$i + 3] = $sections{$etiq_insr}{code};
+          $morceau[$i + 3] = code_sect($etiq_insr);
         }
       }
       push @code, grep { length($_) } @morceau;
@@ -360,11 +375,11 @@ EOF
   }
 
   # Impression des sections
-  for my $section (sort { $sections{$a}{rang} <=> $sections{$b}{rang} } grep { $sections{$_}{global} } keys %sections) {
+  for my $section (sort { rang_sect($a) <=> rang_sect($b) } grep { globale($_) } keys %sections) {
     if ($h->{$fic} eq 'dir') {
       print $f "$section ";
     }
-    print $f $sections{$section}{code};
+    print $f code_sect($section);
 
   }
 
