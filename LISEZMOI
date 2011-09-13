@@ -28,3 +28,6 @@ téléchargez genere-hpweb et utilisez-le.
 Si vous avez déjà un  autre interpréteur YAML, vous pouvez l'utiliser,
 à  condition de  modifier genere-hpweb,  pour  y remplacer  le nom  de
 paquetage et les noms de fonction s'ils diffèrent.
+
+Ce code est diffusé sous les  mêmes termes que Perl, la licence GPL et
+la licence artistique.
