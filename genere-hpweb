@@ -224,17 +224,17 @@ for (keys %textes) {
 
 # Table des sections et accesseurs aux propriétés des sections
 my %sections;
-sub rang_sect {
-  return $sections{$_[0]}{rang};
+sub rang_sect : lvalue {
+  $sections{$_[0]}{rang};
 }
-sub nv_hier  {
-  return $sections{$_[0]}{hier};
+sub nv_hier : lvalue {
+  $sections{$_[0]}{hier};
 }
-sub code_sect {
-  return $sections{$_[0]}{code};
+sub code_sect : lvalue {
+  $sections{$_[0]}{code};
 }
-sub globale {
-  return $sections{$_[0]}{global};
+sub globale : lvalue {
+  $sections{$_[0]}{global};
 }
 
 # Génération des fichiers de code
@@ -253,8 +253,8 @@ for my $fic (keys %codes) {
       $rang    = $fragment->{$fic} || 0;
       next
         unless ($section);
-      $sections{$section}{rang} = $rang;
-      $sections{$section}{hier} = 0;
+      rang_sect($section) = $rang;
+      nv_hier  ($section) = 0;
     }
 
     elsif ($fragment->{code} && $section) {
@@ -283,7 +283,7 @@ for my $fic (keys %codes) {
     if (rang_sect($_)) {
       $g->add_node($_, shape => 'box');
       $g->add_edge($fic, $_);
-      $sections{$_}{global} = 1;
+      globale($_) = 1;
     }
     else {
       $g->add_node($_);
@@ -322,7 +322,7 @@ for my $fic (keys %codes) {
     for my $d (keys %insertion) {
       for my $a (keys %{$insertion{$d}}) {
         if (nv_hier($d) <= nv_hier($a)) {
-          $sections{$d}{hier} = nv_hier($a) + 1;
+          nv_hier($d) = nv_hier($a) + 1;
           $change = 1;
           if (nv_hier($d) > $max_hier) {
             $max_hier = nv_hier($d);
@@ -359,7 +359,7 @@ for my $fic (keys %codes) {
       }
       push @code, grep { length($_) } @morceau;
     }
-    $sections{$section}{code} = join '', @code, "\n"; 
+    code_sect($section) = join '', @code, "\n"; 
   }
   if ($trace & 64) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
