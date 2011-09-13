@@ -1,23 +1,30 @@
-Ce projet est un mini environnement de développement
-pour écrire des programmes en User-RPL pour la HP-48
-et la HP-50. Peut-être également pour les HP-49,
-mais je n'en dispose pas, donc je ne peux pas tester.
-De même, je n'en sais pas assez sur le System-RPL
-pour savoir si cela pourrait fonctionner.
+-*- encoding: utf-8 -*-
 
-Le projet est basé sur le concept de Knuth de
-programmation littéraire, où le même fichier
-source permet de générer à la fois le code
-et la documentation.
+Ce projet est  un mini environnement de développement  pour écrire des
+programmes en User-RPL pour la  HP-48 et la HP-50. Peut-être également
+pour les HP-49, mais je n'en  dispose pas, donc je ne peux pas tester.
+De même, je n'en sais pas  assez sur le System-RPL pour savoir si cela
+pourrait fonctionner.
 
-Ce projet est développé en parallèle avec un autre
-projet, qui sera la première mise en application
-de la génération en programmation littéraire.
-Du coup, il peut y avoir quelques écarts entre la
-description du logiciel dans "description.hpweb"
-et ce qu'il fait réellement dans "genere-hpweb".
+Le  projet  est  basé  sur   le  concept  de  Knuth  de  programmation
+littéraire, où le  même fichier source permet de générer  à la fois le
+code et la documentation.
 
-Pour l'instant, pas d'instructions d'installation.
-Le seul moyen d'en savoir plus est de lire le
-source et de deviner comment cela pourra être
-utilisé.
+Ce projet est développé en parallèle avec un autre projet, qui sera la
+première  mise  en  application  de  la  génération  en  programmation
+littéraire.   Du  coup, il  peut  y  avoir  quelques écarts  entre  la
+description  du logiciel  dans  "description.hpweb" et  ce qu'il  fait
+réellement dans "genere-hpweb".
+
+Installation :
+
+Il vous  faut une version  de Perl qui comprend  Unicode, c'est-à-dire
+l'une   des  dernières   versions  5.8,   ou  une   version   5.10  ou
+ultérieure.  Vous  avez besoin  également  du  module  YAML, dans  une
+version  compatible  avec  Unicode  (0.72 peut-être  ?),  du  logiciel
+GraphViz  et  du   module  Perl  correspondant  GraphViz.pm.  Ensuite,
+téléchargez genere-hpweb et utilisez-le.
+
+Si vous avez déjà un  autre interpréteur YAML, vous pouvez l'utiliser,
+à  condition de  modifier genere-hpweb,  pour  y remplacer  le nom  de
+paquetage et les noms de fonction s'ils diffèrent.
