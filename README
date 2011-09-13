@@ -22,6 +22,8 @@ genere-hpweb and run it.
 If you have another YAML interpreter, just modify all calls to YAML to
 use the other interpreter's namespace and functions (if different).
 
+License:
+
 This code is published under the  same terms as Perl: GPL and Artistic
 License.
 
