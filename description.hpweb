@@ -370,19 +370,29 @@ ex-cycle: dir
     Cela se fait en examinant la première variable saisie dans le fichier
     YAML. Cette variable est une table de hachage, interprétée ainsi&nbsp;:
 
-    Dans le couple clé-valeur, si la valeur est <tt>dir</tt> ou <tt>code</tt>,
+    Dans le couple clé-valeur, si la valeur est <tt>dir</tt>, <tt>dir.</tt>, <tt>code</tt> ou <tt>code.</tt>,
     la clé est le nom d'un fichier qui contiendra du code. Sinon, la clé
     est un code langue et la valeur est le titre du fichier HTML généré.
+    La différence entre <tt>dir</tt> et <tt>dir.</tt> est qu'un fichier
+    <tt>dir</tt> ou <tt>code</tt> contient des nombres réels avec une virgule pour séparer
+    la partie entière de la partie décimale, tandis qu'un fichier <tt>dir.</tt>
+    ou <tt>code.</tt> contient des nombres réels où la séparation se fait
+    avec un point.
 - en: |
     The preparation consists in determining which languages will be used
     for the documentation and which files will contain code. This is specified
     in the first variable typed in the YAML file. This variable is a hashtable,
     which is interpreted in the following way.
 
-    If the value of a key-value pair is <tt>dir</tt> or <tt>code</tt>, then
+    If the value of a key-value pair is <tt>dir</tt>, <tt>dir.</tt>, <tt>code</tt> or <tt>code.</tt>, then
     the key is the filename for a file which will contain code. Else, the
     key is a language code and the value is the title of the generated HTML
     file.
+    The difference between <tt>dir</tt> and <tt>dir.</tt> is that in a 
+    <tt>dir</tt> or <tt>code</tt> file, the real numbers are typed
+    with a comma separating the integer part from the fractional part, 
+    while in a <tt>dir.</tt> or <tt>code.</tt> file, the separation is
+    acheived with a period.
 - fr: |
     Si vous remontez au tout début du présent fichier <tt>.hpweb</tt>,
     vous pouvez constater qu'il y aura quatre fichiers de code&nbsp;:

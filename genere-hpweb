@@ -41,6 +41,7 @@ for (values %transco1) {
 
 my %textes;
 my %codes;
+my %dec_point;
 
 my ($h, $l) = YAML::LoadFile("$racine.hpweb");
 if ($trace & 1) {
@@ -60,6 +61,11 @@ for my $cle (keys %$h) {
 for (keys %$h) {
   if ($h->{$_} eq 'code' || $h->{$_} eq 'dir') {
     $codes{$_} = 1;
+    $dec_point{$_} = ",";
+  }
+  elsif ($h->{$_} eq 'code.' || $h->{$_} eq 'dir.') {
+    $codes{$_} = 1;
+    $dec_point{$_} = ".";
   }
   else {
     my $nom = "$racine.$_.html";
@@ -349,8 +355,8 @@ for my $fic (keys %codes) {
         my $etiq_call = $morceau[$i + 2];
         my $etiq_insr = $morceau[$i + 3];
         if ($seq_bcksl) {
-	  $morceau[$i + 1] = '\\' . $seq_bcksl;
-	}
+          $morceau[$i + 1] = '\\' . $seq_bcksl;
+        }
         if ($etiq_call && ! globale($etiq_call)) {
           $morceau[$i + 2] = "$etiq_call EVAL";
         }
@@ -374,17 +380,23 @@ for my $fic (keys %codes) {
 DIR
 EOF
   }
+  elsif ($h->{$fic} eq 'dir.') {
+  print $f <<'EOF';
+%%HP: T(3)A(R)F(.);
+DIR
+EOF
+  }
 
   # Impression des sections
   for my $section (sort { rang_sect($a) <=> rang_sect($b) } grep { globale($_) } keys %sections) {
-    if ($h->{$fic} eq 'dir') {
+    if ($h->{$fic} eq 'dir' or $h->{$fic} eq 'dir.') {
       print $f "$section ";
     }
     print $f code_sect($section);
 
   }
 
-  if ($h->{$fic} eq 'dir') {
+  if ($h->{$fic} eq 'dir' or $h->{$fic} eq 'dir.') {
     print $f "END\n";
   }
   close $f
