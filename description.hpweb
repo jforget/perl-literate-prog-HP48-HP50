@@ -427,7 +427,7 @@ ex-cycle: dir
     et trois fichiers de documentation
     <tt>ams-soviet.Side_Globe.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
     <tt>ams-soviet.Don_Kay.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
-    et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;»
+    et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;».
     Les codes langues «&nbsp;Side_Globe&nbsp;», «&nbsp;Don_Kay&nbsp;» et
     «&nbsp;Light_Bulb&nbsp;» ne figurent pas dans la table ISO-639.
 - en: |
@@ -674,11 +674,20 @@ ex-cycle: dir
 - code: |
     .
       «
-        "<-" 142 @SUBSG@
-        "->" 141 @SUBSG@
-        "<=" 137 @SUBSG@
-        ">=" 138 @SUBSG@
-        "=/" 139 @SUBSG@
+        "<)" 128 @SUBSG@   "<-" 142 @SUBSG@   "PI" 156 @SUBSG@
+        "x-" 129 @SUBSG@   "|v" 143 @SUBSG@   "GW" 157 @SUBSG@
+        ".V" 130 @SUBSG@   "|^" 144 @SUBSG@   "[]" 158 @SUBSG@
+        "v/" 131 @SUBSG@   "Gg" 145 @SUBSG@   "oo" 159 @SUBSG@
+        ".S" 132 @SUBSG@   "Gd" 146 @SUBSG@   "<<" 171 @SUBSG@
+        "GS" 133 @SUBSG@   "Ge" 147 @SUBSG@   "^o" 176 @SUBSG@
+        "|>" 134 @SUBSG@   "Gn" 148 @SUBSG@   "Gm" 181 @SUBSG@
+        "pi" 135 @SUBSG@   "Gh" 149 @SUBSG@   ">>" 187 @SUBSG@
+        ".d" 136 @SUBSG@   "Gl" 150 @SUBSG@   ".x" 215 @SUBSG@
+        "<=" 137 @SUBSG@   "Gr" 151 @SUBSG@   "O/" 216 @SUBSG@
+        ">=" 138 @SUBSG@   "Gs" 152 @SUBSG@   "Gb" 223 @SUBSG@
+        "=/" 139 @SUBSG@   "Gt" 153 @SUBSG@   ":-" 247 @SUBSG@
+        "Ga" 140 @SUBSG@   "Gw" 154 @SUBSG@
+        "->" 141 @SUBSG@   "GD" 155 @SUBSG@
         IF DUP "%%HP" POS
         THEN
           DUP 10 CHR POS 1 +
