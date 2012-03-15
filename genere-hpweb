@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 # Génération de la documentation HTML et du fichier à transférer
 

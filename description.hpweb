@@ -1,3 +1,4 @@
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
 fr: Programmation littéraire pour HP-48 et HP-50
 en: Literate programming for HP-48 and HP-50
 ex1: code
@@ -10,7 +11,7 @@ ex-cycle: dir
 - fr: |
     Ceci est un texte auto-descriptif
     présentant le format que j'ai choisi pour faire
-    de la programmation littéraire pour 
+    de la programmation littéraire pour
     les calculatrices HP fonctionnant en RPL.
 - en: |
     This is a self-describing text showing the
@@ -26,19 +27,19 @@ ex-cycle: dir
     operation of the system is easier to understand.
 - fr: |
     La programmation littéraire a été popularisée, peut-être même
-    inventée, par Donald Knuth. À partir d'un fichier source, 
+    inventée, par Donald Knuth. À partir d'un fichier source,
     <var>toto</var><tt>.web</tt> contenant du code, des commentaires
-    et quelques directives d'édition, il génère un fichier 
+    et quelques directives d'édition, il génère un fichier
     <var>toto</var><tt>.tex</tt> pour la documentation et un fichier
     source Pascal <var>toto</var><tt>.p</tt> pour le programme à proprement
     parler. Une variante appelée CWEB part d'un fichier
     <var>toto</var><tt>.cweb</tt> pour obtenir un fichier de documentation
     <var>toto</var><tt>.tex</tt>  et un fichier programme en C
-    <var>toto</var><tt>.c</tt> 
+    <var>toto</var><tt>.c</tt>
 
     Et comme le fichier à l'usage des humains est distinct
     du fichier à l'usage du compilateur, rien n'oblige à ce qu'ils
-    présentent le code dans le même ordre. Donc, par exemple, le fichier 
+    présentent le code dans le même ordre. Donc, par exemple, le fichier
     <var>toto</var><tt>.tex</tt> commence par donner une idée générale
     de l'algorithme, puis il définit la structure de données principale,
     puis le détail de l'algorithme, puis les initialisations et enfin
@@ -57,13 +58,13 @@ ex-cycle: dir
     passer de l'un à l'autre s'appelle <tt>tangle</tt> («&nbsp;emmêler&nbsp;»).
 - en: |
     Literay programming was popularised, maybe even created,
-    by Donald Knuth. Starting with a source file 
+    by Donald Knuth. Starting with a source file
     <var>toto</var><tt>.web</tt> which contains code, comments and
-    a few editing commands, he generates a 
+    a few editing commands, he generates a
     <var>toto</var><tt>.tex</tt> documentation file and a
     <var>toto</var><tt>.p</tt> Pascal source file for the program.
     A variant named CWEB starts with a
-    <var>toto</var><tt>.cweb</tt> file to produce a 
+    <var>toto</var><tt>.cweb</tt> file to produce a
     <var>toto</var><tt>.tex</tt>  documentation file and a
     <var>toto</var><tt>.c</tt> C programme file.
 
@@ -75,9 +76,9 @@ ex-cycle: dir
     intialisation and error processing. On the other hand, the
     <var>toto</var><tt>.p</tt> file must begin with the definition of
     data structures and the declaration of global variables and the
-    algorithm's main functions include the processing of border cases  
-    and of errors. The source file 
-    <var>toto</var><tt>.web</tt> has the same structure as 
+    algorithm's main functions include the processing of border cases
+    and of errors. The source file
+    <var>toto</var><tt>.web</tt> has the same structure as
     <var>toto</var><tt>.tex</tt>, so the programme generating
     the T<sub>E</sub>X file is called <tt>weave</tt>. On the other
     hand, the structure of <var>toto</var><tt>.p</tt> is very different,
@@ -125,7 +126,7 @@ ex-cycle: dir
     <a href='http://www.yaml.org/'>YAML</a> contenant deux
     variables. La première, très brève, se contente d'énumérer
     les langues utilisées en donnant à cette occasion le titre
-    du fichier HTML généré. Elle liste également les noms des fichiers 
+    du fichier HTML généré. Elle liste également les noms des fichiers
     qui contiendront le code.
 - en: |
     The source text comes from a <a href='http://www.yaml.org/'>YAML</a>
@@ -167,7 +168,7 @@ ex-cycle: dir
     Le tissage consiste à construire un fichier HTML pour chaque
     code langue. Le programme passe en revue tous les fragments
     et tient compte des fragments sections, des fragments codes
-    indépendamment de la langue et des fragments textes associés 
+    indépendamment de la langue et des fragments textes associés
     à la langue en cours de traitement.
 
     Pour chaque fragment, le programme effectue un léger traitement
@@ -197,7 +198,7 @@ ex-cycle: dir
     sections.
 - fr: |
     L'emmêlement se passe ainsi pour un fichier de code donné&nbsp;:
-    le programme commence par répertorier toutes les sections 
+    le programme commence par répertorier toutes les sections
     appelées dans ce fichier. Il passe également en revue tous les
     fragments de code de toutes
     les sections pour en extraire les références consistant à inclure
@@ -209,7 +210,7 @@ ex-cycle: dir
     For a given code file, tangling consists in the following actions.
     The program starts by listing all the sections assigned to the
     file. It also scans all code fragments from all sections to extract the insertion-type
-    references. It checks there is no cycle in these references 
+    references. It checks there is no cycle in these references
     and determines in which order the sections will be generated
     by inserting other sections. Then, the program writes the
     code sections into the final code file.
@@ -292,7 +293,7 @@ ex-cycle: dir
 - fr: |
     Lorsqu'il y a besoin d'un code langue, il est possible de spécifier
     plusieurs codes langues séparés par des virgules. Cela permet de mettre
-    en commun le texte associé, s'il ne contient aucun élément traduisible 
+    en commun le texte associé, s'il ne contient aucun élément traduisible
     ou si la traduction est identique à l'original. Par exemple.
 - en: |
     When a language code is required, it is allowed to enter several
@@ -315,7 +316,7 @@ ex-cycle: dir
     Pour passer outre cette limitation, vous pouvez spécifier une
     première ligne composée en tout et pour tout d'un point précédé
     de quatre espaces et vous avez toute latitude pour l'indentation
-    de la deuxième ligne. La première ligne sera supprimée lors de 
+    de la deuxième ligne. La première ligne sera supprimée lors de
     l'emmêlement et du tissage.
 
     Pour les fragments de code, cela vous permet d'avoir une indentation
@@ -336,21 +337,30 @@ ex-cycle: dir
     first line with a single period will be removed.
 
     For code fragments, this feature allows you to keep a consistent
-    indentation from a code fragment to the next. For text fragments, 
+    indentation from a code fragment to the next. For text fragments,
     I do not know in which case it could be useful, but you
     never know.
 
-    And if you really want a line consisting of a single period, 
+    And if you really want a line consisting of a single period,
     just write two such lines. The first will be removed, but the
     second one will be kept.
 - fr: |
-    Rappel&nbsp;: YAML n'aime pas les tabulations. Pensez donc à 
+    Rappel&nbsp;: YAML n'aime pas les tabulations. Pensez donc à
     utiliser si nécessaire <tt>untabify</tt> sous Emacs ou <tt>expand</tt>
-    sous shell.
+    sous shell. Ou bien, pour les utilisateurs d'Emacs, vous pouvez
+    insérer au début du fichier un commentaire tel que&nbsp;:
+
+    <pre>
+    # -*- indent-tabs-mode: nil -*-
+    </pre>
 - en: |
     Remember that YAML does not like tabulations. So, use <tt>untabify</tt>
-    under Emacs or <tt>expand</tt> under shell when necessary.
+    under Emacs or <tt>expand</tt> under shell when necessary. Emacs users
+    can also insert a comment such as:
 
+    <pre>
+    # -*- indent-tabs-mode: nil -*-
+    </pre>
 - section: 0
   fr: Préparation
   en: Preparation
@@ -375,7 +385,7 @@ ex-cycle: dir
     file.
 - fr: |
     Si vous remontez au tout début du présent fichier <tt>.hpweb</tt>,
-    vous pouvez constater qu'il y aura quatre fichiers de code&nbsp;: 
+    vous pouvez constater qu'il y aura quatre fichiers de code&nbsp;:
     <tt>ex1</tt>, <tt>ex2</tt>, <tt>ex3</tt> et <tt>ex-cycle</tt>. De plus, la documentation
     est écrite en français (code <tt>fr</tt>, titre «&nbsp;Programmation littéraire
     pour HP-48 et HP-50&nbsp;») et en anglais (code langue <tt>en</tt>, titre
@@ -390,7 +400,7 @@ ex-cycle: dir
 - fr: |
     Il n'y a pas de contrôle vis-à-vis de la table ISO-639
     des codes langues. Vous pouvez saisir n'importe quel code constitué de caractères
-    alphanumériques, ils seront interprétés comme indiqué ci-dessus. Ainsi, si 
+    alphanumériques, ils seront interprétés comme indiqué ci-dessus. Ainsi, si
     le fichier <tt>ams-soviet.hpweb</tt> commence par&nbsp;:
 - en: |
     There is no check with the ISO-639 table for language
@@ -465,7 +475,7 @@ ex-cycle: dir
     given by the <tt>section</tt> attribute. The contents is the
     section name and the text associated to the language.
 - fr: |
-    Si un fragment section contient une clé <tt>level</tt>, alors le 
+    Si un fragment section contient une clé <tt>level</tt>, alors le
     programme utilise la valeur <var>n</var> correspondante pour générer
     une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> à la place
     de <tt>&lt;h2&gt;</tt>.
@@ -481,15 +491,15 @@ ex-cycle: dir
     section.
 - en: |
     If the value corresponding to the <tt>section</tt> key is <tt>0</tt>,
-    this is an anonymous section. The 
+    this is an anonymous section. The
     <tt>&lt;a name='...'&gt;</tt> tag will be generated using the
     section's title.
 - fr: |
     Pour les textes, le balisage par défaut est les balises <tt>&lt;p&gt;</tt>.
     Chaque paragraphe (fragment de texte ou portion de fragment de texte
-    délimitée par des lignes vides) sera encadré par 
+    délimitée par des lignes vides) sera encadré par
     <tt>&lt;p&gt;</tt> et <tt>&lt;/p&gt;</tt>, sauf si une balise existe
-    déjà au début et à la fin. Et si par hasard, vous 
+    déjà au début et à la fin. Et si par hasard, vous
     ne voulez pas de balise, il vous suffit d'ajouter
     un commentaire HTML <tt>&lt;!-- blabla --&gt;</tt>.
 - en: |
@@ -498,7 +508,7 @@ ex-cycle: dir
     delimited by empty lines) will be surrounded by
     <tt>&lt;p&gt;</tt> and <tt>&lt;/p&gt;</tt>, except if another tag exists
     both at the beginning and at the end of the paragraph.
-    And if you do not want any tag, just add 
+    And if you do not want any tag, just add
     an HTML comment <tt>&lt;!-- blahblah --&gt;</tt>.
 - fr: |
     Les fragments de type code sont tous repris
@@ -511,7 +521,7 @@ ex-cycle: dir
     une balise <tt>&lt;img&gt;</tt> dans un fragment texte.
 - en: |
     All code fragments are used when generating
-    the HTML file.  
+    the HTML file.
     In addition, for <tt>GROB</tt> fragments, the program generates
     a <tt>.png</tt> file containing the bitmap (to be developped
     later, it is not ready yet).
@@ -541,7 +551,7 @@ ex-cycle: dir
     <tt>\\pi</tt> will be replaced by <tt>&amp;#960;</tt>, that is, \pi.
     At the same time, the section names sandwiched between two <tt>@</tt>'s
     or two <tt>|</tt>'s are changed into an hyperlink to the section
-    with the corresponding name (yet, there is no check; if the name 
+    with the corresponding name (yet, there is no check; if the name
     defines no section, the link will be dangling).
     And for code fragments, the <tt>&lt;&gt;&amp;</tt> are escaped.
     This is not done for section fragments and texts, because they already include
@@ -597,7 +607,7 @@ ex-cycle: dir
     The first step consists in collating all code fragments which are
     involved in building the current code file, and extracting all the
     links (calls and inserts) which exist in these fragments.
-    During this step, the program builds a graph for the insert links 
+    During this step, the program builds a graph for the insert links
     and another graph for the call links.
 - fr: |
     La sélection du code se fait à deux niveaux&nbsp;: section et fragment.
@@ -608,13 +618,13 @@ ex-cycle: dir
     et avec un nombre supérieur ou égal à 1 comme valeur.
     S'il n'y a pas un tel attribut, la section pourra être quand
     même utilisée, si elle est incluse dans une section sélectionnée
-    (ou incluse dans une section elle-même incluse dans... et ainsi de 
+    (ou incluse dans une section elle-même incluse dans... et ainsi de
     suite, récursivement).
 - en: |
     Selecting code is done on two levels: section and fragment.
     An anonymous section  (<tt>section:&nbsp;0</tt>) is never selected
     in any code file. A named section will be selected if the
-    section fragment includes a attribute whose key is the 
+    section fragment includes a attribute whose key is the
     code file name and whose value is a number, 1 or greater.
     If no such attribute exists, the section might still be selected
     if it is included in an already selected section (or included
@@ -630,8 +640,8 @@ ex-cycle: dir
     The selection on fragments is rather similar to the selection on sections.
     If a fragment contains an attribute pair whose key is a code file name,
     the fragment will be selected in this file. The main difference with section
-    selection is that if the code fragment does not contain any attribute 
-    whose key is a code file name, then this fragment will be used by all 
+    selection is that if the code fragment does not contain any attribute
+    whose key is a code file name, then this fragment will be used by all
     code files.
 - fr: |
     Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
@@ -643,7 +653,7 @@ ex-cycle: dir
   ex2: 1
   ex3: 1
 - code: |
-    « 
+    «
 - ex1: 1
   ex-cycle: 1
   code: |
@@ -763,7 +773,7 @@ ex-cycle: dir
 
 - fr: |
     Le mécanisme s'arrête dans deux cas. Tout d'abord, si on a effectué une passe
-    sur tous les liens d'insertion sans qu'il y ait eu besoin de mettre à jour 
+    sur tous les liens d'insertion sans qu'il y ait eu besoin de mettre à jour
     un niveau hiérarchique. Le tri est alors achevé. Ou alors, si on détecte qu'une
     section a un niveau hiérarchique supérieur au nombre de sections existantes.
     Dans ce cas, cela signifie qu'il existe un cycle dans les liens d'insertion.
@@ -847,8 +857,8 @@ ex-cycle: dir
 - fr: |
     Pour un fichier de type <tt>code</tt>, toutes les sections globales
     sont écrites, dans l'ordre de leur attribut <tt>rang</tt> (celui
-    qui a été spécifié par le nom du fichier de code). Pour un fichier 
-    de type <tt>dir</tt>, on commence par le mot-clé <tt>DIR</tt>, 
+    qui a été spécifié par le nom du fichier de code). Pour un fichier
+    de type <tt>dir</tt>, on commence par le mot-clé <tt>DIR</tt>,
     puis pour chaque section globale, on écrit le nom puis le code.
     Et on termine par <tt>END</tt>. Cela sert à créer un répertoire
     entier dans la machine cible.
@@ -860,7 +870,7 @@ ex-cycle: dir
     writes first the keyword <tt>DIR</tt>. Then, for all global
     sections, it writes the section name and the section code.
     At last, it ends the code file with the keyword <tt>END</tt>.
-    Such a file allows the creation of a whole directory in 
+    Such a file allows the creation of a whole directory in
     the target calculator.
 
 - section: 0
