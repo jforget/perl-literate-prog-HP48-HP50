@@ -418,6 +418,8 @@ ex-cycle: dir
     <tt>ams-soviet.Side_Globe.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
     <tt>ams-soviet.Don_Kay.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
     et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;»
+    Les codes langues «&nbsp;Side_Globe&nbsp;», «&nbsp;Don_Kay&nbsp;» et
+    «&nbsp;Light_Bulb&nbsp;» ne figurent pas dans la table ISO-639.
 - en: |
     there will be two code files:
     <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
@@ -425,14 +427,15 @@ ex-cycle: dir
     <tt>ams-soviet.Side_Globe.html</tt> titled "Small_Fred,Mare_Tail"
     <tt>ams-soviet.Don_Kay.html</tt> titled "Small_Fred,Mare_Tail"
     et <tt>ams-soviet.Light_Bulb.html</tt> titled "Top_Trough,Rum_Tub,Straight_Key".
-
+    The language codes "Side_Globe", "Don_Kay" and "Light_Bulb"
+    are not mentionned in the ISO-639 table.
 
 - section: 0
   fr: Tissage
   en: Weaving
 - fr: |
     Le tissage est présenté ci-dessous pour un code langue donné,
-    alors qu'il concerne tous les codes langues en parallèle.
+    alors qu'il traite tous les codes langues en parallèle.
 
     Le nom du fichier en sortie est le nom du fichier en entrée,
     moins l'extension <tt>.hpweb</tt>, plus un point, le code
@@ -749,7 +752,7 @@ ex-cycle: dir
 
     <li>
     topologically sort the sections according to the insertion
-    links, to determine in which order they have to be generated.
+    links, to determine in which order the sections have to be generated.
     </li>
     <li>
     detect any cycles in the insertions graph.
