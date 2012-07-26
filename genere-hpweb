@@ -59,7 +59,7 @@ for my $cle (keys %$h) {
 }
 
 for (keys %$h) {
-  if ($h->{$_} eq 'code' || $h->{$_} eq 'dir') {
+  if ($h->{$_} eq 'code' || $h->{$_} eq 'dir' || $h->{$_} eq 'code41') {
     $codes{$_} = 1;
     $dec_point{$_} = ",";
   }
@@ -343,6 +343,7 @@ for my $fic (keys %codes) {
     next;
   }
   if ($trace & 32) {
+    print $fic, " après le tri topologique\n";
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
   # Génération des sections
@@ -366,9 +367,16 @@ for my $fic (keys %codes) {
       }
       push @code, grep { length($_) } @morceau;
     }
-    code_sect($section) = join '', @code, "\n"; 
+    if ($code[-1] !~ /\n$/) {
+      if ($trace & 64) {
+        print "$fic, $section : ajout d'un passage à la ligne\n";
+      }
+      push @code, "\n";
+    }
+    code_sect($section) = join '', @code;
   }
   if ($trace & 64) {
+    print "$fic après génération des sections\n";
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
 
@@ -387,12 +395,24 @@ DIR
 EOF
   }
 
+  my $cpt = 0;
   # Impression des sections
   for my $section (sort { rang_sect($a) <=> rang_sect($b) } grep { globale($_) } keys %sections) {
     if ($h->{$fic} eq 'dir' or $h->{$fic} eq 'dir.') {
       print $f "$section ";
     }
-    print $f code_sect($section);
+    if ($h->{$fic} ne 'code41') {
+      print $f code_sect($section);
+    }
+    else {
+      print "numéroter $section\n";
+      my @lignes = grep /\S/, split "\n", code_sect($section);
+      for my $ligne (@lignes) {
+        printf $f "%4d %s\n", ++$cpt, $ligne;
+        #print "$ligne\n";
+      }
+      #print code_sect($section);
+    }
 
   }
 

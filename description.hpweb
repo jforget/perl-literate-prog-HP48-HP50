@@ -388,9 +388,9 @@ ex-cycle: dir
     the key is the filename for a file which will contain code. Else, the
     key is a language code and the value is the title of the generated HTML
     file.
-    The difference between <tt>dir</tt> and <tt>dir.</tt> is that in a 
+    The difference between <tt>dir</tt> and <tt>dir.</tt> is that in a
     <tt>dir</tt> or <tt>code</tt> file, the real numbers are typed
-    with a comma separating the integer part from the fractional part, 
+    with a comma separating the integer part from the fractional part,
     while in a <tt>dir.</tt> or <tt>code.</tt> file, the separation is
     acheived with a period.
 - fr: |
@@ -895,6 +895,29 @@ ex-cycle: dir
     Such a file allows the creation of a whole directory in
     the target calculator.
 
+- section: 0
+  fr: Utilisation pour les HP-41
+  en: Use with HP-41
+- fr: |
+     Ce format et ce programme peuvent être utilisés pour générer des programmes
+     pour HP-41, avec quelques restrictions. Tout d'abord, les fichiers
+     générés sont de type <tt>code41</tt>, analogue à <tt>code</tt>, mais
+     d'appel marquées par <tt>@</tt> sont interdites. En revanche,
+     il est possible d'utiliser les balises d'insertion <tt>|</tt>.
+- en: |
+     This format and this program can be used to generate programs for the HP-41,
+     with some constraints. First, the generated files can only be <tt>code41</tt>
+     files, there is no equivalent of <tt>dir</tt> files.
+     In addition, <tt>@</tt>-marked calls are prohibited. But you can use
+     <tt>|</tt>-marked insertions.
+- fr: |
+     Les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
+     contrôler la saisie du programme sur HP-41.
+     La sortie doit être compatible avec HP41UC.
+- en: |
+     The lines in the code files are numbered, so it is easier to check
+     for missing lines when entering the program into a HP-41.
+     The output must be compatible with HP41UC.
 - section: 0
   fr: Licence
   en: License
