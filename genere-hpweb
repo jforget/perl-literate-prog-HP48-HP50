@@ -100,6 +100,7 @@ for my $fragment (@$l) {
       for my $cle1 (split ',', $cle) {
         $fragment->{$cle1} = $fragment->{$cle};
       }
+      delete $fragment->{$cle};
     }
   }
 }
