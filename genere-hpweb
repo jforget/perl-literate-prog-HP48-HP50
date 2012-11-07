@@ -368,7 +368,7 @@ for my $fic (keys %codes) {
       }
       push @code, grep { length($_) } @morceau;
     }
-    if ($code[-1] !~ /\n$/) {
+    if (@code != 0 && $code[-1] !~ /\n$/) {
       if ($trace & 64) {
         print "$fic, $section : ajout d'un passage à la ligne\n";
       }
