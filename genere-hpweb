@@ -11,7 +11,10 @@ use Data::Dumper;
 use GraphViz;
 
 my $trace = 0;
-GetOptions("trace:i" => \$trace)
+my $flg_number = 0;
+GetOptions("trace:i" => \$trace,
+           "number"  => \$flg_number,
+  )
   or die "Problème avec les options";
 
 my $racine = $ARGV[0];
@@ -402,7 +405,7 @@ EOF
     if ($h->{$fic} eq 'dir' or $h->{$fic} eq 'dir.') {
       print $f "$section ";
     }
-    if ($h->{$fic} ne 'code41') {
+    if ($flg_number == 0) {
       print $f code_sect($section);
     }
     else {

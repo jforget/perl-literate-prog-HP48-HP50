@@ -911,11 +911,13 @@ ex-cycle: dir
      In addition, <tt>@</tt>-marked calls are prohibited. But you can use
      <tt>|</tt>-marked insertions.
 - fr: |
-     Les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
+     Si l'on utilise le paramètre C<-number> sur la ligne de commande,
+     les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
      contrôler la saisie du programme sur HP-41.
      La sortie doit être compatible avec HP41UC.
 - en: |
-     The lines in the code files are numbered, so it is easier to check
+     when using the command-line parameter C<-number>,
+     the lines in the code files are numbered, so it is easier to check
      for missing lines when entering the program into a HP-41.
      The output must be compatible with HP41UC.
 - section: 0
