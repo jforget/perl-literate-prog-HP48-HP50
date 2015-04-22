@@ -18,6 +18,15 @@ ex-cycle: dir
     format I chose to use literate programming for
     RPL-using HP calculators.
 - fr: |
+    En fait, j'en suis venu à utiliser ce mécanisme pour autre chose que des
+    HP-48 et des HP-50. Je l'utilise pour d'autres programmes pour lesquels
+    l'ajout de commentaires est malcommode et pourtant nécessaire. Pour l'instant,
+    cela ajoute les HP-41 et les programmes APL.
+- en: |
+    Actually, I have resused this process for programs beyond HP-48 and HP-50.
+    I use it for systems where writing comments is cumbersome and yet
+    very necessary. For the moment, this includes HP-41 and APL.
+- fr: |
     Il est préférable de lire en parallèle le texte d'origine (français
     + anglais avec les symboles spéciaux) et le texte HTML généré
     pour mieux se rendre compte du fonctionnement du système.

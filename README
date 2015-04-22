@@ -11,6 +11,10 @@ will be a  testcase for literate programming generation.  As a result,
 there  may  be  discrepancies  between  the  software  description  in
 "description.hpweb" and what it actually does in "genere-hpweb".
 
+Later, this project has been adapted to develop programs for the HP-41
+and for the APL language.  Not all HP-48/HP-50 functions are used, but
+the basic tangling and weaving are used.
+
 Installation:
 
 You need  a Unicode-friendly  Perl, that  is a late  5.8 version  or a

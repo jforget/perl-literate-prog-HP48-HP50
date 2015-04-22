@@ -70,6 +70,10 @@ for (keys %$h) {
     $codes{$_} = 1;
     $dec_point{$_} = ".";
   }
+  elsif ($h->{$_} eq 'apl') {
+    $codes{$_} = 'apl';
+    $dec_point{$_} = ".";
+  }
   else {
     my $nom = "$racine.$_.html";
     open my $f, '>:encoding(utf8)', $nom
@@ -384,8 +388,14 @@ for my $fic (keys %codes) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
 
-  open $f, '>', $fic
-    or die "Ouverture $fic $!";
+  if ($codes{$fic} eq 'apl') {
+    open $f, '>:encoding(UTF-8)', $fic
+      or die "Ouverture $fic $!";
+  }
+  else {
+    open $f, '>', $fic
+      or die "Ouverture $fic $!";
+  }
   if ($h->{$fic} eq 'dir') {
   print $f <<'EOF';
 %%HP: T(3)A(R)F(,);
