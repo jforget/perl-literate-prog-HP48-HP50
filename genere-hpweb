@@ -3,6 +3,7 @@
 #
 # Génération de la documentation HTML et du fichier à transférer
 
+use utf8;
 use strict;
 use warnings;
 use YAML;
@@ -470,8 +471,8 @@ sub transcrit {
 sub decoup {
   my ($texte) = @_;
   my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
-                    | @(\w+)@   # capture des appels à une étiquette
-                    | \|(\w+)\| # capture des insertions
+                    | @([\w∆]+)@   # capture des appels à une étiquette
+                    | \|([\w∆]+)\| # capture des insertions
                     | ([<>&])   # capture des caractères spéciaux HTML
                     /x, $texte;
 
