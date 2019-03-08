@@ -492,11 +492,15 @@ sub transcrit {
 
 sub decoup {
   my ($texte) = @_;
-  my @morceau = split /\\($re1) # capture des séquences préfixées par backslash
+  my @capture = split /\\($re1) # capture des séquences préfixées par backslash
                     | @([\w∆]+)@   # capture des appels à une étiquette
                     | \|([\w∆]+)\| # capture des insertions
                     | ([<>&])   # capture des caractères spéciaux HTML
                     /x, $texte;
+
+  # with an unknown version of Perl, the result of the list-context split is
+  # a list of read-only values. Yet we need read-and-write values
+  my @morceau = @capture;
 
   for (my $i = 1; $i < $#morceau; $i +=5) {
     $morceau[$i    ] ||= ''; 
