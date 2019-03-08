@@ -1,7 +1,29 @@
 #!/usr/bin/perl
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
-# Génération de la documentation HTML et du fichier à transférer
+# Génération de la documentation HTML et du fichier source du programme
+# Generating the HTML documentation and the source file containing the program
+#
+# Copyright (C) 2011--2013, 2015, 2019, Jean Forget
+#
+# Author: Jean Forget
+# Maintainer: Jean Forget
+# Keywords: literate programming
+#
+# This program is free software; you can redistribute it and modify
+# it under the terms of Perl:
+# -- either the GNU General Public License as published by
+#    the Free Software Foundation; version 1, or (at your option)
+#    any later version,
+# -- or the Artistic Licence.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING. If not, see <https://www.gnu.org/licenses/>.
 
 use utf8;
 use strict;
