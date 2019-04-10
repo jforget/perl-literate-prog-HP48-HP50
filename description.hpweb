@@ -21,11 +21,11 @@ ex-cycle: dir
     En fait, j'en suis venu à utiliser ce mécanisme pour autre chose que des
     HP-48 et des HP-50. Je l'utilise pour d'autres programmes pour lesquels
     l'ajout de commentaires est malcommode et pourtant nécessaire. Pour l'instant,
-    cela ajoute les HP-41 et les programmes APL.
+    cela ajoute les HP-41 et les programmes APL ou shell.
 - en: |
     Actually, I have resused this process for programs beyond HP-48 and HP-50.
     I use it for systems where writing comments is cumbersome and yet
-    very necessary. For the moment, this includes HP-41 and APL.
+    very necessary. For the moment, this includes HP-41, APL and shell.
 - fr: |
     Il est préférable de lire en parallèle le texte d'origine (français
     + anglais avec les symboles spéciaux) et le texte HTML généré
@@ -101,7 +101,7 @@ ex-cycle: dir
     système permet de générer plusieurs fichiers dans des langues
     différentes à partir d'un fichier <tt>.hpweb</tt> multilingue.</li>
     <li>WEB génère du Pascal, CWEB génère du C, mon système génère du
-    RPL pour les calculatrices HP.</li>
+    RPL pour les calculatrices HP-48-50 ou des sources HP-41, APL ou shell.</li>
     <li>C'est le même programme qui tisse les fichiers de documentation
     et qui emmêle les fichiers de code.</li>
     <li>CWEB a un mécanisme assez malcommode pour générer plusieurs fichiers
@@ -119,7 +119,7 @@ ex-cycle: dir
     programme uses a multilingual <tt>.hpweb</tt> file to generate
     several documentation files.</li>
     <li>WEB generates Pascal, CWEB generates C or C++ and my programme
-    generates User-RPL for HP calculators.</li>
+    generates User-RPL for HP-48-50 calculators or other sources files in APL or shell or for HP-41.</li>
     <li>The same programme weaves the documentation files and tangles
     the code files.</li>
     <li>CWEB has a cumbersome mechanism to produce several code files: change files
@@ -252,7 +252,7 @@ ex-cycle: dir
 - en: |
     will result in:
 - code: |
-    \<) \x- \.V \v/\.S \GS \|> \pi \.d \<= \>= \=/ \Ga \-> \<- \|v\|^
+    \<) \x- \.V \v/ \.S \GS \|> \pi \.d \<= \>= \=/ \Ga \-> \<- \|v\|^
     \Gg \Gd \Ge \Gn \Gh \Gl \Gr \Gs \Gt \Gw
     \GD \PI \GW \[] \oo
 - fr: |
@@ -336,6 +336,11 @@ ex-cycle: dir
     Et si vous voulez quand même une ligne constituée d'un point et
     rien d'autre, mettez cette ligne en double. Le premier exemplaire
     de la ligne sera supprimé, le second sera conservé.
+
+    En fait, il existe une syntaxe particulière en YAML pour avoir un groupe
+    de lignes dans lequel la première ligne est plus indentée que les
+    suivantes, mais je ne l'ai pas retenue. Mon astuce avec un point isolé
+    est simple et facile à mémoriser.
 - en: |
     In a text fragment or a code fragment, the first line specify the
     minimum indentation of the lines of the fragment and all subsequent
@@ -353,6 +358,11 @@ ex-cycle: dir
     And if you really want a line consisting of a single period,
     just write two such lines. The first will be removed, but the
     second one will be kept.
+
+    Actually, there is a syntax in YAML dealing with a group of lines
+    in which the first line is more indented than the next. But I do
+    not remember it. My trick with an isolated period is simple and
+    easy to remember.
 - fr: |
     Rappel&nbsp;: YAML n'aime pas les tabulations. Pensez donc à
     utiliser si nécessaire <tt>untabify</tt> sous Emacs ou <tt>expand</tt>
@@ -911,7 +921,7 @@ ex-cycle: dir
      Ce format et ce programme peuvent être utilisés pour générer des programmes
      pour HP-41, avec quelques restrictions. Tout d'abord, les fichiers
      générés sont de type <tt>code41</tt>, analogue à <tt>code</tt>, mais
-     d'appel marquées par <tt>@</tt> sont interdites. En revanche,
+     les séquences d'appel marquées par <tt>@</tt> sont interdites. En revanche,
      il est possible d'utiliser les balises d'insertion <tt>|</tt>.
 - en: |
      This format and this program can be used to generate programs for the HP-41,
@@ -920,15 +930,32 @@ ex-cycle: dir
      In addition, <tt>@</tt>-marked calls are prohibited. But you can use
      <tt>|</tt>-marked insertions.
 - fr: |
-     Si l'on utilise le paramètre C<-number> sur la ligne de commande,
+     Si l'on utilise le paramètre <tt>-number</tt> sur la ligne de commande,
      les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
      contrôler la saisie du programme sur HP-41.
      La sortie doit être compatible avec HP41UC.
 - en: |
-     when using the command-line parameter C<-number>,
+     when using the command-line parameter <tt>-number</tt>,
      the lines in the code files are numbered, so it is easier to check
      for missing lines when entering the program into a HP-41.
      The output must be compatible with HP41UC.
+
+- section: 0
+  fr: Utilisation pour APL et shell
+  en: Use with APL and shell
+- fr: |
+    Ce format et ce programme peuvent également être utilisés pour générer
+    des programmes APL et shell. Pour cela, il faut utiliser le type <tt>apl</tt>
+    ou <tt>shell</tt>. À l'inverse des programmes pour HP-41, on peut marquer
+    les appels par des balises <tt>@</tt>, mais on ne peut pas faire d'insertion
+    avec des balises <tt>|</tt>. De plus, pour les rares modulos d'APL et les fréquents
+    pipes de shell, il faut écrire <tt>\\|</tt>.
+- en: |
+    This format and this program can also be used to generate APL programs and shell
+    scripts. For this, use a filetype <tt>apl</tt> or <tt>shell</tt>. Contrary to
+    the HP-41 programs, you can mark calls with <tt>@</tt>, but you cannot insert
+    a piece of code elsewhere with <tt>|</tt>. Anyhow, if you want to code a
+    seldom used APL modulo or a frequently used shell pipe, you must type <tt>\\|</tt>.
 - section: 0
   fr: Licence
   en: License

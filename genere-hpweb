@@ -23,7 +23,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with GNU Emacs; see the file COPYING. If not, see <https://www.gnu.org/licenses/>.
+# along with this program; see the file LICENSE. If not, see <https://www.gnu.org/licenses/>.
 
 use utf8;
 use strict;
@@ -95,6 +95,10 @@ for (keys %$h) {
   }
   elsif ($h->{$_} eq 'apl') {
     $codes{$_} = 'apl';
+    $dec_point{$_} = ".";
+  }
+  elsif ($h->{$_} eq 'shell') {
+    $codes    {$_} = 'shell';
     $dec_point{$_} = ".";
   }
   else {
@@ -411,7 +415,7 @@ for my $fic (keys %codes) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
 
-  if ($codes{$fic} eq 'apl') {
+  if ($codes{$fic} eq 'apl' || $codes{$fic} eq 'shell') {
     open $f, '>:encoding(UTF-8)', $fic
       or die "Ouverture $fic $!";
   }
