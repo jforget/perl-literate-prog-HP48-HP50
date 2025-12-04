@@ -31,7 +31,7 @@ use warnings;
 use YAML;
 use Getopt::Long;
 use Data::Dumper;
-use GraphViz;
+use GraphViz2;
 
 my $trace = 0;
 my $flg_number = 0;
@@ -45,7 +45,7 @@ my $racine = $ARGV[0];
 my %transco1 = ( # méta-caractères
        '@', '@', '\\', '\\', '|', '|',
        # flèches
-       '<-', '2190', '|^', '2191', '->', '2192', '|v', '2193', 
+       '<-', '2190', '|^', '2191', '->', '2192', '|v', '2193',
        # comparaisons
        '=/', '2260', '<=', '2264', '>=', '2265',
        # grec minuscule
@@ -54,7 +54,7 @@ my %transco1 = ( # méta-caractères
        # autres symboles (à revoir : v- |> )
        '<)', '2221', 'x-', 'x-', '.V', '2207', 'v/', '221a', '.S', '222b', 'GS', '2211',
        '|>', '25b6', '.d', '2202', 'GD', '2206', 'PI', '220f', 'GW', '3a9', '[]', '220e',
-       'oo', '221e', 
+       'oo', '221e',
     );
 $transco1{'x-'} = 'x&#772;';
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
@@ -286,7 +286,7 @@ for my $fic (keys %codes) {
   my $rang;
   %sections = ();
   my %appel;
-  my %insertion;  
+  my %insertion;
 
   for my $fragment (@$l) {
 
@@ -318,37 +318,33 @@ for my $fic (keys %codes) {
   }
 
   # Construction du graphe des appels et des insertions
-  my $g = GraphViz->new();
-  $g->add_node($fic, shape => 'octagon');
+  my $g = GraphViz2->new();
+  $g->add_node(name => $fic, shape => 'octagon');
 
   for (keys %sections) {
     if (rang_sect($_)) {
-      $g->add_node($_, shape => 'box');
-      $g->add_edge($fic, $_);
+      $g->add_node(name => $_, shape => 'box');
+      $g->add_edge(from => $fic, to => $_);
       globale($_) = 1;
     }
     else {
-      $g->add_node($_);
+      $g->add_node(name => $_);
     }
   }
 
   for my $haut (keys %insertion) {
     for my $bas (keys %{$insertion{$haut}}) {
-      $g->add_edge($haut, $bas);
+      $g->add_edge(from => $haut, to => $bas);
     }
   }
 
   for my $haut (keys %appel) {
     for my $bas (keys %{$appel{$haut}}) {
-      $g->add_edge($haut, $bas, color => 'red');
+      $g->add_edge(from => $haut, to => $bas, color => 'red');
     }
   }
 
-  open my $f, '>', "$fic.png"
-    or die "Ouverture $fic.png $!";
-  print $f $g->as_png;
-  close $f
-    or die "fermeture $fic.png $!";
+  $g->run(format => 'png', output_file => "$fic.png");
 
   if ($trace & 16) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
@@ -415,6 +411,7 @@ for my $fic (keys %codes) {
     print $fic, ' sections ',  YAML::Dump(\%sections);
   }
 
+  my $f;
   if ($codes{$fic} eq 'apl' || $codes{$fic} eq 'shell') {
     open $f, '>:encoding(UTF-8)', $fic
       or die "Ouverture $fic $!";
@@ -492,7 +489,7 @@ sub transcrit {
   }
   return join '', @morceau;
 }
- 
+
 
 sub decoup {
   my ($texte) = @_;
@@ -507,10 +504,10 @@ sub decoup {
   my @morceau = @capture;
 
   for (my $i = 1; $i < $#morceau; $i +=5) {
-    $morceau[$i    ] ||= ''; 
-    $morceau[$i + 1] ||= ''; 
-    $morceau[$i + 2] ||= ''; 
-    $morceau[$i + 3] ||= ''; 
+    $morceau[$i    ] ||= '';
+    $morceau[$i + 1] ||= '';
+    $morceau[$i + 2] ||= '';
+    $morceau[$i + 3] ||= '';
   }
   return @morceau;
 }

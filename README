@@ -1,7 +1,7 @@
 This  project is  a mini-framework  for developping  programs  for the
 HP-48 and  HP-50 in User-RPL.   Maybe it works  for HP-49, but  I have
 none available. Likewise, I have not digged into System-RPL.
- 
+
 It is  based on Knuth's idea  of literate programming,  where a single
 file contains all which is necessary  to produce both the code and the
 documentation.
@@ -20,7 +20,7 @@ Installation:
 You need  a Unicode-friendly  Perl, that  is a late  5.8 version  or a
 later  version,   5.10  or   more.   You  will   need  to   install  a
 Unicode-friendly version of  YAML (0.72 maybe?). And you  will have to
-install  GraphViz  and its  Perl  module  GraphViz.pm.  Then  download
+install  GraphViz  and its  Perl  module  GraphViz2.pm. Then  download
 genere-hpweb and run it.
 
 If you have another YAML interpreter, just modify all calls to YAML to

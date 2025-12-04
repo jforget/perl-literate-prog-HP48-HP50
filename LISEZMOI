@@ -1,4 +1,4 @@
--*- encoding: utf-8 -*-
+-*- encoding: utf-8; indent-tabs-mode: nil -*-
 
 Ce projet est  un mini environnement de développement  pour écrire des
 programmes en User-RPL pour la  HP-48 et la HP-50. Peut-être également
@@ -22,7 +22,7 @@ Il vous  faut une version  de Perl qui comprend  Unicode, c'est-à-dire
 l'une   des  dernières   versions  5.8,   ou  une   version   5.10  ou
 ultérieure.  Vous  avez besoin  également  du  module  YAML, dans  une
 version  compatible  avec  Unicode  (0.72 peut-être  ?),  du  logiciel
-GraphViz  et  du   module  Perl  correspondant  GraphViz.pm.  Ensuite,
+GraphViz  et  du  module  Perl  correspondant  GraphViz2.pm.  Ensuite,
 téléchargez genere-hpweb et utilisez-le.
 
 Si vous avez déjà un  autre interpréteur YAML, vous pouvez l'utiliser,
