@@ -28,19 +28,19 @@
   )
 )
 
-(defun html-langage (lang) (interactive "slangage ? ") 
-	(insert "<i lang='" lang "'></i>")
-	(backward-char 4))
+(defun html-langage (lang) (interactive "slangage ? ")
+        (insert "<i lang='" lang "'></i>")
+        (backward-char 4))
 
-(defun html-href-anchor (address) (interactive "sadresse ? ") 
-	(insert "<a href='" address "'></a>")
-	(backward-char 4))
+(defun html-href-anchor (address) (interactive "sadresse ? ")
+        (insert "<a href='" address "'></a>")
+        (backward-char 4))
 
-(defun html-search-cpan (module) (interactive "smodule ? ") 
+(defun html-search-cpan (module) (interactive "smodule ? ")
    "Insère un lien vers un module de CPAN"
-   (let ((module-deux-points (subs-chaine module "-"  "::" 1)) 
+   (let ((module-deux-points (subs-chaine module "-"  "::" 1))
          (module-tiret       (subs-chaine module "::" "-"  2)))
-	(insert "<a href='http://search.cpan.org/dist/" module-tiret "/'><tt>" module-deux-points "</tt></a>")))
+        (insert "<a href='http://search.cpan.org/dist/" module-tiret "/'><tt>" module-deux-points "</tt></a>")))
 
 
 (defun completer-html-table () (interactive)
