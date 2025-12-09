@@ -7,6 +7,7 @@
 (defun html-raquo        () (interactive) (insert "&nbsp;»"))
 (defun html-latex        () (interactive) (insert "L<sup>A</sup>T<sub>E</sub>X"))
 (defun html-oelig        () (interactive) (insert "&oelig;"))
+(defun html-tt           () (interactive) (progn (insert "<tt></tt>")(forward-char -5)))
 (defun html-list-item    () (interactive) (insert "
 <li>
 
@@ -44,16 +45,17 @@
 
 
 (defun completer-html-table () (interactive)
-  (define-key html-mode-map "\C-c>"      'html-plus-grand)
-  (define-key html-mode-map "\C-c<"      'html-plus-petit)
-  (define-key html-mode-map "\C-c "      'html-espace-insec)
-  (define-key html-mode-map "\C-c\C-c>"  'html-raquo)
-  (define-key html-mode-map "\C-c\C-c<"  'html-laquo)
-  (define-key html-mode-map "\C-cl"      'html-latex)
-  (define-key html-mode-map "\C-co"      'html-oelig)
-  (define-key html-mode-map "\C-cp"      'html-pre-tt)
-  (define-key html-mode-map "\C-cs"      'html-search-cpan)
-  (define-key html-mode-map "\C-ci"      'html-langage))
+  (define-key global-map "\C-c>"      'html-plus-grand)
+  (define-key global-map "\C-c<"      'html-plus-petit)
+  (define-key global-map "\C-c "      'html-espace-insec)
+  (define-key global-map "\C-c\C-c>"  'html-raquo)
+  (define-key global-map "\C-c\C-c<"  'html-laquo)
+  (define-key global-map "\C-cl"      'html-latex)
+  (define-key global-map "\C-co"      'html-oelig)
+  (define-key global-map "\C-cp"      'html-pre-tt)
+  (define-key global-map "\C-cs"      'html-search-cpan)
+  (define-key global-map "\C-ct"      'html-tt)
+  (define-key global-map "\C-ci"      'html-langage))
 (completer-html-table)
 (global-font-lock-mode -1)
 (mouse-avoidance-mode "proteus")
