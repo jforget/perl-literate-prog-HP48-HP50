@@ -56,12 +56,19 @@ my %transco1 = ( # méta-caractères
        '|>', '25b6', '.d', '2202', 'GD', '2206', 'PI', '220f', 'GW', '3a9', '[]', '220e',
        'oo', '221e',
     );
-$transco1{'x-'} = 'x&#772;';
+my %transco_md = %transco1;
+$transco1  {'x-'} = 'x&#772;';
+$transco_md{'x-'} = 'x̄';
+
 my %transco2 = ( '<', '&lt;', '>', '&gt;', '&', '&amp;' );
 # Obligé de trier par longueur décroissante pour que '|^' et '|v' matchent avant '|'
 my $re1 = join '|', map { quotemeta $_ } sort { length($b) <=> length($a) } keys %transco1;
 for (values %transco1) {
   $_ = sprintf "&#%d;", hex($_)
+    if /^[0-9a-f]+$/i;
+}
+for (values %transco_md) {
+  $_ = chr(hex($_))
     if /^[0-9a-f]+$/i;
 }
 
@@ -230,20 +237,23 @@ for my $fragment (@$l) {
       }
     }
 
-    $code = transcrit($code, 1);
-    my $condition = '';
-    my $classe    = '';
+    my $code_md = transcrit_md($code, 1);
+    $code       = transcrit   ($code, 1);
+    my $condition    = '';
+    my $condition_md = '';
+    my $classe       = '';
     unless ($fragment->{commun}) {
       $classe = " class='condcode'";
-      $condition = join ', ', sort @condition;
-      $condition = "<span class='condition'>$condition</span>\n";
+      $condition    = join ', ', sort @condition;
+      $condition_md = ":::: $condition ::::\n";
+      $condition    = "<span class='condition'>$condition</span>\n";
     }
 
     for my $lg (keys %textes) {
       my $f  = $textes{$lg}{fh};
       my $fm = $textes{$lg}{fm};
       print $f "<pre$classe>\n$condition$code</pre>\n";
-      print $fm "```\n$condition$code```\n\n";
+      print $fm "```\n$condition_md$code_md```\n\n";
     }
 
     next;
@@ -259,18 +269,20 @@ for my $fragment (@$l) {
         $fragment->{$lg} = $texte;
       }
 
-      for my $paragraphe (split /\n\n+/, transcrit($fragment->{$lg}, 0)) {
+      for my $paragraphe (split /\n\n+/, $fragment->{$lg}) {
         if ($trace & 8) {
           print "--$paragraphe--\n";
         }
-        my $para_html = $paragraphe;
-        if ($para_html !~ /\A\<.*\>\z/s && $para_html !~ /\A\<.*\>\Z/s) {
+        my $para_html = transcrit  ($paragraphe);
+        my $para_md   = transcrit_md($paragraphe);
+        if (   $para_html !~ /\A\<.*\>\z/s
+            && $para_html !~ /\A\<.*\>\Z/s) {
           $para_html = "<p>\n$para_html</p>\n";
         }
         my $f  = $textes{$lg}{fh};
         my $fm = $textes{$lg}{fm};
         print $f  $para_html, "\n";
-        print $fm $paragraphe, "\n";
+        print $fm $para_md  , "\n\n";
       }
     }
   }
@@ -513,6 +525,27 @@ sub transcrit {
   return join '', @morceau;
 }
 
+sub transcrit_md {
+  my ($texte) = @_;
+
+  my @morceau = decoup($texte);
+
+  for (my $i = 1; $i < $#morceau; $i +=5) {
+    if ($morceau[$i]) {
+      # Séquence préfixée par un backslash
+      # backslash sequence
+      $morceau[$i] = $transco_md{$morceau[$i]};
+    }
+    my $etiq_ins  = $morceau[$i + 2];
+    if ($etiq_ins) {
+      # Autre section à insérer dans la section courante
+      # Other section to be inserted into the current section
+      $morceau[$i + 2] = "<<<<$etiq_ins>>>>";
+    }
+  }
+  return join '', @morceau;
+}
+
 
 sub decoup {
   my ($texte) = @_;
@@ -531,6 +564,7 @@ sub decoup {
     $morceau[$i + 1] ||= '';
     $morceau[$i + 2] ||= '';
     $morceau[$i + 3] ||= '';
+    $morceau[$i + 4] ||= '';
   }
   return @morceau;
 }

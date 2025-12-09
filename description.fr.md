@@ -9,14 +9,17 @@ présentant le format que j'ai choisi pour faire
 de la programmation littéraire pour
 les calculatrices HP fonctionnant en RPL.
 
+
 En fait, j'en suis venu à utiliser ce mécanisme pour autre chose que des
 HP-48 et des HP-50. Je l'utilise pour d'autres programmes pour lesquels
 l'ajout de commentaires est malcommode et pourtant nécessaire. Pour l'instant,
 cela ajoute les HP-41 et les programmes APL ou shell.
 
-Il est préférable de lire en parallèle le texte d'origine (français
-+ anglais avec les symboles spéciaux) et le texte HTML généré
+
+Il est préférable de lire en parallèle le texte d'origine (français + anglais
+avec les symboles spéciaux) et le texte HTML généré
 pour mieux se rendre compte du fonctionnement du système.
+
 
 La programmation littéraire a été popularisée, peut-être même
 inventée, par Donald Knuth. À partir d'un fichier source,
@@ -28,6 +31,7 @@ parler. Une variante appelée CWEB part d'un fichier
 <var>toto</var><tt>.cweb</tt> pour obtenir un fichier de documentation
 <var>toto</var><tt>.tex</tt>  et un fichier programme en C
 <var>toto</var><tt>.c</tt>
+
 Et comme le fichier à l'usage des humains est distinct
 du fichier à l'usage du compilateur, rien n'oblige à ce qu'ils
 présentent le code dans le même ordre. Donc, par exemple, le fichier
@@ -48,10 +52,11 @@ de passer de <var>toto</var><tt>.web</tt> à <var>toto</var><tt>.tex</tt>.
 ont des structures nettement différentes, donc le programme permettant de
 passer de l'un à l'autre s'appelle <tt>tangle</tt> («&nbsp;emmêler&nbsp;»).
 
+
 Ma version diffère sur plusieurs points.
 <ul>
 <li>Le fichier documentation généré n'est pas du T<sub>E</sub>X,
-mais du HTML.</li>
+mais du HTML et du Markdown.</li>
 <li>WEB et CWEB génèrent un seul fichier de documentation, mon
 système permet de générer plusieurs fichiers dans des langues
 différentes à partir d'un fichier <tt>.hpweb</tt> multilingue.</li>
@@ -71,6 +76,7 @@ Mon système permet de générer des fichiers de code qui peuvent être des vari
 d'un fichier de base, ou bien des fichiers complémentaires, partageant très peu de code.</li>
 </ul>
 
+
 ## Principe
 
 Le texte source est écrit dans un fichier
@@ -80,13 +86,16 @@ les langues utilisées en donnant à cette occasion le titre
 du fichier HTML généré. Elle liste également les noms des fichiers
 qui contiendront le code.
 
+
 La seconde variable est une liste de fragments. Chaque fragment
 peut être&nbsp;:
+
 <ul>
   <li>un fragment section</li>
   <li>du texte</li>
   <li>du code</li>
 </ul>
+
 Attention, il faut bien distinguer les «&nbsp;fragments sections&nbsp;»
 des «&nbsp;sections&nbsp;». Un fragment section se termine lorsque
 commence un autre fragment, que ce soit du texte, du code, voire un
@@ -94,20 +103,24 @@ autre fragment section, tandis qu'une section regroupe tous les fragments
 à partir d'un fragment section (inclus) jusqu'au fragment section suivant
 (exclus, car faisant partie de la section suivante).
 
-Le tissage consiste à construire un fichier HTML pour chaque
+
+Le tissage consiste à construire un fichier HTML et un fichier Markdown pour chaque
 code langue. Le programme passe en revue tous les fragments
 et tient compte des fragments sections, des fragments codes
 indépendamment de la langue et des fragments textes associés
 à la langue en cours de traitement.
+
 Pour chaque fragment, le programme effectue un léger traitement
 de formattage. Ainsi, les fragments sections donnent lieu
 à une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> et à
 une balise <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt>.
 Les fragments de code sont encadrés par des balises <tt>&lt;pre&gt;</tt>.
+
 En outre, dans les fragments de texte et de code, on repère les références
 (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;|&nbsp;») pour établir
 un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
 d'autres sections.
+
 
 L'emmêlement se passe ainsi pour un fichier de code donné&nbsp;:
 le programme commence par répertorier toutes les sections
@@ -118,6 +131,7 @@ une section dans une autre. Après s'être assuré qu'il n'y a pas
 de dépendance circulaire et après avoir déterminé dans quel ordre
 il faut générer les sections, le programme effectue ces insertions
 et écrit le fichier de code final.
+
 
 ## Détails
 
@@ -130,26 +144,29 @@ pas dans le jeu de caractère ISO-8859-1, il faudra utiliser une
 séquence de caractères introduite par un <i lang='en'>backslash</i>.
 Par exemple, les lignes&nbsp;:
 
+
 ```
-\&lt;) \x- \.V \v/ \.S \GS \|&gt; \pi \.d \&lt;= \&gt;= \=/ \Ga \-&gt; \&lt;- \|v \|^
+\<) \x- \.V \v/ \.S \GS \|> \pi \.d \<= \>= \=/ \Ga \-> \<- \|v \|^
 \Gg \Gd \Ge \Gn \Gh \Gl \Gr \Gs \Gt \Gw
 \GD \PI \GW \[] \oo
 ```
 
 donneront lieu à&nbsp;:
 
+
 ```
-&#8737; x&#772; &#8711; &#8730; &#8747; &#8721; &#9654; &#960; &#8706; &#8804; &#8805; &#8800; &#945; &#8594; &#8592; &#8595;&#8593;
-&#947; &#948; &#949; &#951; &#952; &#955; &#961; &#963; &#964; &#969;
-&#8710; &#8719; &#937; &#8718; &#8734;
+∡ x̄ ∇ √ ∫ ∑ ▶ π ∂ ≤ ≥ ≠ α → ← ↓↑
+γ δ ε η θ λ ρ σ τ ω
+∆ ∏ Ω ∎ ∞
 ```
 
 Notons que certains caractères qui figurent dans le jeu de caractères
 ISO-8859-1 ont eux aussi une séquence introduite par <i lang='en'>backslash</i>
 alors qu'il n'en ont pas réellement besoin.
 
+
 ```
-\&lt;&lt; \^o \Gm \&gt;&gt; \.x \O/ \Gb \:-
+\<< \^o \Gm \>> \.x \O/ \Gb \:-
 «   °   µ   »   ×   Ø   ß   ÷
 ```
 
@@ -161,9 +178,11 @@ pour désactiver l'interprétation du «&nbsp;@&nbsp;» et du «&nbsp;|&nbsp;»
 dans les cas où ils pourraient être compris à tort comme des liens vers d'autres
 sections.
 
+
 Remarque&nbsp;: les germanophones remarqueront que le jeu de caractères
 des calculatrices HP confond allègrement le béta grec et le s-tsett allemand.
 Désolé, ce n'est pas moi qui ai pris cette option.
+
 
 ### Syntaxe YAML
 
@@ -171,16 +190,19 @@ Pour les besoins de la syntaxe YAML, pour chaque fragment code ou texte,
 la première ligne du contenu doit commencer par 4&nbsp;espaces
 et les lignes suivantes par 4&nbsp;espaces ou plus.
 
+
 Lorsqu'il y a besoin d'un code langue, il est possible de spécifier
 plusieurs codes langues séparés par des virgules. Cela permet de mettre
 en commun le texte associé, s'il ne contient aucun élément traduisible
 ou si la traduction est identique à l'original. Par exemple.
+
 
 ```
 'fr,en': Introduction
 ```
 
 est remplacé par&nbsp;:
+
 
 ```
 fr: Introduction
@@ -195,25 +217,31 @@ première ligne composée en tout et pour tout d'un point précédé
 de quatre espaces et vous avez toute latitude pour l'indentation
 de la deuxième ligne. La première ligne sera supprimée lors de
 l'emmêlement et du tissage.
+
 Pour les fragments de code, cela vous permet d'avoir une indentation
 cohérente d'un fragment à l'autre. Pour les fragments de texte, je
 ne vois pas dans quelles circonstances cela pourrait servir, mais
 on ne sait jamais.
+
 Et si vous voulez quand même une ligne constituée d'un point et
 rien d'autre, mettez cette ligne en double. Le premier exemplaire
 de la ligne sera supprimé, le second sera conservé.
+
 En fait, il existe une syntaxe particulière en YAML pour avoir un groupe
 de lignes dans lequel la première ligne est plus indentée que les
 suivantes, mais je ne l'ai pas retenue. Mon astuce avec un point isolé
 est simple et facile à mémoriser.
 
+
 Rappel&nbsp;: YAML n'aime pas les tabulations. Pensez donc à
 utiliser si nécessaire <tt>untabify</tt> sous Emacs ou <tt>expand</tt>
 sous shell. Ou bien, pour les utilisateurs d'Emacs, vous pouvez
 insérer au début du fichier un commentaire tel que&nbsp;:
+
 <pre>
 # -*- indent-tabs-mode: nil -*-
 </pre>
+
 
 ## Préparation
 
@@ -221,6 +249,7 @@ La préparation consiste à répertorier quelles langues utiliser
 pour la documentation et quels fichiers générer pour le code.
 Cela se fait en examinant la première variable saisie dans le fichier
 YAML. Cette variable est une table de hachage, interprétée ainsi&nbsp;:
+
 Dans le couple clé-valeur, si la valeur est <tt>dir</tt>, <tt>dir.</tt>, <tt>code</tt> ou <tt>code.</tt>,
 la clé est le nom d'un fichier qui contiendra du code. Sinon, la clé
 est un code langue et la valeur est le titre du fichier HTML généré.
@@ -230,6 +259,7 @@ la partie entière de la partie décimale, tandis qu'un fichier <tt>dir.</tt>
 ou <tt>code.</tt> contient des nombres réels où la séparation se fait
 avec un point.
 
+
 Si vous remontez au tout début du présent fichier <tt>.hpweb</tt>,
 vous pouvez constater qu'il y aura quatre fichiers de code&nbsp;:
 <tt>ex1</tt>, <tt>ex2</tt>, <tt>ex3</tt> et <tt>ex-cycle</tt>. De plus, la documentation
@@ -237,13 +267,16 @@ est écrite en français (code <tt>fr</tt>, titre «&nbsp;Programmation littéra
 pour HP-48 et HP-50&nbsp;») et en anglais (code langue <tt>en</tt>, titre
 <i lang='en'>Literate programming for HP-48 and HP-50</i>).
 
+
 D'autres valeurs ont été ajoutées ultérieurement pour les fichiers codes&nbsp;:
 <tt>code41</tt>, <tt>apl</tt> et <tt>shell</tt>.
+
 
 Pour les codes langues, il n'y a pas de contrôle vis-à-vis de la table ISO-639.
 Vous pouvez saisir n'importe quel code constitué de caractères
 alphanumériques, ils seront interprétés comme indiqué ci-dessus. Ainsi, si
 le fichier <tt>ams-soviet.hpweb</tt> commence par&nbsp;:
+
 
 ```
 'Side_Globe,Don_Kay': Small_Fred,Mare_Tail
@@ -254,59 +287,75 @@ Light_Bulb: Top_Trough,Rum_Tub,Straight_Key
 
 il y aura deux fichiers de code&nbsp;:
 <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
-et trois fichiers de documentation
+trois fichiers de documentation HTML
 <tt>ams-soviet.Side_Globe.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
 <tt>ams-soviet.Don_Kay.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
-et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;».
+et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;»
+et trois fichiers de documentation Markdown avec des noms équivalents.
 Les codes langues «&nbsp;Side_Globe&nbsp;», «&nbsp;Don_Kay&nbsp;» et
 «&nbsp;Light_Bulb&nbsp;» ne figurent pas dans la table ISO-639.
+
 
 Ces exemples sont caricaturaux. Un cas d'emploi plus sérieux est d'utiliser
 un pseudo-code langue <tt>docu</tt>  pour la documentation utilisateur,
 un pseudo-code langue <tt>docp</tt> pour la documentation destinée aux programmeurs
 et un pseudo-code langue <tt>docm</tt> pour la documentation de maintenance.
+
 Quoi qu'il en soit, nous continuons à utiliser la désignation «&nbsp;code langue&nbsp;».
+
 
 ## Tissage
 
 Le tissage est présenté ci-dessous pour un code langue donné,
 alors qu'il traite tous les codes langues en parallèle.
+
 Le nom du fichier en sortie est le nom du fichier en entrée,
 moins l'extension <tt>.hpweb</tt>, plus un point, le code
-langue et l'extension <tt>.html</tt>. Par exemple, pour le
+langue et l'extension <tt>.html</tt> ou <tt>.md</tt>. Par exemple, pour le
 français, le fichier <tt>description.htweb</tt> donnera
-le fichier en sortie <tt>description.fr.html</tt>
+les fichiers en sortie <tt>description.fr.html</tt>
+et <tt>description.fr.md</tt>
+
 
 Le titre spécifié dans la première variable du fichier YAML
 permet d'avoir le contenu de l'élément <tt>&lt;title&gt;</tt>
-et de l'élément <tt>&lt;h1&gt;</tt> du fichier HTML.
+et de l'élément <tt>&lt;h1&gt;</tt> du fichier HTML, ainsi que
+de l'élément <tt>#</tt> du fichier Markdown.
+
 
 Pour le tissage, le programme extrait dans l'ordre tous les fragments sections,
 tous les textes dépendant du code langue utilisé et tous les
 fragments de code.
 
+
 Chaque fragment section génère une balise <tt>&lt;h2&gt;</tt>
 et une balise <tt>&lt;a name='...'&gt;</tt>, le nom étant
 donné par l'attribut <tt>section</tt> de la section. Le contenu
 est donné par le nom de la section et le texte associé à la langue.
+Pour le fichier Markdown, il y aura une balise équivalente <tt>##</tt>, mais pas
+de balise Markdown équivalente à la balise <tt>a name</tt> du HTML.
+
 
 Si un fragment section contient une clé <tt>level</tt>, alors le
 programme utilise la valeur <var>n</var> correspondante pour générer
 une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> à la place
 de <tt>&lt;h2&gt;</tt>.
 
-Si la valeur correspondant à la clé <tt>section</tt> est <tt>0</tt>,
+
+Si la valeur correspondant à la clé <tt>section</tt> est 0,
 il s'agit d'une section anonyme. Dans ce cas, la balise
 <tt>&lt;a name='...'&gt;</tt> sera générée avec le titre de la
 section.
 
-Pour les textes, le balisage par défaut est les balises <tt>&lt;p&gt;</tt>.
+
+Pour les textes, le balisage HTML par défaut est les balises <tt>&lt;p&gt;</tt>.
 Chaque paragraphe (fragment de texte ou portion de fragment de texte
 délimitée par des lignes vides) sera encadré par
 <tt>&lt;p&gt;</tt> et <tt>&lt;/p&gt;</tt>, sauf si une balise existe
 déjà au début et à la fin. Et si par hasard, vous
 ne voulez pas de balise, il vous suffit d'ajouter
 un commentaire HTML <tt>&lt;!-- blabla --&gt;</tt>.
+
 
 Les fragments de type code sont tous repris
 dans le fichier HTML généré. De plus, pour les
@@ -317,12 +366,14 @@ Le fichier n'est pas appelé automatiquement dans le HTML
 généré, il faut l'appeler «&nbsp;manuellement&nbsp;» avec
 une balise <tt>&lt;img&gt;</tt> dans un fragment texte.
 
+
 Dans tous les cas, fragment section, texte et code, le tissage recherche
 les séquences introduites par un <i lang='en'>backslash</i> pour
 les remplacer par le caractère associé (en fait, la séquence
-<tt>&amp;#</tt><var>nnn</var><tt>;</tt>). Par exemple,
-la séquence <tt>\pi</tt> sera remplacée par <tt>&amp;#960;</tt>, c'est-à-dire &#960;.
-En même temps, les noms de section encadrés par des <tt>@</tt> ou des
+<tt>&amp;#</tt><var>nnn</var><tt>;</tt> dans le fichier HTML). Par exemple,
+la séquence <tt>\pi</tt> sera remplacée par π dans le fichier
+Markdown et par <tt>&amp;#960;</tt> dans le fichier HTML.
+En même temps, dans le fichier HTML, les noms de section encadrés par des <tt>@</tt> ou des
 <tt>|</tt> sont transformés en liens hypertextes vers la section du
 même nom (cela dit, il n'y a pas de contrôle, le lien peut pointer
 vers le néant s'il n'existe aucune section de ce nom).
@@ -332,12 +383,14 @@ pour les fragments sections et les textes, car ceux-ci contiennent déjà du mar
 HTML et on considère que les  <tt>&lt;&gt;&amp;</tt> y sont déjà sous
 la forme <tt>&amp;lt;&amp;gt;&amp;amp;</tt>.
 
+
 ## Emmêlement
 
 L'emmêlement permet de générer un ou plusieurs fichiers
 téléchargeables sur les machines HP-48 ou HP-50.
 Il peut y avoir plusieurs raisons pour générer
 plusieurs fichiers&nbsp;:
+
 <ul>
   <li>un fichier contient les fonctions de base et les autres fichiers les fonctions étendues,</li>
   <li>les fichiers contiennent des chaînes de caractères dans des langues différentes
@@ -350,6 +403,7 @@ plusieurs fichiers&nbsp;:
   des programmes fournis.</li>
 </ul>
 
+
 ### Extraction des liens
 
 La première étape consiste à recenser tous les fragments de code
@@ -357,6 +411,7 @@ qui s'appliquent au fichier de code en cours de constitution et
 à identifier les liens (appels et insertions) qui s'y trouvent.
 À cette occasion, le programme bâtit un graphe des appels et un
 graphe des insertions.
+
 
 La sélection du code se fait à deux niveaux&nbsp;: section et fragment.
 Si la section est une section anonyme (<tt>section:&nbsp;0</tt>),
@@ -369,6 +424,7 @@ même utilisée, si elle est incluse dans une section sélectionnée
 (ou incluse dans une section elle-même incluse dans... et ainsi de
 suite, récursivement).
 
+
 La sélection sur les fragments est assez semblable. Si un fragment
 comporte un attribut avec le nom du fichier de code en clé, alors
 le fragment de code sera inclus dans le fichier de code.
@@ -376,7 +432,9 @@ La seule différence par rapport aux sections est que si un fragment
 ne comporte aucun attribut dont la clé est un nom de fichier de code,
 alors il sera appelé dans tous les fichiers.
 
+
 Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
+
 
 #### `CVTCAR`
 
@@ -385,26 +443,26 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 ```
 
 ```
-<span class='condition'>ex-cycle, ex1</span>
-<a href='#SUBSG' class='insert'>SUBSG</a> &#8594; SUBSG
+:::: ex-cycle, ex1 ::::
+<<<<SUBSG>>>> → SUBSG
 ```
 
 ```
   «
-    "&lt;)" 128 <a href='#SUBSG' class='call'>SUBSG</a>   "&lt;-" 142 <a href='#SUBSG' class='call'>SUBSG</a>   "PI" 156 <a href='#SUBSG' class='call'>SUBSG</a>
-    "x-" 129 <a href='#SUBSG' class='call'>SUBSG</a>   "|v" 143 <a href='#SUBSG' class='call'>SUBSG</a>   "GW" 157 <a href='#SUBSG' class='call'>SUBSG</a>
-    ".V" 130 <a href='#SUBSG' class='call'>SUBSG</a>   "|^" 144 <a href='#SUBSG' class='call'>SUBSG</a>   "[]" 158 <a href='#SUBSG' class='call'>SUBSG</a>
-    "v/" 131 <a href='#SUBSG' class='call'>SUBSG</a>   "Gg" 145 <a href='#SUBSG' class='call'>SUBSG</a>   "oo" 159 <a href='#SUBSG' class='call'>SUBSG</a>
-    ".S" 132 <a href='#SUBSG' class='call'>SUBSG</a>   "Gd" 146 <a href='#SUBSG' class='call'>SUBSG</a>   "&lt;&lt;" 171 <a href='#SUBSG' class='call'>SUBSG</a>
-    "GS" 133 <a href='#SUBSG' class='call'>SUBSG</a>   "Ge" 147 <a href='#SUBSG' class='call'>SUBSG</a>   "^o" 176 <a href='#SUBSG' class='call'>SUBSG</a>
-    "|&gt;" 134 <a href='#SUBSG' class='call'>SUBSG</a>   "Gn" 148 <a href='#SUBSG' class='call'>SUBSG</a>   "Gm" 181 <a href='#SUBSG' class='call'>SUBSG</a>
-    "pi" 135 <a href='#SUBSG' class='call'>SUBSG</a>   "Gh" 149 <a href='#SUBSG' class='call'>SUBSG</a>   "&gt;&gt;" 187 <a href='#SUBSG' class='call'>SUBSG</a>
-    ".d" 136 <a href='#SUBSG' class='call'>SUBSG</a>   "Gl" 150 <a href='#SUBSG' class='call'>SUBSG</a>   ".x" 215 <a href='#SUBSG' class='call'>SUBSG</a>
-    "&lt;=" 137 <a href='#SUBSG' class='call'>SUBSG</a>   "Gr" 151 <a href='#SUBSG' class='call'>SUBSG</a>   "O/" 216 <a href='#SUBSG' class='call'>SUBSG</a>
-    "&gt;=" 138 <a href='#SUBSG' class='call'>SUBSG</a>   "Gs" 152 <a href='#SUBSG' class='call'>SUBSG</a>   "Gb" 223 <a href='#SUBSG' class='call'>SUBSG</a>
-    "=/" 139 <a href='#SUBSG' class='call'>SUBSG</a>   "Gt" 153 <a href='#SUBSG' class='call'>SUBSG</a>   ":-" 247 <a href='#SUBSG' class='call'>SUBSG</a>
-    "Ga" 140 <a href='#SUBSG' class='call'>SUBSG</a>   "Gw" 154 <a href='#SUBSG' class='call'>SUBSG</a>
-    "-&gt;" 141 <a href='#SUBSG' class='call'>SUBSG</a>   "GD" 155 <a href='#SUBSG' class='call'>SUBSG</a>
+    "<)" 128 SUBSG   "<-" 142 SUBSG   "PI" 156 SUBSG
+    "x-" 129 SUBSG   "|v" 143 SUBSG   "GW" 157 SUBSG
+    ".V" 130 SUBSG   "|^" 144 SUBSG   "[]" 158 SUBSG
+    "v/" 131 SUBSG   "Gg" 145 SUBSG   "oo" 159 SUBSG
+    ".S" 132 SUBSG   "Gd" 146 SUBSG   "<<" 171 SUBSG
+    "GS" 133 SUBSG   "Ge" 147 SUBSG   "^o" 176 SUBSG
+    "|>" 134 SUBSG   "Gn" 148 SUBSG   "Gm" 181 SUBSG
+    "pi" 135 SUBSG   "Gh" 149 SUBSG   ">>" 187 SUBSG
+    ".d" 136 SUBSG   "Gl" 150 SUBSG   ".x" 215 SUBSG
+    "<=" 137 SUBSG   "Gr" 151 SUBSG   "O/" 216 SUBSG
+    ">=" 138 SUBSG   "Gs" 152 SUBSG   "Gb" 223 SUBSG
+    "=/" 139 SUBSG   "Gt" 153 SUBSG   ":-" 247 SUBSG
+    "Ga" 140 SUBSG   "Gw" 154 SUBSG
+    "->" 141 SUBSG   "GD" 155 SUBSG
     IF DUP "%%HP" POS
     THEN
       DUP 10 CHR POS 1 +
@@ -422,12 +480,12 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 ```
 
 ```
-<span class='condition'>ex-cycle, ex1, ex3</span>
-  &#8594; ch av ap
+:::: ex-cycle, ex1, ex3 ::::
+  → ch av ap
 ```
 
 ```
-<span class='condition'>ex2</span>
+:::: ex2 ::::
 'ap' STO 'av' STO 'ch' STO
 ```
 
@@ -445,24 +503,27 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 ```
 
 ```
-<span class='condition'>ex-cycle</span>
-"cycle" <a href='#CVTCAR' class='insert'>CVTCAR</a>
+:::: ex-cycle ::::
+"cycle" <<<<CVTCAR>>>>
 ```
 
-La section <a href='#CVTCAR' class='call'>CVTCAR</a> sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
-<tt>ex3</tt>, tandis que la section <a href='#SUBSG' class='call'>SUBSG</a> ne sera, apparemment, sélectionnée
-que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section <a href='#CVTCAR' class='call'>CVTCAR</a>, le fichier <tt>ex2</tt>
+La section CVTCAR sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
+<tt>ex3</tt>, tandis que la section SUBSG ne sera, apparemment, sélectionnée
+que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section CVTCAR, le fichier <tt>ex2</tt>
 utilisera un stockage dans des variables globales pour des besoins
 de débugage, tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
-locales. De plus, le fichier <tt>ex1</tt> inclura le code de <a href='#SUBSG' class='call'>SUBSG</a> et le stockera dans
+locales. De plus, le fichier <tt>ex1</tt> inclura le code de SUBSG et le stockera dans
 une autre variable locale.
 
-Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section <a href='#SUBSG' class='call'>SUBSG</a>,
-qui inclut la section <a href='#CVTCAR' class='call'>CVTCAR</a>, qui inclut à son tour <a href='#SUBSG' class='call'>SUBSG</a>, ce qui constitue un problème certain.
+
+Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section SUBSG,
+qui inclut la section CVTCAR, qui inclut à son tour SUBSG, ce qui constitue un problème certain.
+
 
 ### Tri des sections de code
 
 La deuxième étape a deux buts&nbsp;:
+
 <ol>
 <li>
 établir un tri topologique des sections en fonction des insertions,
@@ -474,12 +535,14 @@ détecter les cycles dans le graphe des insertions.
 </li>
 </ol>
 
+
 Le tri topologique consiste à passer en revue tous les liens d'insertion
 et à comparer le niveau hiérarchique de la section englobante et celui
 de la section insérée. Le niveau de la section englobante doit être supérieur,
 strictement, à celui de la section insérée. Si ce n'est pas le cas, le niveau
 de la section englobante est mis à jour avec le niveau hiérarchique de la section
 insérée plus 1.
+
 
 Le mécanisme s'arrête dans deux cas. Tout d'abord, si on a effectué une passe
 sur tous les liens d'insertion sans qu'il y ait eu besoin de mettre à jour
@@ -488,11 +551,13 @@ section a un niveau hiérarchique supérieur au nombre de sections existantes.
 Dans ce cas, cela signifie qu'il existe un cycle dans les liens d'insertion.
 Et le fichier n'est pas généré.
 
+
 Remarque&nbsp;: dans la version actuelle, on tient compte de toutes les sections
 et de tous les liens d'insertion déclarés pour le fichier, même si parmi
 ces sections, il en existe qui constituent du «&nbsp;code mort&nbsp;» (sections
 qui ne sont pas reliées au fichier à générer par un lien d'insertion). Cela peut
 créer des rejets abusifs. Cela sera corrigé dans une version ultérieure.
+
 
 Il y a d'autres cas d'erreur, comme une section que l'on a oublié d'inclure,
 ou bien que l'on a inclue plusieurs fois alors qu'il ne fallait pas le faire,
@@ -500,6 +565,7 @@ ou encore une section globale inclue en tant que section locale.
 Ces cas de figure ne sont pas traitée automatiquement par le programme,
 c'est au programmeur de s'en rendre compte en jetant un coup d'&oelig;il
 sur le graphe des appels et des insertions.
+
 
 ### Génération des sections de code
 
@@ -512,10 +578,12 @@ d'appel, c'est un peu plus compliqué. Si la section appelée est
 une section globale, alors le code généré est réduit au nom de
 la section. En revanche, s'il s'agit d'une section locale,
 il faut la faire suivre de <tt>EVAL</tt>.
+
 Une section peut être globale dans un premier fichier de code
 et locale dans un autre. C'est pour cela que l'instruction <tt>EVAL</tt>
 n'est pas codée dans le source, mais générée lors de la construction
 du code.
+
 
 ### Écriture des fichiers de code
 
@@ -527,6 +595,7 @@ puis pour chaque section globale, on écrit le nom puis le code.
 Et on termine par <tt>END</tt>. Cela sert à créer un répertoire
 entier dans la machine cible.
 
+
 ## Utilisation pour les HP-41
 
 Ce format et ce programme peuvent être utilisés pour générer des programmes
@@ -535,11 +604,13 @@ générés sont de type <tt>code41</tt>, analogue à <tt>code</tt>, mais
 les séquences d'appel marquées par <tt>@</tt> sont interdites. En revanche,
 il est possible d'utiliser les balises d'insertion <tt>|</tt>.
 
+
 Si l'on utilise le paramètre <tt>-number</tt> sur la ligne de commande,
 les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
 contrôler la saisie du programme sur HP-41.
 La sortie doit être compatible avec
 <a href="https://www.hpmuseum.org/software/41uc.htm">HP41UC</a>.
+
 
 ## Utilisation pour APL et shell
 
@@ -550,8 +621,10 @@ les appels par des balises <tt>@</tt>, mais on ne peut pas faire d'insertion
 avec des balises <tt>|</tt>. De plus, pour les rares modulos d'APL et les fréquents
 pipes de shell, il faut écrire <tt>\|</tt>.
 
+
 ## Licence
 
 Ce code est diffusé sous les mêmes termes que Perl, la licence GPL
 et la licence artistique.
+
 

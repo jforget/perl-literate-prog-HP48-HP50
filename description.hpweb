@@ -23,12 +23,12 @@ ex-cycle: dir
     l'ajout de commentaires est malcommode et pourtant nécessaire. Pour l'instant,
     cela ajoute les HP-41 et les programmes APL ou shell.
 - en: |
-    Actually, I have resused this process for programs beyond HP-48 and HP-50.
+    Actually, I have reused this process for programs beyond HP-48 and HP-50.
     I use it for systems where writing comments is cumbersome and yet
     very necessary. For the moment, this includes HP-41, APL and shell.
 - fr: |
-    Il est préférable de lire en parallèle le texte d'origine (français
-    + anglais avec les symboles spéciaux) et le texte HTML généré
+    Il est préférable de lire en parallèle le texte d'origine (français + anglais
+    avec les symboles spéciaux) et le texte HTML généré
     pour mieux se rendre compte du fonctionnement du système.
 - en: |
     It is better to read in parallel the source file (French + English
@@ -96,7 +96,7 @@ ex-cycle: dir
     Ma version diffère sur plusieurs points.
     <ul>
     <li>Le fichier documentation généré n'est pas du T<sub>E</sub>X,
-    mais du HTML.</li>
+    mais du HTML et du Markdown.</li>
     <li>WEB et CWEB génèrent un seul fichier de documentation, mon
     système permet de générer plusieurs fichiers dans des langues
     différentes à partir d'un fichier <tt>.hpweb</tt> multilingue.</li>
@@ -118,7 +118,7 @@ ex-cycle: dir
 - en: |
     My version differs on several points.
     <ul>
-    <li>The human-readable file is not T<sub>E</sub>X  but HTML</li>
+    <li>The human-readable file is not T<sub>E</sub>X  but HTML and Markdown</li>
     <li>WEB and CWEB generate only one documentation file, my
     programme uses a multilingual <tt>.hpweb</tt> file to generate
     several documentation files.</li>
@@ -181,7 +181,7 @@ ex-cycle: dir
     fragment (included) to the next section fragment (excluded, because
     it belongs to the next section).
 - fr: |
-    Le tissage consiste à construire un fichier HTML pour chaque
+    Le tissage consiste à construire un fichier HTML et un fichier Markdown pour chaque
     code langue. Le programme passe en revue tous les fragments
     et tient compte des fragments sections, des fragments codes
     indépendamment de la langue et des fragments textes associés
@@ -198,7 +198,7 @@ ex-cycle: dir
     un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
     d'autres sections.
 - en: |
-    Weaving consists in building an HTML file for each language code.
+    Weaving consists in building an HTML file and a Markdown file for each language code.
     The program scans all fragments, keeping the sections fragments
     and code fragment irrespective of the language code and the
     text fragments tagged with the current language code.
@@ -456,19 +456,21 @@ ex-cycle: dir
 - fr: |
     il y aura deux fichiers de code&nbsp;:
     <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
-    et trois fichiers de documentation
+    trois fichiers de documentation HTML
     <tt>ams-soviet.Side_Globe.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
     <tt>ams-soviet.Don_Kay.html</tt> intitulé «&nbsp;Small_Fred,Mare_Tail&nbsp;»
-    et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;».
+    et <tt>ams-soviet.Light_Bulb.html</tt> intitulé «&nbsp;Top_Trough,Rum_Tub,Straight_Key&nbsp;»
+    et trois fichiers de documentation Markdown avec des noms équivalents.
     Les codes langues «&nbsp;Side_Globe&nbsp;», «&nbsp;Don_Kay&nbsp;» et
     «&nbsp;Light_Bulb&nbsp;» ne figurent pas dans la table ISO-639.
 - en: |
     there will be two code files:
     <tt>Skip_Spin</tt> et <tt>Flap_Lid</tt>,
-    and three documentation files:
+    and three HTML documentation files:
     <tt>ams-soviet.Side_Globe.html</tt> titled "Small_Fred,Mare_Tail"
     <tt>ams-soviet.Don_Kay.html</tt> titled "Small_Fred,Mare_Tail"
-    et <tt>ams-soviet.Light_Bulb.html</tt> titled "Top_Trough,Rum_Tub,Straight_Key".
+    et <tt>ams-soviet.Light_Bulb.html</tt> titled "Top_Trough,Rum_Tub,Straight_Key"
+    and three Markdown documentation files with similar names.
     The language codes "Side_Globe", "Don_Kay" and "Light_Bulb"
     are not mentionned in the ISO-639 table.
 - fr: |
@@ -495,27 +497,30 @@ ex-cycle: dir
 
     Le nom du fichier en sortie est le nom du fichier en entrée,
     moins l'extension <tt>.hpweb</tt>, plus un point, le code
-    langue et l'extension <tt>.html</tt>. Par exemple, pour le
+    langue et l'extension <tt>.html</tt> ou <tt>.md</tt>. Par exemple, pour le
     français, le fichier <tt>description.htweb</tt> donnera
-    le fichier en sortie <tt>description.fr.html</tt>
+    les fichiers en sortie <tt>description.fr.html</tt>
+    et <tt>description.fr.md</tt>
 - en: |
     Weaving is explained hereafter for one language code, although
     the real program processes all language codes in parallel.
 
     The name of the output file is the name of the input file,
     minus the <tt>.hpweb</tt> extension, plus a dot, the language
-    code and the extension <tt>.html</tt>. For example, for
+    code and the extension <tt>.html</tt> or <tt>.md</tt>. For example, for
     the English language, the
     input file <tt>description.htweb</tt> will produce the output
-    file <tt>description.en.html</tt>.
+    files <tt>description.en.html</tt> and <tt>description.en.md</tt>.
 - fr: |
     Le titre spécifié dans la première variable du fichier YAML
     permet d'avoir le contenu de l'élément <tt>&lt;title&gt;</tt>
-    et de l'élément <tt>&lt;h1&gt;</tt> du fichier HTML.
+    et de l'élément <tt>&lt;h1&gt;</tt> du fichier HTML, ainsi que
+    de l'élément <tt>#</tt> du fichier Markdown.
 - en: |
     The title specified in the first variable of the YAML
     file gives the contents of the <tt>&lt;title&gt;</tt>
-    and the <tt>&lt;h1&gt;</tt> elements in the HTML file.
+    and the <tt>&lt;h1&gt;</tt> elements in the HTML file and
+    the <tt>#</tt> element of the Markdown file.
 - fr: |
     Pour le tissage, le programme extrait dans l'ordre tous les fragments sections,
     tous les textes dépendant du code langue utilisé et tous les
@@ -528,11 +533,15 @@ ex-cycle: dir
     et une balise <tt>&lt;a name='...'&gt;</tt>, le nom étant
     donné par l'attribut <tt>section</tt> de la section. Le contenu
     est donné par le nom de la section et le texte associé à la langue.
+    Pour le fichier Markdown, il y aura une balise équivalente <tt>##</tt>, mais pas
+    de balise Markdown équivalente à la balise <tt>a name</tt> du HTML.
 - en: |
     Each section fragment generates a <tt>&lt;h2&gt;</tt> tag and a
     <tt>&lt;a name='...'&gt;</tt> tag, the name of which is
     given by the <tt>section</tt> attribute. The contents is the
     section name and the text associated to the language.
+    In the Markdown file, there will be a <tt>##</tt> tag instead of the <tt>h2</tt>
+    tag, but nothing to replace the <tt>a name</tt> HTML tag.
 - fr: |
     Si un fragment section contient une clé <tt>level</tt>, alors le
     programme utilise la valeur <var>n</var> correspondante pour générer
@@ -544,17 +553,17 @@ ex-cycle: dir
     <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> tag instead of
     the <tt>&lt;h2&gt;</tt> tag.
 - fr: |
-    Si la valeur correspondant à la clé <tt>section</tt> est <tt>0</tt>,
+    Si la valeur correspondant à la clé <tt>section</tt> est 0,
     il s'agit d'une section anonyme. Dans ce cas, la balise
     <tt>&lt;a name='...'&gt;</tt> sera générée avec le titre de la
     section.
 - en: |
-    If the value corresponding to the <tt>section</tt> key is <tt>0</tt>,
+    If the value corresponding to the <tt>section</tt> key is 0,
     this is an anonymous section. The
     <tt>&lt;a name='...'&gt;</tt> tag will be generated using the
     section's title.
 - fr: |
-    Pour les textes, le balisage par défaut est les balises <tt>&lt;p&gt;</tt>.
+    Pour les textes, le balisage HTML par défaut est les balises <tt>&lt;p&gt;</tt>.
     Chaque paragraphe (fragment de texte ou portion de fragment de texte
     délimitée par des lignes vides) sera encadré par
     <tt>&lt;p&gt;</tt> et <tt>&lt;/p&gt;</tt>, sauf si une balise existe
@@ -562,7 +571,7 @@ ex-cycle: dir
     ne voulez pas de balise, il vous suffit d'ajouter
     un commentaire HTML <tt>&lt;!-- blabla --&gt;</tt>.
 - en: |
-    Default tagging for texts is <tt>&lt;p&gt;</tt>, so
+    Default tagging for HTML texts is <tt>&lt;p&gt;</tt>, so
     each paragraph (text fragment or text fragment portion
     delimited by empty lines) will be surrounded by
     <tt>&lt;p&gt;</tt> and <tt>&lt;/p&gt;</tt>, except if another tag exists
@@ -591,9 +600,10 @@ ex-cycle: dir
     Dans tous les cas, fragment section, texte et code, le tissage recherche
     les séquences introduites par un <i lang='en'>backslash</i> pour
     les remplacer par le caractère associé (en fait, la séquence
-    <tt>&amp;#</tt><var>nnn</var><tt>;</tt>). Par exemple,
-    la séquence <tt>\\pi</tt> sera remplacée par <tt>&amp;#960;</tt>, c'est-à-dire \pi.
-    En même temps, les noms de section encadrés par des <tt>@</tt> ou des
+    <tt>&amp;#</tt><var>nnn</var><tt>;</tt> dans le fichier HTML). Par exemple,
+    la séquence <tt>\\pi</tt> sera remplacée par \pi dans le fichier
+    Markdown et par <tt>&amp;#960;</tt> dans le fichier HTML.
+    En même temps, dans le fichier HTML, les noms de section encadrés par des <tt>@</tt> ou des
     <tt>|</tt> sont transformés en liens hypertextes vers la section du
     même nom (cela dit, il n'y a pas de contrôle, le lien peut pointer
     vers le néant s'il n'existe aucune section de ce nom).
@@ -606,9 +616,10 @@ ex-cycle: dir
     In all cases, section fragments, text and code, weaving looks for substrings
     starting with a backslash to substitute them with the associated
     character (or actually, the corresponding
-    <tt>&amp;#</tt><var>nnn</var><tt>;</tt> sequence). For example,
-    <tt>\\pi</tt> will be replaced by <tt>&amp;#960;</tt>, that is, \pi.
-    At the same time, the section names sandwiched between two <tt>@</tt>'s
+    <tt>&amp;#</tt><var>nnn</var><tt>;</tt> sequence in the HTML file). For example,
+    <tt>\\pi</tt> will be replaced by \pi in the Markdown file
+    and by <tt>&amp;#960;</tt> in the HTML file.
+    At the same time, in the HTML file, the section names sandwiched between two <tt>@</tt>'s
     or two <tt>|</tt>'s are changed into an hyperlink to the section
     with the corresponding name (yet, there is no check; if the name
     defines no section, the link will be dangling).
