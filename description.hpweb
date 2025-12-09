@@ -80,7 +80,7 @@ ex-cycle: dir
     Since the human-readable file is different from the compiler-readable
     file, they can present the code in a different order. So, for
     example, the <var>foo</var><tt>.tex</tt> file can first give a
-    general orverview of the algorithm, then define the main data
+    general overview of the algorithm, then define the main data
     structure, show the details of the algorithm and end with
     intialisation and error processing. On the other hand, the
     <var>toto</var><tt>.p</tt> file must begin with the definition of
@@ -102,12 +102,16 @@ ex-cycle: dir
     différentes à partir d'un fichier <tt>.hpweb</tt> multilingue.</li>
     <li>WEB génère du Pascal, CWEB génère du C, mon système génère du
     RPL pour les calculatrices HP-48-50 ou des sources HP-41, APL ou shell.</li>
-    <li>C'est le même programme qui tisse les fichiers de documentation
+    <li>WEB et CWEB fournissent chacun deux programmes différents pour générer
+    d'un côté le fichier de documentation et de l'autre côté le fichier source.
+    Dans mon système, c'est le même programme qui tisse les fichiers de documentation
     et qui emmêle les fichiers de code.</li>
     <li>CWEB a un mécanisme assez malcommode pour générer plusieurs fichiers
     de code&nbsp;: les <i lang='en'>change files</i> (comme le résultat de <tt>diff</tt>
     et son traitement ultérieur par <tt>patch</tt>, mais en moins bien). Et cela permet de générer seulement
-    des fichiers de code similaires, se distinguant par quelques variantes éparses.
+    des fichiers de code similaires, se distinguant par quelques variantes éparses,
+    par exemple un fichier à compiler avec <tt>gcc</tt> et un fichier faisant la même
+    chose, mais compilé par <tt>mingw</tt>.
     Mon système permet de générer des fichiers de code qui peuvent être des variantes
     d'un fichier de base, ou bien des fichiers complémentaires, partageant très peu de code.</li>
     </ul>
@@ -120,10 +124,13 @@ ex-cycle: dir
     several documentation files.</li>
     <li>WEB generates Pascal, CWEB generates C or C++ and my programme
     generates User-RPL for HP-48-50 calculators or other sources files in APL or shell or for HP-41.</li>
-    <li>The same programme weaves the documentation files and tangles
+    <li>Both WEB and CWEB provide two different programs to weave and tangle.
+    In my project, the same program weaves the documentation files and tangles
     the code files.</li>
     <li>CWEB has a cumbersome mechanism to produce several code files: change files
     (a bit like <tt>diff</tt>'s output, processed by <tt>patch</tt>, but less efficient).
+    And the generated code files are much similar, such as a C program for <tt>gcc</tt>
+    and a C program for <tt>mingw</tt> and doing the same things.
     My system allows you to produce easily several code files, either variants of a basic
     file, or independant dissimilar files.</li>
     </ul>
@@ -427,13 +434,19 @@ ex-cycle: dir
     and in French (language code <tt>fr</tt>, title <i lang='fr'>Programmation littéraire
     pour HP-48 et HP-50</i>).
 - fr: |
-    Il n'y a pas de contrôle vis-à-vis de la table ISO-639
-    des codes langues. Vous pouvez saisir n'importe quel code constitué de caractères
+    D'autres valeurs ont été ajoutées ultérieurement pour les fichiers codes&nbsp;:
+    <tt>code41</tt>, <tt>apl</tt> et <tt>shell</tt>.
+- en: |
+    Other values have been added after the initial version:
+    <tt>code41</tt>, <tt>apl</tt> et <tt>shell</tt>.
+- fr: |
+    Pour les codes langues, il n'y a pas de contrôle vis-à-vis de la table ISO-639.
+    Vous pouvez saisir n'importe quel code constitué de caractères
     alphanumériques, ils seront interprétés comme indiqué ci-dessus. Ainsi, si
     le fichier <tt>ams-soviet.hpweb</tt> commence par&nbsp;:
 - en: |
-    There is no check with the ISO-639 table for language
-    codes. You can enter any alphanumeric string for the various codes. Thus, if
+    For language codes, there is no check with the ISO-639 table.
+    You can enter any alphanumeric string for the various codes. Thus, if
     the <tt>ams-soviet.hpweb</tt> file starts with:
 - code: |
     'Side_Globe,Don_Kay': Small_Fred,Mare_Tail
@@ -458,6 +471,20 @@ ex-cycle: dir
     et <tt>ams-soviet.Light_Bulb.html</tt> titled "Top_Trough,Rum_Tub,Straight_Key".
     The language codes "Side_Globe", "Don_Kay" and "Light_Bulb"
     are not mentionned in the ISO-639 table.
+- fr: |
+    Ces exemples sont caricaturaux. Un cas d'emploi plus sérieux est d'utiliser
+    un pseudo-code langue <tt>docu</tt>  pour la documentation utilisateur,
+    un pseudo-code langue <tt>docp</tt> pour la documentation destinée aux programmeurs
+    et un pseudo-code langue <tt>docm</tt> pour la documentation de maintenance.
+
+    Quoi qu'il en soit, nous continuons à utiliser la désignation «&nbsp;code langue&nbsp;».
+- en: |
+    These examples are far-fetched. A more concrete example is to use a
+    <tt>docu</tt> "language code" for the user documentation, a <tt>docp</tt>
+    "language code" for the documentation for programmers and a <tt>docm</tt>
+    "language code" for the maintenance documentation.
+
+    Anyhow, we will continue to pretend these are language codes.
 
 - section: 0
   fr: Tissage
@@ -604,7 +631,7 @@ ex-cycle: dir
       <li>les fichiers contiennent des chaînes de caractères dans des langues différentes
       pour les invites et les messages,</li>
       <li>les fichiers concernent des machines cibles différentes, par exemple une HP-48
-      avec un affichage 64x131 et une HP-50 avec un affichage 80x131,</li>
+      avec un affichage 64×131 et une HP-50 avec un affichage 80×131,</li>
       <li>un fichier contient les routines utilitaires sous formes de variables globales
       dans le répertoire de la HP, pour faciliter la mise au point, tandis qu'un autre
       fichier stocke toutes ces routines utilitaires dans des variables locales
@@ -619,9 +646,9 @@ ex-cycle: dir
     <li>one file contains the basic functions and the others contain the extensions,</li>
     <li>each file contains prompt strings and message strings in a different language,</li>
     <li>the files apply to different target machines, for example one file for HP-48's
-    with a 64x131 screen and another file for HP-50's with a 80x131 screen,</li>
-    <li>one file stores all routines into global variables, to facilitage
-    development, while the other stores these routines as local variables
+    with a 64×131 screen and another file for HP-50's with a 80×131 screen,</li>
+    <li>one file stores all routines into global variables, to facilitate
+    development and debuging, while the other stores these routines as local variables
     inside the main programs.</li>
     </ul>
 - section: 0
@@ -755,8 +782,8 @@ ex-cycle: dir
     locales. De plus, le fichier <tt>ex1</tt> inclura le code de @SUBSG@ et le stockera dans
     une autre variable locale.
 - en: |
-    The @CVTCAR@ section will be selected in both <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>
-    files. On the other hand, it seems that the @SUBSG@ section will be selected
+    The @CVTCAR@ section will be selected in three files, <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>.
+    On the other hand, it seems that the @SUBSG@ section will be selected
     only in <tt>ex2</tt> and <tt>ex3</tt>. For the @CVTCAR@ section, the <tt>ex2</tt> file
     will store values into global variables, for debugging purposes. The
     <tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables. In addition,
@@ -933,13 +960,14 @@ ex-cycle: dir
      Si l'on utilise le paramètre <tt>-number</tt> sur la ligne de commande,
      les lignes du fichier obtenu sont numérotées, ce qui permet de mieux
      contrôler la saisie du programme sur HP-41.
-     La sortie doit être compatible avec HP41UC.
+     La sortie doit être compatible avec
+     <a href="https://www.hpmuseum.org/software/41uc.htm">HP41UC</a>.
 - en: |
-     when using the command-line parameter <tt>-number</tt>,
+     When using the command-line parameter <tt>-number</tt>,
      the lines in the code files are numbered, so it is easier to check
      for missing lines when entering the program into a HP-41.
-     The output must be compatible with HP41UC.
-
+     The output must be compatible with
+     <a href="https://www.hpmuseum.org/software/41uc.htm">HP41UC</a>.
 - section: 0
   fr: Utilisation pour APL et shell
   en: Use with APL and shell

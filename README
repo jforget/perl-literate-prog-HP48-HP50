@@ -7,7 +7,7 @@ file contains all which is necessary  to produce both the code and the
 documentation.
 
 This  project is developped  in parallel  with another  project, which
-will be a  testcase for literate programming generation.  As a result,
+is a  testcase for literate programming generation.  As a result,
 there  may  be  discrepancies  between  the  software  description  in
 "description.hpweb" and what it actually does in "genere-hpweb".
 
