@@ -102,11 +102,16 @@ for (keys %$h) {
     $dec_point{$_} = ".";
   }
   else {
-    my $nom = "$racine.$_.html";
+    my $nom    = "$racine.$_.html";
+    my $nom_md = "$racine.$_.md";
     open my $f, '>:encoding(utf8)', $nom
       or die "Ouverture $nom $!";
-    $textes{$_}{name} = $nom;
+    open my $fm, '>:encoding(utf8)', $nom_md
+      or die "Ouverture $nom_md $!";
+    $textes{$_}{name}   = $nom;
+    $textes{$_}{namemd} = $nom_md;
     $textes{$_}{fh} = $f;
+    $textes{$_}{fm} = $fm;
     print $f <<"EOF";
 <html>
 <head>
@@ -123,6 +128,12 @@ for (keys %$h) {
 </head>
 <body>
 <a href='#$h->{$_}'>$h->{$_}</a>
+EOF
+    print $fm <<"EOF";
+-*- encoding: utf-8; indent-tabs-mode: nil -*-
+
+# $h->{$_}
+
 EOF
   }
 }
@@ -182,18 +193,22 @@ for my $fragment (@$l) {
       print "$section\n";
     }
     for (keys %textes) {
-      my $f = $textes{$_}{fh};
+      my $f  = $textes{$_}{fh};
+      my $fm = $textes{$_}{fm};
       my $titre = transcrit($fragment->{$_} || '', 0);
       if ($section && $titre) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt> - $titre</a></h$niveau>\n";
+        print $fm "#" x $niveau, " `$section` - $titre\n\n";
       }
       elsif ($titre) {
         my $lien = $titre;
         $lien =~ s/[<>&']/_/g;
         print $f "<h$niveau><a name='$lien'>$titre</a></h$niveau>\n";
+        print $fm "#" x $niveau, " $titre\n\n";
       }
       elsif ($section) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt></a></h$niveau>\n";
+        print $fm "#" x $niveau, " `$section`\n\n";
       }
     }
     next;
@@ -225,8 +240,10 @@ for my $fragment (@$l) {
     }
 
     for my $lg (keys %textes) {
-      my $f = $textes{$lg}{fh};
+      my $f  = $textes{$lg}{fh};
+      my $fm = $textes{$lg}{fm};
       print $f "<pre$classe>\n$condition$code</pre>\n";
+      print $fm "```\n$condition$code```\n\n";
     }
 
     next;
@@ -246,11 +263,14 @@ for my $fragment (@$l) {
         if ($trace & 8) {
           print "--$paragraphe--\n";
         }
-        if ($paragraphe !~ /\A\<.*\>\z/s && $paragraphe !~ /\A\<.*\>\Z/s) {
-          $paragraphe = "<p>\n$paragraphe</p>\n";
+        my $para_html = $paragraphe;
+        if ($para_html !~ /\A\<.*\>\z/s && $para_html !~ /\A\<.*\>\Z/s) {
+          $para_html = "<p>\n$para_html</p>\n";
         }
-        my $f = $textes{$lg}{fh};
-        print $f $paragraphe, "\n";
+        my $f  = $textes{$lg}{fh};
+        my $fm = $textes{$lg}{fm};
+        print $f  $para_html, "\n";
+        print $fm $paragraphe, "\n";
       }
     }
   }
@@ -258,10 +278,13 @@ for my $fragment (@$l) {
 
 # Fin de la documentation
 for (keys %textes) {
-  my $f = $textes{$_}{fh};
+  my $f  = $textes{$_}{fh};
+  my $fm = $textes{$_}{fm};
   print $f "</body>\n</html>\n";
   close $f
     or die "fermeture $textes{$_}{name} $!";
+  close $fm
+    or die "fermeture $textes{$_}{namemd} $!";
 }
 
 # Table des sections et accesseurs aux propriétés des sections
