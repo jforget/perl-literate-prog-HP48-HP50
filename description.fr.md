@@ -507,10 +507,10 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 "cycle" <<<<CVTCAR>>>>
 ```
 
-<pre class='condcode' style='background-color: lightgrey;'>
+<listing class='condcode' style='background-color: lightgrey;'>
 <span class='condition' style='font-size-adjust: .5'>ex-cycle</span>
 "cycle" <a href='#CVTCAR' class='insert' style='background-color: skyblue'>CVTCAR</a>
-</pre>
+</listing>
 
 La section CVTCAR sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
 <tt>ex3</tt>, tandis que la section SUBSG ne sera, apparemment, sélectionnée
