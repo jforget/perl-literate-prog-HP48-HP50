@@ -237,7 +237,7 @@ for my $fragment (@$l) {
       }
     }
 
-    my $code_md = transcrit_md($code, 1);
+    my $code_md = transcrit_md($code, 0);
     $code       = transcrit   ($code, 1);
     my $condition    = '';
     my $condition_md = '';
@@ -273,8 +273,8 @@ for my $fragment (@$l) {
         if ($trace & 8) {
           print "--$paragraphe--\n";
         }
-        my $para_html = transcrit  ($paragraphe);
-        my $para_md   = transcrit_md($paragraphe);
+        my $para_html = transcrit   ($paragraphe);
+        my $para_md   = transcrit_md($paragraphe, 1);
         if (   $para_html !~ /\A\<.*\>\z/s
             && $para_html !~ /\A\<.*\>\Z/s) {
           $para_html = "<p>\n$para_html</p>\n";
@@ -526,7 +526,7 @@ sub transcrit {
 }
 
 sub transcrit_md {
-  my ($texte) = @_;
+  my ($texte, $with_links) = @_;
 
   my @morceau = decoup($texte);
 
@@ -543,7 +543,7 @@ sub transcrit_md {
       # Other section to be inserted into the current section
       $morceau[$i + 2] = "<<<<$etiq_ins>>>>";
     }
-    elsif ($etiq_call) {
+    elsif ($with_links && $etiq_call) {
       my $lien = lc($etiq_call);
       $morceau[$i + 1] = "<a href='#$lien' class='call'>$etiq_call</a>";
     }

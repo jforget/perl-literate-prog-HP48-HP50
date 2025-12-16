@@ -419,20 +419,20 @@ Here is an example (best understood if you read the <tt>.hpweb</tt> file)
 
 ```
   «
-    "<)" 128 <a href='#subsg' class='call'>SUBSG</a>   "<-" 142 <a href='#subsg' class='call'>SUBSG</a>   "PI" 156 <a href='#subsg' class='call'>SUBSG</a>
-    "x-" 129 <a href='#subsg' class='call'>SUBSG</a>   "|v" 143 <a href='#subsg' class='call'>SUBSG</a>   "GW" 157 <a href='#subsg' class='call'>SUBSG</a>
-    ".V" 130 <a href='#subsg' class='call'>SUBSG</a>   "|^" 144 <a href='#subsg' class='call'>SUBSG</a>   "[]" 158 <a href='#subsg' class='call'>SUBSG</a>
-    "v/" 131 <a href='#subsg' class='call'>SUBSG</a>   "Gg" 145 <a href='#subsg' class='call'>SUBSG</a>   "oo" 159 <a href='#subsg' class='call'>SUBSG</a>
-    ".S" 132 <a href='#subsg' class='call'>SUBSG</a>   "Gd" 146 <a href='#subsg' class='call'>SUBSG</a>   "<<" 171 <a href='#subsg' class='call'>SUBSG</a>
-    "GS" 133 <a href='#subsg' class='call'>SUBSG</a>   "Ge" 147 <a href='#subsg' class='call'>SUBSG</a>   "^o" 176 <a href='#subsg' class='call'>SUBSG</a>
-    "|>" 134 <a href='#subsg' class='call'>SUBSG</a>   "Gn" 148 <a href='#subsg' class='call'>SUBSG</a>   "Gm" 181 <a href='#subsg' class='call'>SUBSG</a>
-    "pi" 135 <a href='#subsg' class='call'>SUBSG</a>   "Gh" 149 <a href='#subsg' class='call'>SUBSG</a>   ">>" 187 <a href='#subsg' class='call'>SUBSG</a>
-    ".d" 136 <a href='#subsg' class='call'>SUBSG</a>   "Gl" 150 <a href='#subsg' class='call'>SUBSG</a>   ".x" 215 <a href='#subsg' class='call'>SUBSG</a>
-    "<=" 137 <a href='#subsg' class='call'>SUBSG</a>   "Gr" 151 <a href='#subsg' class='call'>SUBSG</a>   "O/" 216 <a href='#subsg' class='call'>SUBSG</a>
-    ">=" 138 <a href='#subsg' class='call'>SUBSG</a>   "Gs" 152 <a href='#subsg' class='call'>SUBSG</a>   "Gb" 223 <a href='#subsg' class='call'>SUBSG</a>
-    "=/" 139 <a href='#subsg' class='call'>SUBSG</a>   "Gt" 153 <a href='#subsg' class='call'>SUBSG</a>   ":-" 247 <a href='#subsg' class='call'>SUBSG</a>
-    "Ga" 140 <a href='#subsg' class='call'>SUBSG</a>   "Gw" 154 <a href='#subsg' class='call'>SUBSG</a>
-    "->" 141 <a href='#subsg' class='call'>SUBSG</a>   "GD" 155 <a href='#subsg' class='call'>SUBSG</a>
+    "<)" 128 SUBSG   "<-" 142 SUBSG   "PI" 156 SUBSG
+    "x-" 129 SUBSG   "|v" 143 SUBSG   "GW" 157 SUBSG
+    ".V" 130 SUBSG   "|^" 144 SUBSG   "[]" 158 SUBSG
+    "v/" 131 SUBSG   "Gg" 145 SUBSG   "oo" 159 SUBSG
+    ".S" 132 SUBSG   "Gd" 146 SUBSG   "<<" 171 SUBSG
+    "GS" 133 SUBSG   "Ge" 147 SUBSG   "^o" 176 SUBSG
+    "|>" 134 SUBSG   "Gn" 148 SUBSG   "Gm" 181 SUBSG
+    "pi" 135 SUBSG   "Gh" 149 SUBSG   ">>" 187 SUBSG
+    ".d" 136 SUBSG   "Gl" 150 SUBSG   ".x" 215 SUBSG
+    "<=" 137 SUBSG   "Gr" 151 SUBSG   "O/" 216 SUBSG
+    ">=" 138 SUBSG   "Gs" 152 SUBSG   "Gb" 223 SUBSG
+    "=/" 139 SUBSG   "Gt" 153 SUBSG   ":-" 247 SUBSG
+    "Ga" 140 SUBSG   "Gw" 154 SUBSG
+    "->" 141 SUBSG   "GD" 155 SUBSG
     IF DUP "%%HP" POS
     THEN
       DUP 10 CHR POS 1 +
