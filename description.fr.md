@@ -507,9 +507,9 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 "cycle" <<<<CVTCAR>>>>
 ```
 
-<pre class='condcode'>
-<span class='condition'>ex-cycle</span>
-"cycle" <a href='#CVTCAR' class='insert'>CVTCAR</a>
+<pre class='condcode' style='background-color: lightgrey;'>
+<span class='condition' style='font-size-adjust: .5'>ex-cycle</span>
+"cycle" <a href='#CVTCAR' class='insert' style='background-color: skyblue'>CVTCAR</a>
 </pre>
 
 La section CVTCAR sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
