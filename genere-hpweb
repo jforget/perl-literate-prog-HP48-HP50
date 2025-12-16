@@ -536,11 +536,16 @@ sub transcrit_md {
       # backslash sequence
       $morceau[$i] = $transco_md{$morceau[$i]};
     }
+    my $etiq_call = $morceau[$i + 1];
     my $etiq_ins  = $morceau[$i + 2];
     if ($etiq_ins) {
       # Autre section à insérer dans la section courante
       # Other section to be inserted into the current section
       $morceau[$i + 2] = "<<<<$etiq_ins>>>>";
+    }
+    elsif ($etiq_call) {
+      my $lien = lc($etiq_call);
+      $morceau[$i + 1] = "<a href='#$lien' class='call'>$etiq_call</a>";
     }
   }
   return join '', @morceau;
