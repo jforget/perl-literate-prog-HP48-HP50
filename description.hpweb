@@ -189,13 +189,13 @@ ex-cycle: dir
 
     Pour chaque fragment, le programme effectue un léger traitement
     de formattage. Ainsi, les fragments sections donnent lieu
-    à une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> et à
-    une balise <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt>.
+    à une balise <tt>&lt;hn&gt;</tt> et à
+    une balise <tt>&lt;a name='xxx'&gt;</tt>.
     Les fragments de code sont encadrés par des balises <tt>&lt;pre&gt;</tt>.
 
     En outre, dans les fragments de texte et de code, on repère les références
     (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;|&nbsp;») pour établir
-    un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
+    un lien <tt>&lt;a href='#xxx'&gt;</tt> vers
     d'autres sections.
 - en: |
     Weaving consists in building an HTML file and a Markdown file for each language code.
@@ -204,13 +204,13 @@ ex-cycle: dir
     text fragments tagged with the current language code.
 
     Each fragment is slightly reformatted. A section fragment
-    generates a <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> tag and a
-    <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt> tag.
+    generates a <tt>&lt;hn&gt;</tt> tag and a
+    <tt>&lt;a name='xxx'&gt;</tt> tag.
     The code fragments are sandwiched between <tt>&lt;pre&gt;</tt> tags.
 
     In addition, in text fragments and code fragments, the program
     looks for references tagged by "@" or "|" and generates
-    links <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> to other
+    links <tt>&lt;a href='#xxx'&gt;</tt> to other
     sections.
 - fr: |
     L'emmêlement se passe ainsi pour un fichier de code donné&nbsp;:
@@ -498,7 +498,7 @@ ex-cycle: dir
     Le nom du fichier en sortie est le nom du fichier en entrée,
     moins l'extension <tt>.hpweb</tt>, plus un point, le code
     langue et l'extension <tt>.html</tt> ou <tt>.md</tt>. Par exemple, pour le
-    français, le fichier <tt>description.htweb</tt> donnera
+    français, le fichier <tt>description.hpweb</tt> donnera
     les fichiers en sortie <tt>description.fr.html</tt>
     et <tt>description.fr.md</tt>
 - en: |
@@ -509,7 +509,7 @@ ex-cycle: dir
     minus the <tt>.hpweb</tt> extension, plus a dot, the language
     code and the extension <tt>.html</tt> or <tt>.md</tt>. For example, for
     the English language, the
-    input file <tt>description.htweb</tt> will produce the output
+    input file <tt>description.hpweb</tt> will produce the output
     files <tt>description.en.html</tt> and <tt>description.en.md</tt>.
 - fr: |
     Le titre spécifié dans la première variable du fichier YAML
@@ -789,15 +789,16 @@ ex-cycle: dir
     <tt>ex3</tt>, tandis que la section @SUBSG@ ne sera, apparemment, sélectionnée
     que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section @CVTCAR@, le fichier <tt>ex2</tt>
     utilisera un stockage dans des variables globales pour des besoins
-    de débugage, tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
-    locales. De plus, le fichier <tt>ex1</tt> inclura le code de @SUBSG@ et le stockera dans
+    de débugage (opération <tt>STO</tt>), tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
+    locales (opération flèche horizontale <tt>→</tt>). De plus, le fichier <tt>ex1</tt> inclura le code de @SUBSG@ et le stockera dans
     une autre variable locale.
 - en: |
     The @CVTCAR@ section will be selected in three files, <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>.
     On the other hand, it seems that the @SUBSG@ section will be selected
     only in <tt>ex2</tt> and <tt>ex3</tt>. For the @CVTCAR@ section, the <tt>ex2</tt> file
-    will store values into global variables, for debugging purposes. The
-    <tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables. In addition,
+    will store values into global variables, for debugging purposes (using operation <tt>STO</tt>). The
+    <tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables (using operation
+    horizontal arrow <tt>→</tt>). In addition,
     the <tt>ex1</tt> file will include the @SUBSG@ code and store it into another local variable.
 - fr: |
     Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section @SUBSG@,
@@ -988,13 +989,15 @@ ex-cycle: dir
     ou <tt>shell</tt>. À l'inverse des programmes pour HP-41, on peut marquer
     les appels par des balises <tt>@</tt>, mais on ne peut pas faire d'insertion
     avec des balises <tt>|</tt>. De plus, pour les rares modulos d'APL et les fréquents
-    pipes de shell, il faut écrire <tt>\\|</tt>.
+    pipes de shell, il faut écrire <tt>\\|</tt> avec un backslash (qui n'apparaît pas
+    dans la version Markdown, désolé).
 - en: |
     This format and this program can also be used to generate APL programs and shell
     scripts. For this, use a filetype <tt>apl</tt> or <tt>shell</tt>. Contrary to
     the HP-41 programs, you can mark calls with <tt>@</tt>, but you cannot insert
     a piece of code elsewhere with <tt>|</tt>. Anyhow, if you want to code a
-    seldom used APL modulo or a frequently used shell pipe, you must type <tt>\\|</tt>.
+    seldom used APL modulo or a frequently used shell pipe, you must type <tt>\\|</tt>
+    with a backslash (which does not show in the Markdown variant, sorry).
 - section: 0
   fr: Licence
   en: License
