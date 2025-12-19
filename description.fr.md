@@ -112,13 +112,13 @@ indépendamment de la langue et des fragments textes associés
 
 Pour chaque fragment, le programme effectue un léger traitement
 de formattage. Ainsi, les fragments sections donnent lieu
-à une balise <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> et à
-une balise <tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt>.
+à une balise <tt>&lt;hn&gt;</tt> et à
+une balise <tt>&lt;a name='xxx'&gt;</tt>.
 Les fragments de code sont encadrés par des balises <tt>&lt;pre&gt;</tt>.
 
 En outre, dans les fragments de texte et de code, on repère les références
 (balisées par «&nbsp;@&nbsp;» ou par «&nbsp;|&nbsp;») pour établir
-un lien <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> vers
+un lien <tt>&lt;a href='#xxx'&gt;</tt> vers
 d'autres sections.
 
 
@@ -312,7 +312,7 @@ alors qu'il traite tous les codes langues en parallèle.
 Le nom du fichier en sortie est le nom du fichier en entrée,
 moins l'extension <tt>.hpweb</tt>, plus un point, le code
 langue et l'extension <tt>.html</tt> ou <tt>.md</tt>. Par exemple, pour le
-français, le fichier <tt>description.htweb</tt> donnera
+français, le fichier <tt>description.hpweb</tt> donnera
 les fichiers en sortie <tt>description.fr.html</tt>
 et <tt>description.fr.md</tt>
 
@@ -511,8 +511,8 @@ La section <a href='#cvtcar' class='call'>CVTCAR</a> sera appelée dans les troi
 <tt>ex3</tt>, tandis que la section <a href='#subsg' class='call'>SUBSG</a> ne sera, apparemment, sélectionnée
 que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section <a href='#cvtcar' class='call'>CVTCAR</a>, le fichier <tt>ex2</tt>
 utilisera un stockage dans des variables globales pour des besoins
-de débugage, tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
-locales. De plus, le fichier <tt>ex1</tt> inclura le code de <a href='#subsg' class='call'>SUBSG</a> et le stockera dans
+de débugage (opération <tt>STO</tt>), tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
+locales (opération flèche horizontale <tt>→</tt>). De plus, le fichier <tt>ex1</tt> inclura le code de <a href='#subsg' class='call'>SUBSG</a> et le stockera dans
 une autre variable locale.
 
 
@@ -619,7 +619,8 @@ des programmes APL et shell. Pour cela, il faut utiliser le type <tt>apl</tt>
 ou <tt>shell</tt>. À l'inverse des programmes pour HP-41, on peut marquer
 les appels par des balises <tt>@</tt>, mais on ne peut pas faire d'insertion
 avec des balises <tt>|</tt>. De plus, pour les rares modulos d'APL et les fréquents
-pipes de shell, il faut écrire <tt>\|</tt>.
+pipes de shell, il faut écrire <tt>\|</tt> avec un backslash (qui n'apparaît pas
+dans la version Markdown, désolé).
 
 
 ## Licence

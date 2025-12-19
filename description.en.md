@@ -97,13 +97,13 @@ and code fragment irrespective of the language code and the
 text fragments tagged with the current language code.
 
 Each fragment is slightly reformatted. A section fragment
-generates a <tt>&lt;h</tt><var>n</var><tt>&gt;</tt> tag and a
-<tt>&lt;a name='</tt><var>xxx</var><tt>'&gt;</tt> tag.
+generates a <tt>&lt;hn&gt;</tt> tag and a
+<tt>&lt;a name='xxx'&gt;</tt> tag.
 The code fragments are sandwiched between <tt>&lt;pre&gt;</tt> tags.
 
 In addition, in text fragments and code fragments, the program
 looks for references tagged by "@" or "|" and generates
-links <tt>&lt;a href='#</tt><var>xxx</var><tt>'&gt;</tt> to other
+links <tt>&lt;a href='#xxx'&gt;</tt> to other
 sections.
 
 
@@ -290,7 +290,7 @@ The name of the output file is the name of the input file,
 minus the <tt>.hpweb</tt> extension, plus a dot, the language
 code and the extension <tt>.html</tt> or <tt>.md</tt>. For example, for
 the English language, the
-input file <tt>description.htweb</tt> will produce the output
+input file <tt>description.hpweb</tt> will produce the output
 files <tt>description.en.html</tt> and <tt>description.en.md</tt>.
 
 
@@ -480,8 +480,9 @@ Here is an example (best understood if you read the <tt>.hpweb</tt> file)
 The <a href='#cvtcar' class='call'>CVTCAR</a> section will be selected in three files, <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>.
 On the other hand, it seems that the <a href='#subsg' class='call'>SUBSG</a> section will be selected
 only in <tt>ex2</tt> and <tt>ex3</tt>. For the <a href='#cvtcar' class='call'>CVTCAR</a> section, the <tt>ex2</tt> file
-will store values into global variables, for debugging purposes. The
-<tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables. In addition,
+will store values into global variables, for debugging purposes (using operation <tt>STO</tt>). The
+<tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables (using operation
+horizontal arrow <tt>→</tt>). In addition,
 the <tt>ex1</tt> file will include the <a href='#subsg' class='call'>SUBSG</a> code and store it into another local variable.
 
 
@@ -580,7 +581,8 @@ This format and this program can also be used to generate APL programs and shell
 scripts. For this, use a filetype <tt>apl</tt> or <tt>shell</tt>. Contrary to
 the HP-41 programs, you can mark calls with <tt>@</tt>, but you cannot insert
 a piece of code elsewhere with <tt>|</tt>. Anyhow, if you want to code a
-seldom used APL modulo or a frequently used shell pipe, you must type <tt>\|</tt>.
+seldom used APL modulo or a frequently used shell pipe, you must type <tt>\|</tt>
+with a backslash (which does not show in the Markdown variant, sorry).
 
 
 ## License
