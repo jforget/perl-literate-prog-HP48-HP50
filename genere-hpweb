@@ -205,7 +205,7 @@ for my $fragment (@$l) {
       my $titre = transcrit($fragment->{$_} || '', 0);
       if ($section && $titre) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt> - $titre</a></h$niveau>\n";
-        print $fm "#" x $niveau, " `$section` - $titre\n\n";
+        print $fm "#" x $niveau, " <a name='$section'>`$section` - $titre</a>\n\n";
       }
       elsif ($titre) {
         my $lien = $titre;
@@ -215,7 +215,7 @@ for my $fragment (@$l) {
       }
       elsif ($section) {
         print $f "<h$niveau><a name='$section'><tt>$section</tt></a></h$niveau>\n";
-        print $fm "#" x $niveau, " `$section`\n\n";
+        print $fm "#" x $niveau, " <a name='$section'>`$section`</a>\n\n";
       }
     }
     next;
@@ -544,7 +544,7 @@ sub transcrit_md {
       $morceau[$i + 2] = "<<<<$etiq_ins>>>>";
     }
     elsif ($with_links && $etiq_call) {
-      my $lien = lc($etiq_call);
+      my $lien = $etiq_call;
       $morceau[$i + 1] = "<a href='#$lien' class='call'>$etiq_call</a>";
     }
   }

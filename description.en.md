@@ -406,7 +406,7 @@ code files.
 Here is an example (best understood if you read the <tt>.hpweb</tt> file)
 
 
-#### `CVTCAR`
+#### <a name='CVTCAR'>`CVTCAR`</a>
 
 ```
 «
@@ -443,7 +443,7 @@ Here is an example (best understood if you read the <tt>.hpweb</tt> file)
 »
 ```
 
-#### `SUBSG`
+#### <a name='SUBSG'>`SUBSG`</a>
 
 ```
 « 92 CHR ROT + SWAP CHR
@@ -477,17 +477,17 @@ Here is an example (best understood if you read the <tt>.hpweb</tt> file)
 "cycle" <<<<CVTCAR>>>>
 ```
 
-The <a href='#cvtcar' class='call'>CVTCAR</a> section will be selected in three files, <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>.
-On the other hand, it seems that the <a href='#subsg' class='call'>SUBSG</a> section will be selected
-only in <tt>ex2</tt> and <tt>ex3</tt>. For the <a href='#cvtcar' class='call'>CVTCAR</a> section, the <tt>ex2</tt> file
+The <a href='#CVTCAR' class='call'>CVTCAR</a> section will be selected in three files, <tt>ex1</tt>, <tt>ex2</tt> and <tt>ex3</tt>.
+On the other hand, it seems that the <a href='#SUBSG' class='call'>SUBSG</a> section will be selected
+only in <tt>ex2</tt> and <tt>ex3</tt>. For the <a href='#CVTCAR' class='call'>CVTCAR</a> section, the <tt>ex2</tt> file
 will store values into global variables, for debugging purposes (using operation <tt>STO</tt>). The
 <tt>ex1</tt> and <tt>ex3</tt> files will store them into local variables (using operation
 horizontal arrow <tt>→</tt>). In addition,
-the <tt>ex1</tt> file will include the <a href='#subsg' class='call'>SUBSG</a> code and store it into another local variable.
+the <tt>ex1</tt> file will include the <a href='#SUBSG' class='call'>SUBSG</a> code and store it into another local variable.
 
 
-As for the <tt>ex-cycle</tt> file, il selects the <a href='#subsg' class='call'>SUBSG</a> section, which includes the
-<a href='#cvtcar' class='call'>CVTCAR</a> section, which in turn includes <a href='#subsg' class='call'>SUBSG</a>, which causes some kind of problem.
+As for the <tt>ex-cycle</tt> file, il selects the <a href='#SUBSG' class='call'>SUBSG</a> section, which includes the
+<a href='#CVTCAR' class='call'>CVTCAR</a> section, which in turn includes <a href='#SUBSG' class='call'>SUBSG</a>, which causes some kind of problem.
 
 
 ### Sorting the code sections

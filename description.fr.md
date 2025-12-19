@@ -436,7 +436,7 @@ alors il sera appelé dans tous les fichiers.
 Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 
 
-#### `CVTCAR`
+#### <a name='CVTCAR'>`CVTCAR`</a>
 
 ```
 «
@@ -473,7 +473,7 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 »
 ```
 
-#### `SUBSG`
+#### <a name='SUBSG'>`SUBSG`</a>
 
 ```
 « 92 CHR ROT + SWAP CHR
@@ -507,17 +507,17 @@ Voici un exemple (à lire dans le fichier <tt>.hpweb</tt> pour mieux comprendre)
 "cycle" <<<<CVTCAR>>>>
 ```
 
-La section <a href='#cvtcar' class='call'>CVTCAR</a> sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
-<tt>ex3</tt>, tandis que la section <a href='#subsg' class='call'>SUBSG</a> ne sera, apparemment, sélectionnée
-que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section <a href='#cvtcar' class='call'>CVTCAR</a>, le fichier <tt>ex2</tt>
+La section <a href='#CVTCAR' class='call'>CVTCAR</a> sera appelée dans les trois fichiers <tt>ex1</tt>, <tt>ex2</tt> et
+<tt>ex3</tt>, tandis que la section <a href='#SUBSG' class='call'>SUBSG</a> ne sera, apparemment, sélectionnée
+que dans <tt>ex2</tt> et <tt>ex3</tt>. Pour la section <a href='#CVTCAR' class='call'>CVTCAR</a>, le fichier <tt>ex2</tt>
 utilisera un stockage dans des variables globales pour des besoins
 de débugage (opération <tt>STO</tt>), tandis que les fichiers <tt>ex1</tt> et <tt>ex3</tt> stockeront tout dans des variables
-locales (opération flèche horizontale <tt>→</tt>). De plus, le fichier <tt>ex1</tt> inclura le code de <a href='#subsg' class='call'>SUBSG</a> et le stockera dans
+locales (opération flèche horizontale <tt>→</tt>). De plus, le fichier <tt>ex1</tt> inclura le code de <a href='#SUBSG' class='call'>SUBSG</a> et le stockera dans
 une autre variable locale.
 
 
-Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section <a href='#subsg' class='call'>SUBSG</a>,
-qui inclut la section <a href='#cvtcar' class='call'>CVTCAR</a>, qui inclut à son tour <a href='#subsg' class='call'>SUBSG</a>, ce qui constitue un problème certain.
+Quant au fichier <tt>ex-cycle</tt>, il appelle au premier niveau la section <a href='#SUBSG' class='call'>SUBSG</a>,
+qui inclut la section <a href='#CVTCAR' class='call'>CVTCAR</a>, qui inclut à son tour <a href='#SUBSG' class='call'>SUBSG</a>, ce qui constitue un problème certain.
 
 
 ### Tri des sections de code
